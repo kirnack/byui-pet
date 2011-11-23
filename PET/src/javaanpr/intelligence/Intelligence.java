@@ -90,6 +90,7 @@ import javaanpr.recognizer.KnnPatternClassificator;
 
 public class Intelligence {
     private long lastProcessDuration = 0; // trvanie posledneho procesu v ms
+    public BufferedImage foundPlate = null;
 
     public static Configurator configurator = new Configurator("."+File.separator+"config.xml");
     public static CharacterRecognizer chrRecog;
@@ -115,13 +116,13 @@ public class Intelligence {
 
     // Added by Kyle Atkinson 2011.11.23
     // Used in place of original function
-    public String recognize(CarSnapshot carSnapshot) throws Exception {
-        return recognize(carSnapshot, null);
+    public BufferedImage getPlate() throws Exception {
+        return foundPlate;
     }
 
     // Altered by Kyle Atkinson 2011.11.23
     // Used when the plate image is needed for output
-    public String recognize(CarSnapshot carSnapshot, BufferedImage foundPlate) throws Exception {
+    public String recognize(CarSnapshot carSnapshot) throws Exception {
         TimeMeter time = new TimeMeter();
         int syntaxAnalysisMode = Intelligence.configurator.getIntProperty("intelligence_syntaxanalysis");
         int skewDetectionMode = Intelligence.configurator.getIntProperty("intelligence_skewdetection");
@@ -239,10 +240,13 @@ public class Intelligence {
                 float averageHue = plate.getAveragePieceHue(chars);
                 float averageSaturation = plate.getAveragePieceSaturation(chars);
 
+                // Altered by Kyle Atkinson 2011.11.23
+                // Inserts wildcards when character cannot be recognized
                 for (Char chr : chars) {
                     // heuristicka analyza jednotlivych pismen
                     boolean ok = true;
                     String errorFlags = "";
+                    recognizedPlate.addChar(null);
 
                     // pri normalizovanom pisme musime uvazovat pomer
                     float widthHeightRatio = (float)(chr.pieceWidth);
@@ -315,7 +319,7 @@ public class Intelligence {
                     }
 
                     if (ok==true) {
-                        recognizedPlate.addChar(rc);
+                        recognizedPlate.replaceLastChar(rc);
                     } else {
                     }
 

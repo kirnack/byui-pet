@@ -47,17 +47,17 @@ The name and trademarks of copyright holder(s) may NOT be used in
 advertising or publicity pertaining to the Original or Derivative Works
 without specific, written prior permission. Title to copyright in the
 Original Work and any associated documentation will at all times remain
-with the copyright holders. 
+with the copyright holders.
 
-If you want to alter upon this work, you MUST attribute it in 
+If you want to alter upon this work, you MUST attribute it in
 a) all source files
 b) on every place, where is the copyright of derivated work
 exactly by the following label :
 
 ---- label begin ----
-This work is a derivate of the JavaANPR. JavaANPR is a intellectual 
-property of Ondrej Martinsky. Please visit http://javaanpr.sourceforge.net 
-for more informations about JavaANPR. 
+This work is a derivate of the JavaANPR. JavaANPR is a intellectual
+property of Ondrej Martinsky. Please visit http://javaanpr.sourceforge.net
+for more informations about JavaANPR.
 ----  label end  ----
 
 ------------------------------------------------------------------------
@@ -77,7 +77,7 @@ import java.util.Vector;
 import javaanpr.imageanalysis.Char;
 
 public abstract class CharacterRecognizer {
-    
+
     // rozpoznavane pismena :
     // 0  1  2  3  4  5  6  7  8  9  10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30 31 32 33 34 35
     // 0  1  2  3  4  5  6  7  8  9  A  B  C  D  E  F  G  H  I  J  K  L  M  N  O  P  Q  R  S  T  U  V  W  X  Y  Z
@@ -86,22 +86,22 @@ public abstract class CharacterRecognizer {
         'D','E','F','G','H','I','J','K','L','M','N','O','P',
         'Q','R','S','T','U','V','W','X','Y','Z'
     };
-    
+
     public static float[][] features = {
         {0,1,0,1}, //0
         {1,0,1,0}, //1
         {0,0,1,1}, //2
         {1,1,0,0}, //3
-        {0,0,0,1}, //4        
+        {0,0,0,1}, //4
         {1,0,0,0}, //5
-        {1,1,1,0}, //6        
+        {1,1,1,0}, //6
         {0,1,1,1}, //7
-        {0,0,1,0}, //8        
+        {0,0,1,0}, //8
         {0,1,0,0}, //9
-        {1,0,1,1}, //10       
-        {1,1,0,1}  //11    
+        {1,0,1,1}, //10
+        {1,1,0,1}  //11
     };
-    
+
     public class RecognizedChar {
         public class RecognizedPattern {
             private char chr;
@@ -125,19 +125,19 @@ public abstract class CharacterRecognizer {
             public int compare(Object o1, Object o2) {
                 float cost1 = ((RecognizedPattern)o1).getCost();
                 float cost2 = ((RecognizedPattern)o2).getCost();
-                
+
                 int ret = 0;
-                
+
                 if (cost1 < cost2) ret = -1;
                 if (cost1 > cost2) ret =  1;
                 if (direction==1) ret *= -1;
                 return ret;
             }
         }
-        
+
         private Vector<RecognizedPattern> patterns;
         private boolean isSorted;
-        
+
         RecognizedChar() {
             this.patterns = new Vector<RecognizedPattern>();
             this.isSorted = false;
@@ -154,7 +154,7 @@ public abstract class CharacterRecognizer {
             Collections.sort(patterns, (Comparator<? super RecognizedPattern>)
                                        new PatternComparer(direction));
         }
-        
+
         public Vector<RecognizedPattern> getPatterns() {
             if (this.isSorted) return this.patterns;
             return null; // if not sorted
@@ -163,37 +163,37 @@ public abstract class CharacterRecognizer {
             if (this.isSorted) return this.patterns.elementAt(i);
             return null;
         }
-        
+
         public BufferedImage render() {
             int width=500;
             int height=200;
             BufferedImage histogram = new BufferedImage(width+20, height+20, BufferedImage.TYPE_INT_RGB);
             Graphics2D graphic = histogram.createGraphics();
-            
+
             graphic.setColor(Color.LIGHT_GRAY);
             Rectangle backRect = new Rectangle(0,0,width+20,height+20);
             graphic.fill(backRect);
             graphic.draw(backRect);
-            
+
             graphic.setColor(Color.BLACK);
-            
+
             int colWidth = width / this.patterns.size();
             int left, top;
-            
-            
+
+
             for (int ay = 0; ay <= 100; ay += 10) {
                 int y = 15 + (int)((100 - ay) / 100.0f * (height - 20));
                 graphic.drawString(new Integer(ay).toString(), 3 , y+11);
                 graphic.drawLine(25,y+5,35,y+5);
             }
             graphic.drawLine(35,19,35,height );
-            
+
             graphic.setColor(Color.BLUE);
-            
+
             for (int i=0; i<patterns.size(); i++) {
                 left = i * colWidth + 42;
                 top = height - (int)( patterns.elementAt(i).cost * (height - 20));
-                
+
                 graphic.drawRect(
                         left,
                         top ,
@@ -205,11 +205,11 @@ public abstract class CharacterRecognizer {
             return histogram;
         }
     }
-    
-    
+
+
     /** Creates a new instance of CharacterRecognizer */
     public CharacterRecognizer() {
     }
-    
+
     public abstract RecognizedChar recognize(Char chr)  throws Exception;
 }
