@@ -47,17 +47,17 @@ The name and trademarks of copyright holder(s) may NOT be used in
 advertising or publicity pertaining to the Original or Derivative Works
 without specific, written prior permission. Title to copyright in the
 Original Work and any associated documentation will at all times remain
-with the copyright holders. 
+with the copyright holders.
 
-If you want to alter upon this work, you MUST attribute it in 
+If you want to alter upon this work, you MUST attribute it in
 a) all source files
 b) on every place, where is the copyright of derivated work
 exactly by the following label :
 
 ---- label begin ----
-This work is a derivate of the JavaANPR. JavaANPR is a intellectual 
-property of Ondrej Martinsky. Please visit http://javaanpr.sourceforge.net 
-for more info about JavaANPR. 
+This work is a derivate of the JavaANPR. JavaANPR is a intellectual
+property of Ondrej Martinsky. Please visit http://javaanpr.sourceforge.net
+for more info about JavaANPR.
 ----  label end  ----
 
 ------------------------------------------------------------------------
@@ -73,24 +73,35 @@ import javaanpr.recognizer.CharacterRecognizer.RecognizedChar;
 
 public class RecognizedPlate {
     Vector<RecognizedChar> chars;
-    
+
     public RecognizedPlate() {
         this.chars = new Vector<RecognizedChar>();
     }
-    
+
     public void addChar(RecognizedChar chr) {
         this.chars.add(chr);
     }
-    
+
+    // Added by Kyle Atkinson
+    // Used to replace wildcards when the character is recognized
+    public void replaceLastChar(RecognizedChar chr) {
+        this.chars.remove(this.chars.lastElement());
+        this.chars.add(chr);
+    }
+
     public RecognizedChar getChar(int i) {
         return this.chars.elementAt(i);
     }
 
+    // Altered by Kyle Atkinson 2011.11.23
+    // Inserts wildcards into string when characters cannot be recognized
     public String getString() {
         String ret = new String("");
         for (int i=0; i<chars.size();i++) {
-            
-            ret = ret + this.chars.elementAt(i).getPattern(0).getChar();
+            if (this.chars.elementAt(i) == null)
+                ret = ret + '?';
+            else
+                ret = ret + this.chars.elementAt(i).getPattern(0).getChar();
         }
         return ret;
     }
