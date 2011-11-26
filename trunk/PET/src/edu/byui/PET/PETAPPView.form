@@ -30,12 +30,17 @@
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel2" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
+                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="plateText" pref="300" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="captureButton" min="-2" pref="212" max="-2" attributes="0"/>
+                      </Group>
                       <Component id="jPanel1" alignment="1" max="32767" attributes="1"/>
                       <Component id="jPanel3" alignment="1" max="32767" attributes="1"/>
                   </Group>
               </Group>
-              <EmptySpace pref="1759" max="32767" attributes="0"/>
+              <EmptySpace min="-2" pref="449" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -48,7 +53,12 @@
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="1134" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="plateText" pref="67" max="32767" attributes="1"/>
+                  <Component id="captureButton" alignment="0" pref="67" max="32767" attributes="1"/>
+              </Group>
+              <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -158,5 +168,26 @@
         </Component>
       </SubComponents>
     </Container>
+    <Component class="javax.swing.JTextField" name="plateText">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="plateText.font"/>
+        <Property name="horizontalAlignment" type="int" value="0"/>
+        <Property name="text" type="java.lang.String" resourceKey="plateText.text"/>
+        <Property name="name" type="java.lang.String" value="plateText" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="plateTextChanged"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="captureButton">
+      <Properties>
+        <Property name="font" type="java.awt.Font" resourceKey="captureButton.font"/>
+        <Property name="text" type="java.lang.String" resourceKey="captureButton.text"/>
+        <Property name="name" type="java.lang.String" value="captureButton" noResource="true"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="captureButtonPressed"/>
+      </Events>
+    </Component>
   </SubComponents>
 </Form>
