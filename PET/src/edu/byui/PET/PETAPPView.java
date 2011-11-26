@@ -40,9 +40,10 @@ public class PETAPPView extends javax.swing.JFrame {
         jPanel3 = new ImagePanel(ClassLoader.getSystemResource("edu/byui/PET/resources/licPlateImageHolder.jpg"));
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new ClockLabel();
+        plateText = new javax.swing.JTextField();
+        captureButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setAutoRequestFocus(false);
         setMinimumSize(getToolkit().getScreenSize());
         setName("Form"); // NOI18N
 
@@ -104,6 +105,25 @@ public class PETAPPView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        plateText.setFont(resourceMap.getFont("plateText.font")); // NOI18N
+        plateText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        plateText.setText(resourceMap.getString("plateText.text")); // NOI18N
+        plateText.setName("plateText"); // NOI18N
+        plateText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                plateTextChanged(evt);
+            }
+        });
+
+        captureButton.setFont(resourceMap.getFont("captureButton.font")); // NOI18N
+        captureButton.setText(resourceMap.getString("captureButton.text")); // NOI18N
+        captureButton.setName("captureButton"); // NOI18N
+        captureButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                captureButtonPressed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -112,10 +132,14 @@ public class PETAPPView extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap(1759, Short.MAX_VALUE))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addComponent(plateText, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(captureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(449, 449, 449))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -126,11 +150,49 @@ public class PETAPPView extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(1134, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(plateText, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                    .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_captureButtonPressed
+    // Capture Mode
+    if (this.captureButton.getText() == "Capture") {
+        // Get the image from the Camera
+        // Display the image
+        // Pass the image to the recognize function
+        // Retrieve the plate image
+        // Display the plate image
+
+        // Search the permit database for the string
+        // If no hits, display violation warning
+        // If one hit, display the matched string
+        // If multiple hits, ask for clarification
+        // Make sure returned permit matches lot
+
+        // Display the plate text
+    }
+    // Lookup Mode
+    else if (this.plateText.getText().trim() != "") {
+        // Search the permit database for the string
+        // If no hits, display violation warning
+        // If one hit, do nothing
+        // If multiple hits, ask for clarification (states)
+    }
+
+    // Make sure the button defaults the "Capture"
+    this.captureButton.setText("Capture");
+}//GEN-LAST:event_captureButtonPressed
+
+private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plateTextChanged
+// TODO add your handling code here:
+    this.captureButton.setText("Lookup");
+}//GEN-LAST:event_plateTextChanged
 
     /**
      * @param args the command line arguments
@@ -168,9 +230,11 @@ public class PETAPPView extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton captureButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JTextField plateText;
     // End of variables declaration//GEN-END:variables
 
    private void setAutoRequestFocus(boolean b)
