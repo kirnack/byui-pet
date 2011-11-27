@@ -121,7 +121,8 @@ public class Intelligence {
     }
 
     // Altered by Kyle Atkinson 2011.11.23
-    // Used when the plate image is needed for output
+    // Stores the plate image so that it can be retrieved later. Also places
+    // wildcards in the output string when characters cannot be recognized.
     public String recognize(CarSnapshot carSnapshot) throws Exception {
         TimeMeter time = new TimeMeter();
         int syntaxAnalysisMode = Intelligence.configurator.getIntProperty("intelligence_syntaxanalysis");

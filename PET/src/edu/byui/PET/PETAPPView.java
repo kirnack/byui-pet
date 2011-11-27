@@ -12,6 +12,9 @@ package edu.byui.PET;
 import edu.byui.PET.images.*;
 import java.util.Date;
 import javax.swing.Timer;
+import java.awt.image.BufferedImage;
+import javaanpr.imageanalysis.Photo;
+import javaanpr.intelligence.Intelligence;
 
 /**
  *
@@ -19,10 +22,21 @@ import javax.swing.Timer;
  */
 public class PETAPPView extends javax.swing.JFrame {
 
+    // Used to store images
+    BufferedImage carImage;
+    BufferedImage plateImage;
+    Intelligence reader;
+
     /** Creates new form PETAPPView */
     public PETAPPView() {
 
         initComponents();
+        try {
+            reader = new Intelligence(false);   // This reads the plates
+        } catch (Exception e) {
+            // TODO: Handle this in the GUI
+            System.err.println(e.getMessage());
+        }
         Timer t = new Timer(1000, (ClockLabel) jLabel1);
         t.start();
 
@@ -36,8 +50,18 @@ public class PETAPPView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        javax.swing.JPanel jPanel1 = new ImagePanel();
-        jPanel3 = new ImagePanel(ClassLoader.getSystemResource("edu/byui/PET/resources/licPlateImageHolder.jpg"));
+        carPanel = new javax.swing.JPanel() {
+            public void paint(java.awt.Graphics g) {
+                super.paint(g);
+                g.drawImage(carImage,0,0,null);
+            }
+        };
+        platePanel = new javax.swing.JPanel() {
+            public void paint(java.awt.Graphics g) {
+                super.paint(g);
+                g.drawImage(plateImage,0,0,null);
+            }
+        };
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new ClockLabel();
         plateText = new javax.swing.JTextField();
@@ -48,32 +72,33 @@ public class PETAPPView extends javax.swing.JFrame {
         setName("Form"); // NOI18N
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edu.byui.PET.PETAPP.class).getContext().getResourceMap(PETAPPView.class);
-        jPanel1.setBackground(resourceMap.getColor("jPanel1.background")); // NOI18N
-        jPanel1.setName("jPanel1"); // NOI18N
+        carPanel.setBackground(resourceMap.getColor("carPanel.background")); // NOI18N
+        carPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        carPanel.setName("carPanel"); // NOI18N
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 518, Short.MAX_VALUE)
+        javax.swing.GroupLayout carPanelLayout = new javax.swing.GroupLayout(carPanel);
+        carPanel.setLayout(carPanelLayout);
+        carPanelLayout.setHorizontalGroup(
+            carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 521, Short.MAX_VALUE)
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        carPanelLayout.setVerticalGroup(
+            carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 294, Short.MAX_VALUE)
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.setName("jPanel2"); // NOI18N
-        jPanel3.setOpaque(false);
+        platePanel.setBackground(resourceMap.getColor("platePanel.background")); // NOI18N
+        platePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        platePanel.setName("platePanel"); // NOI18N
 
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 516, Short.MAX_VALUE)
+        javax.swing.GroupLayout platePanelLayout = new javax.swing.GroupLayout(platePanel);
+        platePanel.setLayout(platePanelLayout);
+        platePanelLayout.setHorizontalGroup(
+            platePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 521, Short.MAX_VALUE)
         );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        platePanelLayout.setVerticalGroup(
+            platePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 122, Short.MAX_VALUE)
         );
 
@@ -133,13 +158,13 @@ public class PETAPPView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(plateText, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(captureButton, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(449, 449, 449))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                            .addComponent(plateText, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                        .addComponent(platePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(carPanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(303, 303, 303))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -147,38 +172,73 @@ public class PETAPPView extends javax.swing.JFrame {
                 .addGap(34, 34, 34)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(carPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(platePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(plateText, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                    .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
+                    .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                    .addComponent(plateText, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+/*
+ * Captures and processes a picture or looks up an entered string
+ *
+ * When the captureButton text is "Capture", this method captures a picture
+ * from the camera and processes the picture.
+ * When the captureButton text is "Lookup", this method searches the database
+ * for the string that was entered. This is used when the operator corrects
+ * the plate text read by the system.
+ *
+ * @param evt MouseEvent object. Not used in this method.
+ */
 private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_captureButtonPressed
     // Capture Mode
-    if (this.captureButton.getText() == "Capture") {
+    if (this.captureButton.getText().equals("Capture")) {
         // Get the image from the Camera
+        try {
+            carImage = new Photo("./resources/test.bmp").getBi();  // temporary image
+        } catch (Exception e) {
+            // TODO: Make GUI Error Window
+            System.err.println(e.getMessage());
+        }
         // Display the image
-        // Pass the image to the recognize function
-        // Retrieve the plate image
+        carImage = Photo.linearResizeBi(carImage,carPanel.getWidth(),carPanel.getHeight());
+        carPanel.paint(carPanel.getGraphics());
+        // Clear the plate image
+        plateImage = null;
+        platePanel.paint(platePanel.getGraphics());
+        String plateStr = new String();
+
+        try {
+            // Pass the image to the recognize function
+            plateStr = reader.recognize(new javaanpr.imageanalysis.CarSnapshot(carImage));
+            // Retrieve the plate image
+            plateImage = reader.getPlate();
+        } catch (Exception e) {
+            // TODO: Make GUI Error Window
+            System.err.println(e.getMessage());
+        }
+
         // Display the plate image
+        plateImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
+        platePanel.paint(platePanel.getGraphics());
 
         // Search the permit database for the string
         // If no hits, display violation warning
         // If one hit, display the matched string
-        // If multiple hits, ask for clarification
+        // If multiple hits, ask the operator for clarification
         // Make sure returned permit matches lot
 
         // Display the plate text
+        plateText.setText(plateStr);
     }
-    // Lookup Mode
-    else if (this.plateText.getText().trim() != "") {
+    // Lookup Mode with none-empty input
+    else if (!this.plateText.getText().trim().isEmpty()) {
         // Search the permit database for the string
         // If no hits, display violation warning
         // If one hit, do nothing
@@ -189,9 +249,13 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     this.captureButton.setText("Capture");
 }//GEN-LAST:event_captureButtonPressed
 
+/*
+ * Changes the captureButton text when the Plate Text is edited
+ *
+ * @param evt KeyEvent object. Not used in this method.
+ */
 private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plateTextChanged
-// TODO add your handling code here:
-    this.captureButton.setText("Lookup");
+    this.captureButton.setText("<- Lookup");
 }//GEN-LAST:event_plateTextChanged
 
     /**
@@ -231,9 +295,10 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton captureButton;
+    private javax.swing.JPanel carPanel;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel platePanel;
     private javax.swing.JTextField plateText;
     // End of variables declaration//GEN-END:variables
 

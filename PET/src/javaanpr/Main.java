@@ -169,13 +169,24 @@ public class Main {
     }
 
     // Added by Kyle Atkinson 2011.11.14
-    // Load a comma separated value file into a Map.
-    // Used to load the correct plate numbers for each file. (fileName,plateNumber)
-    // Also used for loading regex strings. (letter,regexString)
-    public static Map loadCSVFile(String numbersFile) {
+    /*
+     * Load a comma separated value (csv) file into a Map.
+     *
+     * Load a comma separated value (csv) file into a Map. The first column
+     * in the csv file supplies the keys and the second column supplies the
+     * values associated with the keys.
+     * Used to load the correct plate numbers for each file. This is used
+     * for statistical purposes. The csv file format is fileName,plateNumber.
+     * Also used for loading regex strings. File format is letter,regexString.
+     *
+     * @since 2011-11-14
+     * @param cvsFile The cvs file to load.
+     * @return Map object containing the file contents.
+     */
+    public static Map loadCSVFile(String cvsFile) {
         Map<String,String> numbers = new HashMap<String,String>();
         try {
-            BufferedReader br = new BufferedReader( new FileReader(numbersFile));
+            BufferedReader br = new BufferedReader( new FileReader(cvsFile));
             String tempStr = "";
             StringTokenizer tokens = null;
 
@@ -194,7 +205,19 @@ public class Main {
     }
 
     // Added by Kyle Atkinson 2011.11.14
-    // TODO: Use inteligent guesses
+    /*
+     * Test if the recognized text matches the actual text.
+     *
+     * Uses regular expressions to test for a match between the recognized and
+     * actual texts. This is used for statistical purposes.
+     * Matches do not need to be exact. For example, 'I' (aye) and '1' (one)
+     * are considered to be the same for a match.
+     *
+     * @since 2011-11-14
+     * @param realVal The actual value of the plate.
+     * @param readVal The recognized text for the plate.
+     * @return true if the strings match, false otherwise.
+     */
     public static boolean plateCorrect(String realVal, String readVal) {
         if (realVal != null && readVal != null) {
             // If strings match, return true
