@@ -31,16 +31,16 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jPanel2" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
                   <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <Component id="plateText" pref="300" max="32767" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="captureButton" min="-2" pref="212" max="-2" attributes="0"/>
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="plateText" min="-2" pref="305" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="captureButton" pref="210" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jPanel1" alignment="1" max="32767" attributes="1"/>
-                      <Component id="jPanel3" alignment="1" max="32767" attributes="1"/>
+                      <Component id="platePanel" alignment="0" max="32767" attributes="1"/>
+                      <Component id="carPanel" alignment="0" max="32767" attributes="1"/>
                   </Group>
               </Group>
-              <EmptySpace min="-2" pref="449" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="303" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -50,27 +50,32 @@
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+              <Component id="carPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-              <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
-              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="platePanel" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="plateText" pref="67" max="32767" attributes="1"/>
-                  <Component id="captureButton" alignment="0" pref="67" max="32767" attributes="1"/>
+                  <Component id="captureButton" pref="67" max="32767" attributes="1"/>
+                  <Component id="plateText" alignment="0" pref="67" max="32767" attributes="1"/>
               </Group>
-              <EmptySpace min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="jPanel1">
+    <Container class="javax.swing.JPanel" name="carPanel">
       <Properties>
-        <Property name="background" type="java.awt.Color" resourceKey="jPanel1.background"/>
-        <Property name="name" type="java.lang.String" value="jPanel1" noResource="true"/>
+        <Property name="background" type="java.awt.Color" resourceKey="carPanel.background"/>
+        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
+          </Border>
+        </Property>
+        <Property name="name" type="java.lang.String" value="carPanel" noResource="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ImagePanel();"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xd;&#xa;    public void paint(java.awt.Graphics g) {&#xd;&#xa;        super.paint(g);&#xd;&#xa;        g.drawImage(carImage,0,0,null);&#xd;&#xa;    }&#xd;&#xa;};"/>
         <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
       </AuxValues>
@@ -78,7 +83,7 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="518" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="521" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -88,24 +93,24 @@
         </DimensionLayout>
       </Layout>
     </Container>
-    <Container class="javax.swing.JPanel" name="jPanel3">
+    <Container class="javax.swing.JPanel" name="platePanel">
       <Properties>
+        <Property name="background" type="java.awt.Color" resourceKey="platePanel.background"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-            <LineBorder/>
+          <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+            <EtchetBorder/>
           </Border>
         </Property>
-        <Property name="name" type="java.lang.String" value="jPanel2" noResource="true"/>
-        <Property name="opaque" type="boolean" value="false"/>
+        <Property name="name" type="java.lang.String" value="platePanel" noResource="true"/>
       </Properties>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new ImagePanel(ClassLoader.getSystemResource(&quot;edu/byui/PET/resources/licPlateImageHolder.jpg&quot;));"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xd;&#xa;    public void paint(java.awt.Graphics g) {&#xd;&#xa;        super.paint(g);&#xd;&#xa;        g.drawImage(plateImage,0,0,null);&#xd;&#xa;    }&#xd;&#xa;};"/>
       </AuxValues>
 
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="516" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="521" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
