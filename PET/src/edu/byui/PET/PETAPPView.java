@@ -54,12 +54,6 @@ public class PETAPPView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        carPanel = new javax.swing.JPanel() {
-            public void paint(java.awt.Graphics g) {
-                super.paint(g);
-                g.drawImage(carPanelImage,0,0,null);
-            }
-        };
         platePanel = new javax.swing.JPanel() {
             public void paint(java.awt.Graphics g) {
                 super.paint(g);
@@ -70,32 +64,18 @@ public class PETAPPView extends javax.swing.JFrame {
         jLabel1 = new ClockLabel();
         plateText = new javax.swing.JTextField();
         captureButton = new javax.swing.JButton();
+        carPanel = new javax.swing.JPanel() {
+            public void paint(java.awt.Graphics g) {
+                super.paint(g);
+                g.drawImage(carPanelImage,0,0,null);
+            }
+        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edu.byui.PET.PETAPP.class).getContext().getResourceMap(PETAPPView.class);
         setTitle(resourceMap.getString("Form.title")); // NOI18N
         setMinimumSize(new java.awt.Dimension(750, 550));
         setName("Form"); // NOI18N
-
-        carPanel.setBackground(resourceMap.getColor("carPanel.background")); // NOI18N
-        carPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        carPanel.setName("carPanel"); // NOI18N
-        carPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                carPanelComponentResized(evt);
-            }
-        });
-
-        javax.swing.GroupLayout carPanelLayout = new javax.swing.GroupLayout(carPanel);
-        carPanel.setLayout(carPanelLayout);
-        carPanelLayout.setHorizontalGroup(
-            carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
-        );
-        carPanelLayout.setVerticalGroup(
-            carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 313, Short.MAX_VALUE)
-        );
 
         platePanel.setBackground(resourceMap.getColor("platePanel.background")); // NOI18N
         platePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -110,14 +90,13 @@ public class PETAPPView extends javax.swing.JFrame {
         platePanel.setLayout(platePanelLayout);
         platePanelLayout.setHorizontalGroup(
             platePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 521, Short.MAX_VALUE)
+            .addGap(0, 525, Short.MAX_VALUE)
         );
         platePanelLayout.setVerticalGroup(
             platePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 122, Short.MAX_VALUE)
         );
 
-        jPanel2.setBackground(resourceMap.getColor("jPanel2.background")); // NOI18N
         jPanel2.setBorder(javax.swing.BorderFactory.createMatteBorder(11, 11, 11, 11, resourceMap.getColor("jPanel2.border.matteColor"))); // NOI18N
         jPanel2.setName("jPanel2"); // NOI18N
 
@@ -164,6 +143,25 @@ public class PETAPPView extends javax.swing.JFrame {
             }
         });
 
+        carPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        carPanel.setName("carPanel"); // NOI18N
+        carPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                carPanelComponentResized(evt);
+            }
+        });
+
+        javax.swing.GroupLayout carPanelLayout = new javax.swing.GroupLayout(carPanel);
+        carPanel.setLayout(carPanelLayout);
+        carPanelLayout.setHorizontalGroup(
+            carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 525, Short.MAX_VALUE)
+        );
+        carPanelLayout.setVerticalGroup(
+            carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 329, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,7 +174,7 @@ public class PETAPPView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(plateText, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE))
+                        .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
                     .addComponent(platePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(303, 303, 303))
         );
@@ -185,7 +183,7 @@ public class PETAPPView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(34, 34, 34)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(carPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(platePanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -272,15 +270,15 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
     this.captureButton.setText("<- Lookup");
 }//GEN-LAST:event_plateTextChanged
 
-private void carPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_carPanelComponentResized
-    carPanelImage = Photo.linearResizeBi(carImage,carPanel.getWidth(),carPanel.getHeight());
-    carPanel.paint(carPanel.getGraphics());
-}//GEN-LAST:event_carPanelComponentResized
-
 private void platePanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_platePanelComponentResized
     platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
     platePanel.paint(platePanel.getGraphics());
 }//GEN-LAST:event_platePanelComponentResized
+
+private void carPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_carPanelComponentResized
+    platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
+    platePanel.paint(platePanel.getGraphics());
+}//GEN-LAST:event_carPanelComponentResized
 
     /**
      * @param args the command line arguments
