@@ -39,16 +39,6 @@ public class ImagePanel
     */
    public ImagePanel()
    {
-      this(ClassLoader.getSystemResource("edu/byui/PET/resources/plateImageHolder.jpg"));
-   }
-
-   /**
-    * Creates a new BackgroundPanel
-    *
-    * @param pURL 
-    */
-   public ImagePanel(URL pURL)
-   {
       //These lines of code are absolutly nessisary to resize the image properly
       addComponentListener(new ComponentListener()
       {
@@ -70,6 +60,16 @@ public class ImagePanel
             resizeImage(getWidth(), getHeight());
          }
       });
+   }
+
+   /**
+    * Creates a new BackgroundPanel
+    *
+    * @param pURL 
+    */
+   public ImagePanel(URL pURL)
+   {
+      this();
       try
       {
          image = new ImageIcon(pURL);
@@ -88,9 +88,12 @@ public class ImagePanel
    @Override
    protected void paintComponent(Graphics g)
    {
-      super.paintComponent(g);
-      //System.err.println("Paniting");
-      g.drawImage(image.getImage(), 0, 0, null);
+      if(image != null)
+      {
+         super.paintComponent(g);
+         //System.err.println("Paniting");
+         g.drawImage(image.getImage(), 0, 0, null);
+      }
    }
 
    /**
@@ -98,15 +101,25 @@ public class ImagePanel
     **/
    public void getImageLoc()
    {
-      size = getSize();
-      /**
-       * resizes the image to the specified screen height and width
-       **/
-      Image img = image.getImage();
-      Image newImg = img.getScaledInstance(size.width, size.height, java.awt.Image.SCALE_SMOOTH);
-      image = new ImageIcon(newImg);
+      if(image != null)
+      {
+         size = getSize();
+         /**
+          * resizes the image to the specified screen height and width
+          **/
+         Image img = image.getImage();
+         Image newImg = img.getScaledInstance(size.width, size.height, java.awt.Image.SCALE_SMOOTH);
+         image = new ImageIcon(newImg);
+      }
    }
 
+   public void setImageIcon(ImageIcon pImg)
+   {
+      image = pImg;
+      resizeImage(getWidth(), getHeight());
+      paint(getGraphics());
+   }
+   
    /**
     * 
     * @param newW
@@ -114,14 +127,17 @@ public class ImagePanel
     */
    public void resizeImage(int newW, int newH)
    {
-      int w = image.getIconWidth();
-      int h = image.getIconHeight();
-      Image oldImage = image.getImage();
-      BufferedImage img = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);
-      Graphics2D g = img.createGraphics();
-      g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
-      g.drawImage(oldImage, 0, 0, newW, newH, 0, 0, w, h, null);
-      g.dispose();
-      image.setImage(img);
+      if(image != null)
+      {
+         int w = image.getIconWidth();
+         int h = image.getIconHeight();
+         Image oldImage = image.getImage();
+         BufferedImage img = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_RGB);
+         Graphics2D g = img.createGraphics();
+         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+         g.drawImage(oldImage, 0, 0, newW, newH, 0, 0, w, h, null);
+         g.dispose();
+         image.setImage(img);
+      }
    }
 }

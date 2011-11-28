@@ -10,12 +10,12 @@
  */
 package edu.byui.PET;
 import edu.byui.PET.images.*;
-import java.util.Date;
 import javax.swing.Timer;
 import java.awt.image.BufferedImage;
 import javaanpr.imageanalysis.Photo;
 import javaanpr.intelligence.Intelligence;
 import javaanpr.imageanalysis.CarSnapshot;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -54,22 +54,12 @@ public class PETAPPView extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        platePanel = new javax.swing.JPanel() {
-            public void paint(java.awt.Graphics g) {
-                super.paint(g);
-                g.drawImage(platePanelImage,0,0,null);
-            }
-        };
+        platePanel = new ImagePanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new ClockLabel();
         plateText = new javax.swing.JTextField();
         captureButton = new javax.swing.JButton();
-        carPanel = new javax.swing.JPanel() {
-            public void paint(java.awt.Graphics g) {
-                super.paint(g);
-                g.drawImage(carPanelImage,0,0,null);
-            }
-        };
+        carPanel = new ImagePanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(edu.byui.PET.PETAPP.class).getContext().getResourceMap(PETAPPView.class);
@@ -90,7 +80,7 @@ public class PETAPPView extends javax.swing.JFrame {
         platePanel.setLayout(platePanelLayout);
         platePanelLayout.setHorizontalGroup(
             platePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGap(0, 526, Short.MAX_VALUE)
         );
         platePanelLayout.setVerticalGroup(
             platePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,7 +145,7 @@ public class PETAPPView extends javax.swing.JFrame {
         carPanel.setLayout(carPanelLayout);
         carPanelLayout.setHorizontalGroup(
             carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 525, Short.MAX_VALUE)
+            .addGap(0, 526, Short.MAX_VALUE)
         );
         carPanelLayout.setVerticalGroup(
             carPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,8 +209,8 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
             System.err.println(e.getMessage());
         }
         // Display the image
-        carPanelImage = Photo.linearResizeBi(carImage,carPanel.getWidth(),carPanel.getHeight());
-        carPanel.paint(carPanel.getGraphics());
+        ((ImagePanel) carPanel).setImageIcon(new ImageIcon(carImage));
+        //carPanel.paint(carPanel.getGraphics());
         // Clear the plate image
         platePanelImage = null;
         platePanel.paint(platePanel.getGraphics());
@@ -324,8 +314,9 @@ private void carPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-
     private javax.swing.JTextField plateText;
     // End of variables declaration//GEN-END:variables
 
-   private void setAutoRequestFocus(boolean b)
+   /*
+   public void setAutoRequestFocus(boolean b)
    {
       //throw new UnsupportedOperationException("Not yet implemented");
-   }
+   }*/
 }
