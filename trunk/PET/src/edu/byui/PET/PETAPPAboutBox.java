@@ -6,15 +6,26 @@ package edu.byui.PET;
 
 import org.jdesktop.application.Action;
 
+/**
+ * 
+ * @author kirnack
+ */
 public class PETAPPAboutBox extends javax.swing.JDialog {
 
-    public PETAPPAboutBox(java.awt.Frame parent) {
+   /**
+    * 
+    * @param parent
+    */
+   public PETAPPAboutBox(java.awt.Frame parent) {
         super(parent);
         initComponents();
         getRootPane().setDefaultButton(closeButton);
     }
 
-    @Action public void closeAboutBox() {
+   /**
+    * 
+    */
+   @Action public void closeAboutBox() {
         dispose();
     }
 
