@@ -3,8 +3,9 @@
 <Form version="1.5" maxVersion="1.7" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
-    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-      <Connection code="getToolkit().getScreenSize()" type="code"/>
+    <Property name="title" type="java.lang.String" resourceKey="Form.title"/>
+    <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+      <Dimension value="[750, 550]"/>
     </Property>
     <Property name="name" type="java.lang.String" value="Form" noResource="true"/>
   </Properties>
@@ -26,19 +27,17 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <Group type="103" groupAlignment="1" attributes="0">
+                  <Component id="carPanel" alignment="0" max="32767" attributes="1"/>
                   <Component id="jPanel2" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
-                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="plateText" min="-2" pref="305" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="captureButton" pref="210" max="32767" attributes="0"/>
-                      </Group>
-                      <Component id="platePanel" alignment="0" max="32767" attributes="1"/>
-                      <Component id="carPanel" alignment="0" max="32767" attributes="1"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="plateText" min="-2" pref="305" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <Component id="captureButton" pref="210" max="32767" attributes="0"/>
                   </Group>
+                  <Component id="platePanel" alignment="0" max="32767" attributes="1"/>
               </Group>
               <EmptySpace min="-2" pref="303" max="-2" attributes="0"/>
           </Group>
@@ -50,13 +49,13 @@
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="carPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
+              <Component id="carPanel" max="32767" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="platePanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="captureButton" pref="67" max="32767" attributes="1"/>
-                  <Component id="plateText" alignment="0" pref="67" max="32767" attributes="1"/>
+                  <Component id="captureButton" min="-2" pref="67" max="-2" attributes="1"/>
+                  <Component id="plateText" alignment="0" min="-2" pref="67" max="-2" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -74,8 +73,11 @@
         </Property>
         <Property name="name" type="java.lang.String" value="carPanel" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="carPanelComponentResized"/>
+      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xd;&#xa;    public void paint(java.awt.Graphics g) {&#xd;&#xa;        super.paint(g);&#xd;&#xa;        g.drawImage(carImage,0,0,null);&#xd;&#xa;    }&#xd;&#xa;};"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xd;&#xa;    public void paint(java.awt.Graphics g) {&#xd;&#xa;        super.paint(g);&#xd;&#xa;        g.drawImage(carPanelImage,0,0,null);&#xd;&#xa;    }&#xd;&#xa;};"/>
         <AuxValue name="JavaCodeGenerator_VariableLocal" type="java.lang.Boolean" value="true"/>
         <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="0"/>
       </AuxValues>
@@ -88,7 +90,7 @@
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="294" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="313" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -103,8 +105,11 @@
         </Property>
         <Property name="name" type="java.lang.String" value="platePanel" noResource="true"/>
       </Properties>
+      <Events>
+        <EventHandler event="componentResized" listener="java.awt.event.ComponentListener" parameters="java.awt.event.ComponentEvent" handler="platePanelComponentResized"/>
+      </Events>
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xd;&#xa;    public void paint(java.awt.Graphics g) {&#xd;&#xa;        super.paint(g);&#xd;&#xa;        g.drawImage(plateImage,0,0,null);&#xd;&#xa;    }&#xd;&#xa;};"/>
+        <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JPanel() {&#xd;&#xa;    public void paint(java.awt.Graphics g) {&#xd;&#xa;        super.paint(g);&#xd;&#xa;        g.drawImage(platePanelImage,0,0,null);&#xd;&#xa;    }&#xd;&#xa;};"/>
       </AuxValues>
 
       <Layout>
