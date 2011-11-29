@@ -54,19 +54,19 @@ N - adaptive thresholding with radius N (must be greater or equal than 1)
 characters must match with normalized characters width and height -->
 <entry key="char_learnAlphabetPath">./resources/alphabets/alphabet_11x27</entry>
 
-<!-- character downsampling methods 
+<!-- character downsampling methods
 0 - linear resampling (good for preserving edges (edge detection))
 1 - weighted average (good for direct pixel mapping)
 -->
 <entry key="char_resizeMethod">1</entry> <!-- character downsampling method -->
 
-<!-- feature extraction method 
+<!-- feature extraction method
 0 - direct pixel mapping (good for blurred characters)
 1 - edge detection (good for skewed/deformed characters)
 -->
 <entry key="char_featuresExtractionMethod">0</entry> <!-- feature extraction method. 0=map, 1=edge -->
 
-<!-- pattern classification methods 
+<!-- pattern classification methods
 0 - euclidean distance pattern matching
 1 - feedforward neural network
 -->
@@ -78,13 +78,13 @@ characters must match with normalized characters width and height -->
 <entry key="neural_maxk">8000</entry> <!-- maximum number of iterations during learning process -->
 <entry key="neural_eps">0.07</entry> <!-- expected error ratio -->
 <entry key="neural_lambda">0.05</entry> <!-- lambda factor : speed of convergence -->
-<entry key="neural_micro">0.5</entry> <!-- micro factor : persistance ratio --> 
+<entry key="neural_micro">0.5</entry> <!-- micro factor : persistance ratio -->
 <entry key="neural_topology">20</entry> <!-- number of neurons in middle nn layer -->
 
 <!-- SYNTAX ANALYSIS OF RECOGNIZED PLATE -->
 
-<!-- syntax analysis mode : 
-0 - do not correct 
+<!-- syntax analysis mode :
+0 - do not correct
 1 - correct characters only if character count matchs
 2 - correct characters anyway (eliminate redundant characters)
 -->

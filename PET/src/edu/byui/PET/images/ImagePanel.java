@@ -26,7 +26,7 @@ public class ImagePanel
     **/
    protected ImageIcon image;
    /**
-    * Holds the prefered size of the image
+    * Holds the preferred size of the image
     **/
    private Dimension size;
    /**
@@ -35,7 +35,7 @@ public class ImagePanel
    private String backLoc;
 
    /**
-    * 
+    *
     */
    public ImagePanel()
    {
@@ -65,7 +65,7 @@ public class ImagePanel
    /**
     * Creates a new BackgroundPanel
     *
-    * @param pURL 
+    * @param pURL
     */
    public ImagePanel(URL pURL)
    {
@@ -83,7 +83,7 @@ public class ImagePanel
    /**
     * Overrides the paintComponent to display the background Image
     *
-    * @param g 
+    * @param g
     */
    @Override
    protected void paintComponent(Graphics g)
@@ -119,9 +119,9 @@ public class ImagePanel
       resizeImage(getWidth(), getHeight());
       paint(getGraphics());
    }
-   
+
    /**
-    * 
+    *
     * @param newW
     * @param newH
     */
