@@ -254,13 +254,13 @@ public class PlateGraph extends Graph {
                         temp.setCenter((temp.getLeft()+temp.getRight())/2);
                         chars.removeElementAt(i+1);
                         //System.err.println("Combined Items "+i+" and "+(i+1));
-                    }
+                    }/* Reduced Accuracy once wildcards were added to output
                     // If only one narrow spacing is found, remove it
-                    else {
-                        //System.err.println("Removed Item "+i);
-                        chars.removeElementAt(i);
-                        i--;
-                    }
+                     *else {
+                     *   //System.err.println("Removed Item "+i);
+                     *   chars.removeElementAt(i);
+                     *   i--;
+                    }*/
                 }
                 else if (chars.elementAt(i).getDiff() > maxWidth) {
                     // Guess how many characters are in the spacing

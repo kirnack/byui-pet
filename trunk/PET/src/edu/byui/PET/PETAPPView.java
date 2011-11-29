@@ -25,10 +25,11 @@ public class PETAPPView extends javax.swing.JFrame {
 
     // Used to store images
     BufferedImage carImage;
-    BufferedImage carPanelImage;
+    //BufferedImage carPanelImage;
     BufferedImage plateImage;
-    BufferedImage platePanelImage;
+    //BufferedImage platePanelImage;
     Intelligence reader;
+    private String currentPhoto = new String();  //Used for testing
 
     /** Creates new form PETAPPView */
     public PETAPPView() {
@@ -70,11 +71,6 @@ public class PETAPPView extends javax.swing.JFrame {
         platePanel.setBackground(resourceMap.getColor("platePanel.background")); // NOI18N
         platePanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         platePanel.setName("platePanel"); // NOI18N
-        platePanel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                platePanelComponentResized(evt);
-            }
-        });
 
         javax.swing.GroupLayout platePanelLayout = new javax.swing.GroupLayout(platePanel);
         platePanel.setLayout(platePanelLayout);
@@ -135,11 +131,6 @@ public class PETAPPView extends javax.swing.JFrame {
 
         carPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         carPanel.setName("carPanel"); // NOI18N
-        carPanel.addComponentListener(new java.awt.event.ComponentAdapter() {
-            public void componentResized(java.awt.event.ComponentEvent evt) {
-                carPanelComponentResized(evt);
-            }
-        });
 
         javax.swing.GroupLayout carPanelLayout = new javax.swing.GroupLayout(carPanel);
         carPanel.setLayout(carPanelLayout);
@@ -164,7 +155,7 @@ public class PETAPPView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                         .addComponent(plateText, javax.swing.GroupLayout.PREFERRED_SIZE, 305, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE))
+                        .addComponent(captureButton, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
                     .addComponent(platePanel, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(303, 303, 303))
         );
@@ -203,7 +194,27 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     if (this.captureButton.getText().equals("Capture")) {
         // Get the image from the Camera
         try {
-            carImage = new Photo("./resources/test.bmp").getBi();  // temporary image
+            // This code used for testing
+            if (currentPhoto.equals("./resources/1.jpg"))
+               currentPhoto = "./resources/3.jpg";
+            else if (currentPhoto.equals("./resources/3.jpg"))
+               currentPhoto = "./resources/11.jpg";
+            else if (currentPhoto.equals("./resources/11.jpg"))
+               currentPhoto = "./resources/53.jpg";
+            else if (currentPhoto.equals("./resources/53.jpg"))
+               currentPhoto = "./resources/54.jpg";
+            else if (currentPhoto.equals("./resources/54.jpg"))
+               currentPhoto = "./resources/55.jpg";
+            else if (currentPhoto.equals("./resources/55.jpg"))
+               currentPhoto = "./resources/63.jpg";
+            else if (currentPhoto.equals("./resources/63.jpg"))
+               currentPhoto = "./resources/69.jpg";
+            else if (currentPhoto.equals("./resources/69.jpg"))
+               currentPhoto = "./resources/73.jpg";
+            else
+               currentPhoto = "./resources/1.jpg";
+
+            carImage = (new Photo(currentPhoto)).getBi();  // temporary image
         } catch (Exception e) {
             // TODO: Make GUI Error Window
             System.err.println(e.getMessage());
@@ -212,8 +223,8 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         ((ImagePanel) carPanel).setImageIcon(new ImageIcon(carImage));
         //carPanel.paint(carPanel.getGraphics());
         // Clear the plate image
-        platePanelImage = null;
-        platePanel.paint(platePanel.getGraphics());
+        //((ImagePanel) platePanel).setImageIcon(null);
+        //platePanel.paint(platePanel.getGraphics());
         String plateStr = new String();
 
         try {
@@ -227,8 +238,9 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         }
 
         // Display the plate image
-        platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
-        platePanel.paint(platePanel.getGraphics());
+        ((ImagePanel) platePanel).setImageIcon(new ImageIcon(plateImage));
+        //platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
+        //platePanel.paint(platePanel.getGraphics());
 
         // Search the permit database for the string
         // If no hits, display violation warning
@@ -259,16 +271,6 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plateTextChanged
     this.captureButton.setText("<- Lookup");
 }//GEN-LAST:event_plateTextChanged
-
-private void platePanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_platePanelComponentResized
-    platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
-    platePanel.paint(platePanel.getGraphics());
-}//GEN-LAST:event_platePanelComponentResized
-
-private void carPanelComponentResized(java.awt.event.ComponentEvent evt) {//GEN-FIRST:event_carPanelComponentResized
-    platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
-    platePanel.paint(platePanel.getGraphics());
-}//GEN-LAST:event_carPanelComponentResized
 
     /**
      * @param args the command line arguments
