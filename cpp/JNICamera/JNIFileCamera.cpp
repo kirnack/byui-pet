@@ -8,7 +8,6 @@
 #include "JNIFileCamera.h"
 
 #include <fstream>
-#include <iostream>
 #include <string>
 
 #include <dirent.h>
@@ -54,11 +53,9 @@ JNIFileCamera::JNIFileCamera() {
   DIR *dp;
   struct dirent *dirp;
   struct stat filestat;
-  //cerr << ;
   dp = opendir( dir.c_str() );
   if (dp == NULL)
   {
-      cerr << "dir \"" << dir << "\" does not exisit.\n";
       exit(1);
   }
 
