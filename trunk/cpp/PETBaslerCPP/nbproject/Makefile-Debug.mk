@@ -54,11 +54,11 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libB.dylib
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libPETBaslerCPP.dylib
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libB.dylib: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libPETBaslerCPP.dylib: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -dynamiclib -install_name libB.dylib -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libB.dylib -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.c} -dynamiclib -install_name libPETBaslerCPP.dylib -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libPETBaslerCPP.dylib -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 # Subprojects
 .build-subprojects:
@@ -66,7 +66,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libB.dylib: ${OBJECTFILES}
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libB.dylib
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libPETBaslerCPP.dylib
 
 # Subprojects
 .clean-subprojects:

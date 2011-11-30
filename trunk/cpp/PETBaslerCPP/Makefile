@@ -57,7 +57,7 @@ build: .build-post
 # Add your pre 'build' code here...
 
 .build-post: .build-impl
-# Add your post 'build' code here...
+   cp ${CND_DISTDIR}/${CONF}/${CND_PLATFORM_${CONF}}/libPETBaslerCPP.dylib ../PET/src/edu/byui/PET/camera/jnilibs/libPETBaslerCPP.dylib
 
 
 # clean
