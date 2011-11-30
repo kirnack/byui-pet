@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-MacOSX
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-MacOSX
-CND_ARTIFACT_NAME_Debug=libB.dylib
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-MacOSX/libB.dylib
+CND_ARTIFACT_NAME_Debug=libPETBaslerCPP.dylib
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-MacOSX/libPETBaslerCPP.dylib
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-MacOSX/package
-CND_PACKAGE_NAME_Debug=libB.dylib.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-MacOSX/package/libB.dylib.tar
+CND_PACKAGE_NAME_Debug=libPETBaslerCPP.dylib.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-MacOSX/package/libPETBaslerCPP.dylib.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-MacOSX
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-MacOSX
-CND_ARTIFACT_NAME_Release=libB.dylib
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/libB.dylib
+CND_ARTIFACT_NAME_Release=libPETBaslerCPP.dylib
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-MacOSX/libPETBaslerCPP.dylib
 CND_PACKAGE_DIR_Release=dist/Release/GNU-MacOSX/package
-CND_PACKAGE_NAME_Release=libB.dylib.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/libB.dylib.tar
+CND_PACKAGE_NAME_Release=libPETBaslerCPP.dylib.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-MacOSX/package/libPETBaslerCPP.dylib.tar
 #
 # include compiler specific variables
 #
