@@ -24,7 +24,6 @@ JNIEXPORT jbyteArray JNICALL Java_edu_byui_PET_camera_JNICamera_getCameraData
 {
     JNIFileCamera* cam = (JNIFileCamera*) ptr;
     jbyteArray dataArray = env->NewByteArray(size);
-    
     char* data = cam->getData()->data;
     env->SetByteArrayRegion(dataArray, 0, size, (jbyte*)data);
     cam->moveNext();
