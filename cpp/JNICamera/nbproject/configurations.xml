@@ -4,6 +4,7 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>JNIFileCamera.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,6 +13,8 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>JNIFileCamera.cpp</itemPath>
+      <itemPath>nativeJNICamera.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -33,6 +36,24 @@
         <compilerSet>default</compilerSet>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>/System/Library/Frameworks/JavaVM.framework/Headers</pElem>
+            <pElem>/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>/System/Library/Frameworks/JavaVM.framework/Headers</pElem>
+            <pElem>/System/Library/Java/JavaVirtualMachines/1.6.0.jdk/Contents/Home/lib</pElem>
+            <pElem>../PET/src/edu/byui/PET/camera</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <linkerAddLib>
+            <pElem>../PET/src/edu/byui/PET/camera/jnilibs</pElem>
+          </linkerAddLib>
+        </linkerTool>
       </compileType>
     </conf>
     <conf name="Release" type="2">
@@ -53,6 +74,12 @@
         <asmTool>
           <developmentMode>5</developmentMode>
         </asmTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libJNICamera.dylib</output>
+          <linkerAddLib>
+            <pElem>../PET/src/edu/byui/PET/camera/jnilibs</pElem>
+          </linkerAddLib>
+        </linkerTool>
       </compileType>
     </conf>
   </confs>

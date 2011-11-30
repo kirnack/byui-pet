@@ -33,7 +33,9 @@ include Makefile
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
-OBJECTFILES=
+OBJECTFILES= \
+	${OBJECTDIR}/JNIFileCamera.o \
+	${OBJECTDIR}/nativeJNICamera.o
 
 
 # C Compiler Flags
@@ -50,7 +52,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=
+LDLIBSOPTIONS=-L../PET/src/edu/byui/PET/camera/jnilibs
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -58,7 +60,17 @@ LDLIBSOPTIONS=
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libJNICamera.dylib: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${LINK.c} -dynamiclib -install_name libJNICamera.dylib -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libJNICamera.dylib -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+	${LINK.cc} -dynamiclib -install_name libJNICamera.dylib -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libJNICamera.dylib -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/JNIFileCamera.o: JNIFileCamera.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/JNIFileCamera.o JNIFileCamera.cpp
+
+${OBJECTDIR}/nativeJNICamera.o: nativeJNICamera.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/nativeJNICamera.o nativeJNICamera.cpp
 
 # Subprojects
 .build-subprojects:
