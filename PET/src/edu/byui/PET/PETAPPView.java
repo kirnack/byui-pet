@@ -9,6 +9,7 @@
  * Created on Nov 5, 2011, 11:33:52 AM
  */
 package edu.byui.PET;
+import edu.byui.PET.h2_db.*;
 import edu.byui.PET.images.*;
 import javax.swing.Timer;
 import java.awt.image.BufferedImage;
