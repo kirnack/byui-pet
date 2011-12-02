@@ -29,34 +29,37 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Component id="carPanel" alignment="0" max="32767" attributes="0"/>
-                  <Component id="jPanel2" alignment="0" min="-2" pref="93" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                  <Component id="jTextField1" alignment="1" max="32767" attributes="1"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="plateText" min="-2" pref="305" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="captureButton" pref="215" max="32767" attributes="0"/>
+                      <Component id="plateText" min="-2" pref="317" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="captureButton" min="-2" pref="186" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="jPanel2" alignment="0" min="-2" max="-2" attributes="0"/>
                   <Component id="platePanel" alignment="0" max="32767" attributes="1"/>
+                  <Component id="carPanel" alignment="0" max="32767" attributes="1"/>
               </Group>
-              <EmptySpace min="-2" pref="303" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="324" max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
               <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="carPanel" max="32767" attributes="0"/>
+              <Component id="carPanel" min="-2" max="-2" attributes="0"/>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
               <Component id="platePanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="1" attributes="0">
                   <Component id="captureButton" min="-2" pref="67" max="-2" attributes="1"/>
-                  <Component id="plateText" alignment="0" min="-2" pref="67" max="-2" attributes="1"/>
+                  <Component id="plateText" min="-2" pref="67" max="-2" attributes="1"/>
               </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="jTextField1" pref="106" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -80,12 +83,12 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="526" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="505" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="122" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="80" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
@@ -107,8 +110,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jLabel1" min="-2" pref="56" max="-2" attributes="0"/>
-                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="jLabel1" pref="218" max="32767" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -179,15 +181,21 @@
       <Layout>
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="526" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="505" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="329" max="32767" attributes="0"/>
+              <EmptySpace min="0" pref="235" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
       </Layout>
     </Container>
+    <Component class="javax.swing.JTextField" name="jTextField1">
+      <Properties>
+        <Property name="text" type="java.lang.String" resourceKey="jTextField1.text"/>
+        <Property name="name" type="java.lang.String" value="jTextField1" noResource="true"/>
+      </Properties>
+    </Component>
   </SubComponents>
 </Form>
