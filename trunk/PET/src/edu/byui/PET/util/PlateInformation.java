@@ -18,18 +18,25 @@ public class PlateInformation
    String color; 
    String numViolations;
    
-   PlateInformation()
+   public PlateInformation()
    {
       plateNo = new String();
+      plateNo = null;
       state = new String();
+      state = null;
       permit = new String();
+      permit = null;
       make = new String();
+      make = null;
       model = new String();
+      model = null;
       color = new String();
+      color = null;
       numViolations = new String();
+      numViolations = null;
    }
    
-   PlateInformation(String plateStr, String stateStr, String permitStr,
+   public PlateInformation(String plateStr, String stateStr, String permitStr,
            String makeStr, String modelStr, String colorStr, String numViolationsStr)
    {
       plateNo = plateStr;

@@ -14,16 +14,16 @@ public class LoggingInformation
    String location;
    String time;
    
-   LoggingInformation()
+   public LoggingInformation()
    {
       plateNo = new String();
       location = new String();
       time = new String();
    }
    
-   LoggingInformation(String plateNoStr, String locationStr, String timeStr)
+   public LoggingInformation(String plateNoStr, String locationStr, String timeStr)
    {
-      plateNo = plateNoStr;
+      plateNo = plateNoStr.toUpperCase();
       location = locationStr;
       time = timeStr;
    }
@@ -45,6 +45,16 @@ public class LoggingInformation
    
    public void setPlateNo(String plateNoStr)
    {
-      plateNo = plateNoStr;
+      plateNo = plateNoStr.toUpperCase();
+   }
+   
+   public void setLocation(String locationStr)
+   {
+      location = locationStr.toUpperCase();
+   }
+   
+   public void setTime(String timeStr)
+   {
+      time = timeStr.toUpperCase();
    }
 }
