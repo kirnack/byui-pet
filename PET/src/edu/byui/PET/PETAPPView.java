@@ -9,6 +9,8 @@
  * Created on Nov 5, 2011, 11:33:52 AM
  */
 package edu.byui.PET;
+
+import edu.byui.PET.util.*;
 import edu.byui.PET.h2_db.*;
 import edu.byui.PET.images.*;
 import javax.swing.Timer;
@@ -256,13 +258,26 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         //platePanel.paint(platePanel.getGraphics());
 
         // Search the permit database for the string
+        String time = "";
+        String location = "";
+        H2_DB_Test h2 = new H2_DB_Test();
+        PlateInformation newSearch = new PlateInformation();
+        newSearch = h2.lookUp(plateStr, location, time);
         // If no hits, display violation warning
         // If one hit, display the matched string
         // If multiple hits, ask the operator for clarification
         // Make sure returned permit matches lot
 
         // Display the plate text
-        plateText.setText(plateStr);
+        if(newSearch.getPlateNo() == null)
+        {
+           plateText.setText(plateStr);
+        }
+        else
+        {
+           plateText.setText(newSearch.getPlateNo());
+        }
+        
     }
     // Lookup Mode with none-empty input
     else if (!this.plateText.getText().trim().isEmpty()) {

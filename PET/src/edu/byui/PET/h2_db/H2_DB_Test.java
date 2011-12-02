@@ -42,7 +42,7 @@ public class H2_DB_Test {
           Statement statement = connection.createStatement();
           statement.setQueryTimeout(30);  // set timeout to 30 sec.
           // Send SQL Commands
-          statement.executeUpdate("DROP TABLE IF EXISTS permits");
+         /* statement.executeUpdate("DROP TABLE IF EXISTS permits");
           statement.executeUpdate("CREATE TABLE permits (plate VARCHAR, state VARCHAR,"
                   + " permit VARCHAR, make VARCHAR, model VARCHAR, color VARCHAR, numViolations VARCHAR)");
           statement.executeUpdate("INSERT INTO permits VALUES('1M12345', 'IDAHO',"
@@ -56,6 +56,23 @@ public class H2_DB_Test {
           statement.executeUpdate("CREATE TABLE logging (plate VARCHAR, gps VARCHAR, time VARCHAR)");
           statement.executeUpdate("CREATE INDEX IDX_PLATE ON logging(plate)");
           statement.executeUpdate("INSERT INTO logging VALUES('1M12345', '157.201, 83.45', '14:35:35')");
+          statement.executeUpdate("INSERT INTO permits VALUES('1M56709', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
+          statement.executeUpdate("INSERT INTO permits VALUES('2F28901', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
+          statement.executeUpdate("INSERT INTO permits VALUES('1M78285', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
+          statement.executeUpdate("INSERT INTO permits VALUES('5EGG864', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
+          statement.executeUpdate("INSERT INTO permits VALUES('1M82230', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
+          statement.executeUpdate("INSERT INTO permits VALUES('5YKG604', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
+          statement.executeUpdate("INSERT INTO permits VALUES('8BCR888', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
+          statement.executeUpdate("INSERT INTO permits VALUES('1111111', 'IDAHO', 'S',"
+                  + " 'CHEVY', 'IMPALA', 'WHITE', '0')");*/
+          
            }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -78,7 +95,7 @@ public class H2_DB_Test {
     {
         try
         {
-             FileInputStream fstream = new FileInputStream("regExpression.txt");
+             InputStream fstream = H2_DB_Test.class.getResourceAsStream("regExpression.txt");
              DataInputStream in = new DataInputStream(fstream);
              BufferedReader br = new BufferedReader(new InputStreamReader(in));
            
@@ -106,11 +123,11 @@ public class H2_DB_Test {
         
     }
     
-    public String lookUp(String licenseNo, String location, String time)
+    public PlateInformation lookUp(String licenseNo, String location, String time)
     {
+        boolean valid = false;
         // load the H2-JDBC driver using the current class loader
-       
-        String results = "";
+        PlateInformation results = null;
         licenseNo = licenseNo.toUpperCase();
         try
         {
@@ -130,22 +147,20 @@ public class H2_DB_Test {
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb;MODE=MySQL;IGNORECASE=TRUE");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-                       
-            writeToLoggingDb(licenseNo, location, time);
+            LoggingInformation logNew = new LoggingInformation(licenseNo, location, time);
+            writeToLoggingDb(logNew);           
             String[] regExpression;
             regExpression = new String[36];
             regularExpression(regExpression);
             String plateNo = licenseNo;
-            String newPlateNo = "";
-            
+            String newPlateNo = "[A-Z0-9]*";
             int i = 0;
             int n = 0;
             int m = 2;           
             while(i < plateNo.length())
-            {                
+            {       
                 while(plateNo.charAt(i) != regExpression[n].charAt(0))
                 {
-                  
                     if (n < (regExpression.length - 1))
                     {
                        
@@ -165,6 +180,7 @@ public class H2_DB_Test {
                 }
                 else
                 {
+                   valid = true;
                     newPlateNo += "[" + regExpression[n].charAt(0);
                 
                     while(m < regExpression[n].length())
@@ -179,31 +195,33 @@ public class H2_DB_Test {
                 n = 0;                
                 i++;
             }
+            newPlateNo += "[A-Z0-9]*";
+                                   
+
             //System.out.println("New License Plate = " + newPlateNo);
             String queryStatement = "SELECT * FROM permits WHERE plate REGEXP '" 
                     + newPlateNo + "'"; 
-            System.out.println(newPlateNo);
             // Send an SQL Query
             ResultSet rs = statement.executeQuery(queryStatement);
-            results = "";
-            while(rs.next())
+            if(valid == true)
             {
-                writeToLoggingDb(rs.getString("plate"), location, time);
-                // read the result set
-                results += "plate = " + rs.getString("plate") +
-                        ", state = " + rs.getString("state") +
-                        ", permit = " + rs.getString("permit") + 
-                        ", make = " + rs.getString("make") +
-                        ", model = " + rs.getString("model") + 
-                        ", color = " + rs.getString("color") +
-                        ", Number of Violations = " + rs.getString("numViolations") + "\n";
+               while(rs.next())
+               {
+                  LoggingInformation newLog = new LoggingInformation(rs.getString("plate"), location, time);
+                  writeToLoggingDb(newLog);
+                  //writeToLoggingDb(rs.getString("plate"), location, time);
+                  // read the result set
+                  results = new PlateInformation(rs.getString("plate"), rs.getString("state"),
+                        rs.getString("permit"), rs.getString("make"), rs.getString("model"), 
+                        rs.getString("color"), rs.getString("numViolations"));
+                  break;
+               }
             }
-            
-            if (results == "")
+            if(results == null)
             {
-                results = "Unknown Plate";                
+               results = new PlateInformation();
+               //results.setPlate("Unknown");
             }
-            // ASHCRAFT - You should not need to edit below this comment
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -223,11 +241,10 @@ public class H2_DB_Test {
         return (results);
     }
     
-    public String lookUpLogging(String licenseNo)
+    public LoggingInformation lookUpLogging(String licenseNo)
     {
         // load the H2-JDBC driver using the current class loader
-       
-        String results = "";
+        LoggingInformation results = null;
         licenseNo = licenseNo.toUpperCase();
         try
         {
@@ -270,19 +287,15 @@ public class H2_DB_Test {
             
             // Send an SQL Query
             ResultSet rs = statement.executeQuery(queryStatement);
-            results = "";
             while(rs.next())
             {
                 // read the result set
-                results += "plate = " + rs.getString("plate") +
-                        ", location = " + rs.getString("gps") +
-                        ", time = " + rs.getString("time") + "\n";
+                results = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
+                        rs.getString("time"));
+                break;
             }
             
-            if (results == "")
-            {
-                results = "License plate not found";                
-            }
+            
             // ASHCRAFT - You should not need to edit below this comment
         }
         catch(SQLException e) {
@@ -303,9 +316,8 @@ public class H2_DB_Test {
         return (results);
     }
     
-    public void writeToLoggingDb(String plate, String location, String time)
+    public void writeToLoggingDb(LoggingInformation newLog)
     {
-        plate = plate.toUpperCase();
         try
         {
            Class.forName("org.h2.Driver");
@@ -325,9 +337,9 @@ public class H2_DB_Test {
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            statement.executeUpdate("DELETE FROM logging WHERE plate='" + plate + "'");
-            statement.executeUpdate("INSERT INTO logging VALUES('" + plate 
-                    + "', '" + location + "', '" + time +"')");
+            statement.executeUpdate("DELETE FROM logging WHERE plate='" + newLog.getPlateNo() + "'");
+            statement.executeUpdate("INSERT INTO logging VALUES('" + newLog.getPlateNo() 
+                    + "', '" + newLog.getLocation() + "', '" + newLog.getTime() +"')");
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -346,10 +358,8 @@ public class H2_DB_Test {
         }
             
     }
-     public void writeToPermitDb(String plate, String state, String permit, String make, 
-             String model, String color, String numViolations)
+     public void writeToPermitDb(PlateInformation newPlate)
     {
-        plate = plate.toUpperCase();
         try
         {
            Class.forName("org.h2.Driver");
@@ -369,9 +379,10 @@ public class H2_DB_Test {
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            statement.executeUpdate("INSERT INTO permits VALUES('" + plate 
-                    + "', '" + state + "', '" + permit + "', '" + make + "', '" + model
-                    + "', '" + color + "', '" + numViolations + "')" );
+            statement.executeUpdate("INSERT INTO permits VALUES('" + newPlate.getPlateNo() 
+                    + "', '" + newPlate.getState() + "', '" + newPlate.getPermit() + "', '" 
+                    + newPlate.getMake() + "', '" + newPlate.getModel() + "', '" 
+                    + newPlate.getColor() + "', '" + newPlate.getNumViolations() + "')" );
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
