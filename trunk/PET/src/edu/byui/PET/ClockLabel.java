@@ -13,7 +13,7 @@ import java.text.*;
 
   public void actionPerformed(ActionEvent ae)
   {
-     Format f = new  SimpleDateFormat("h:mm:ss a    dd/MM/yy");
+     Format f = new  SimpleDateFormat("h:mm:ss a         dd/MM/yy");
      Date d = new Date();
     setText(f.format(d));
     //System.err.println("timer action fired");
