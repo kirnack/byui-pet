@@ -19,6 +19,8 @@ import javaanpr.imageanalysis.Photo;
 import javaanpr.intelligence.Intelligence;
 import javaanpr.imageanalysis.CarSnapshot;
 import javax.swing.ImageIcon;
+import java.io.File;  //Used for testing
+import java.util.Vector;  //Used for testing
 
 /**
  *
@@ -32,7 +34,8 @@ public class PETAPPView extends javax.swing.JFrame {
     BufferedImage plateImage;
     //BufferedImage platePanelImage;
     Intelligence reader;
-    private String currentPhoto = new String();  //Used for testing
+    private int currentTestPhoto = 0;  //Used for testing
+    private File[] photoList = null;  // Used for testing
 
     /** Creates new form PETAPPView */
     public PETAPPView() {
@@ -48,6 +51,8 @@ public class PETAPPView extends javax.swing.JFrame {
         t.start();
         this.setExtendedState(this.getExtendedState() | this.MAXIMIZED_BOTH);
 
+        File folder = new File("./resources/realTestImages");  //Used for testing
+        photoList = folder.listFiles();  //Used for testing
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -227,7 +232,7 @@ public class PETAPPView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
+
 //Edited by Ashcraft
 private void violationsBox(PlateInformation currentPlate)
 {
@@ -273,26 +278,13 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         // Get the image from the Camera
         try {
             // This code used for testing
-            if (currentPhoto.equals("./resources/1.jpg"))
-               currentPhoto = "./resources/3.jpg";
-            else if (currentPhoto.equals("./resources/3.jpg"))
-               currentPhoto = "./resources/11.jpg";
-            else if (currentPhoto.equals("./resources/11.jpg"))
-               currentPhoto = "./resources/53.jpg";
-            else if (currentPhoto.equals("./resources/53.jpg"))
-               currentPhoto = "./resources/54.jpg";
-            else if (currentPhoto.equals("./resources/54.jpg"))
-               currentPhoto = "./resources/55.jpg";
-            else if (currentPhoto.equals("./resources/55.jpg"))
-               currentPhoto = "./resources/63.jpg";
-            else if (currentPhoto.equals("./resources/63.jpg"))
-               currentPhoto = "./resources/69.jpg";
-            else if (currentPhoto.equals("./resources/69.jpg"))
-               currentPhoto = "./resources/73.jpg";
-            else
-               currentPhoto = "./resources/1.jpg";
+            do
+            {
+                currentTestPhoto = (currentTestPhoto + 1) % photoList.length;
+            } while (!photoList[currentTestPhoto].getAbsolutePath().toLowerCase().endsWith(".jpg") &&
+                    !photoList[currentTestPhoto].getAbsolutePath().toLowerCase().endsWith(".bmp"));
 
-            carImage = (new Photo(currentPhoto)).getBi();  // temporary image
+            carImage = (new Photo(photoList[currentTestPhoto].getAbsolutePath())).getBi();  // temporary image
         } catch (Exception e) {
             // TODO: Make GUI Error Window
             System.err.println(e.getMessage());
@@ -303,7 +295,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         // Clear the plate image
         //((ImagePanel) platePanel).setImageIcon(null);
         //platePanel.paint(platePanel.getGraphics());
-        
+
 
         try {
             // Pass the image to the recognize function
@@ -338,13 +330,13 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
            plateText.setText(newSearch.getPlateNo());
            
         }
-        
+
     }
     // Lookup Mode with none-empty input
     else if (!this.plateText.getText().trim().isEmpty()) {
         // Search the permit database for the string
         plateStr = plateText.getText();
-        
+
         newSearch = h2.lookUp(plateStr, location, time);
         // If no hits, display violation warning
         // If one hit, display the matched string
@@ -361,7 +353,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
            plateText.setText(newSearch.getPlateNo());
            
         }
-        
+
     }
 
     // Make sure the button defaults the "Capture"

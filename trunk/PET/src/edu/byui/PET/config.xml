@@ -32,7 +32,7 @@ N - adaptive thresholding with radius N (must be greater or equal than 1)
 <entry key="intelligence_maximumChars">10</entry> <!-- maximum number of detected characters -->
 <entry key="intelligence_maxCharWidthDispersion">0.3</entry> <!-- maximum character width dispersion -->
 <entry key="intelligence_minPlateWidthHeightRatio">3.5</entry> <!-- plate proportions: minimum plate width/height ratio -->
-<entry key="intelligence_maxPlateWidthHeightRatio">10.0</entry> <!-- plate proportions: maximum plate width/height ratio -->
+<entry key="intelligence_maxPlateWidthHeightRatio">5.0</entry> <!-- plate proportions: maximum plate width/height ratio -->
 
 <!-- CHARACTER HEURISTICS (DETERMINES CONSTRAINTS FOR CHARACTERS ACCEPTANCE) -->
 
