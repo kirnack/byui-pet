@@ -65,6 +65,7 @@ public class JNICamera extends PETCamera
 
       }
       out.close();
+      in.close();
       in = Pix.class .getResourceAsStream("test7.data");
       file = new File(dir.toString() + "/test7.data");
       out = new FileOutputStream(file);
@@ -139,8 +140,18 @@ public class JNICamera extends PETCamera
       }
       else if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0)
       {
-         foldPath += "/My Documents";
-         loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs",  "jnilibtest.dll");
+         if (System.getProperty("os.name").toLowerCase().indexOf("xp") >= 0)
+            foldPath += "/My Documents";
+         else
+            foldPath += "/Documents";
+         if(System.getProperty("os.arch").startsWith("i386"))
+         {
+            loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs",  "jnicameralibx86.dll");
+         }
+         else
+         {
+            loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs",  "jnicameralibx64.dll");
+         }
       }
       else if (System.getProperty("os.name").equals("Linux"))
       {
