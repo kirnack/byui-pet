@@ -227,6 +227,12 @@ public class PETAPPView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
+//Edited by Ashcraft
+private void violationsBox(PlateInformation currentPlate)
+{
+   jTextField1.setText(currentPlate.getPermit());
+}
 /*
  * Captures and processes a picture or looks up an entered string
  *
@@ -311,6 +317,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         else
         {
            plateText.setText(newSearch.getPlateNo());
+           violationsBox(newSearch);
         }
         
     }
@@ -332,8 +339,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         else
         {
            plateText.setText(newSearch.getPlateNo());
-           for(int i = 0; i < 100000; i++)
-           {}
+           violationsBox(newSearch);
         }
         
     }
@@ -341,6 +347,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     // Make sure the button defaults the "Capture"
     this.captureButton.setText("Capture");
 }//GEN-LAST:event_captureButtonPressed
+
 
 /*
  * Changes the captureButton text when the Plate Text is edited
@@ -410,3 +417,5 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
       //throw new UnsupportedOperationException("Not yet implemented");
    }*/
 }
+
+
