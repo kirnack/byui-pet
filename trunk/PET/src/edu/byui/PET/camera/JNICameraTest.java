@@ -65,7 +65,7 @@ public class JNICameraTest
    private void testPanel() throws Exception
    {
       image2 = new CameraImagePanel(
-              new JNICamera(new PETConfiguration(PETConfiguration.GRAY_SCALE)));
+              new BaslerA311JNI(new PETConfiguration(PETConfiguration.GRAY_SCALE)));
 
       BorderLayout cSpringLayout = new BorderLayout();
 
