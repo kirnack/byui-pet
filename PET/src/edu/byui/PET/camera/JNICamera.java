@@ -4,6 +4,7 @@
  */
 package edu.byui.PET.camera;
 
+import edu.byui.PET.resources.pixelDataFiles.Pix;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -42,38 +43,96 @@ public class JNICamera extends PETCamera
       {
          dir.mkdir();
       }
-      System.err.println("Dir exists.\nChecking files.");
-      for(File file : packedDir.listFiles())
+      
+      if(dir.exists() && !dir.isFile())
       {
-         File destFile = new File(dir.getAbsolutePath() + "/" + file.getName());
-         if(file.isFile())
-            if ((!destFile.exists() || !destFile.isFile()))
-            {
-               try
-               {
-                  copy(file, destFile);
-               }
-               catch(Exception ex)
-               {
-                  ex.printStackTrace();
-               }
-            }
+         System.err.println("Dir exists.\nChecking files.");
+      try
+      {
+      InputStream in = Pix.class.getResourceAsStream("test6.data");
+      FileOutputStream out = new FileOutputStream(dir.toString() + "/test6.data");
+         byte[] buf = new byte[100];
+         int len = 0;
+         while((len = in.read(buf)) >= 0)
+         {
+            out.write(buf, 0, len);
+         }
+         out.close();
+         in = Pix.class .getResourceAsStream("test7.data");
+         out = new FileOutputStream(dir.toString() + "/test7.data");
+         buf = new byte[100];
+         len = 0;
+         while((len = in.read(buf)) >= 0)
+         {
+            out.write(buf, 0, len);
+         }
+         out.close();
+         in = Pix.class .getResourceAsStream("test8.data");
+         out = new FileOutputStream(dir.toString() + "/test8.data");
+         buf = new byte[100];
+         len = 0;
+         while((len = in.read(buf)) >= 0)
+         {
+            out.write(buf, 0, len);
+         }
+         out.close();
+      }
+      catch (Exception e)
+      {
+         
+      }
+      }
+   }
+   
+   static void loadLib(String path, String name)
+   {
+      try
+      {
+         
+         InputStream in = JNICamera.class.getResourceAsStream(name);
+         File dir = new File(path);
+         if (!dir.exists() || dir.isFile())
+         {
+            dir.mkdirs();
+         }
+         File fileout = new File(dir.getPath() + "/" + name);
+         
+         FileOutputStream out = new FileOutputStream(fileout);
+         byte[] buf = new byte[100];
+         int len = 0;
+         while((len = in.read(buf)) >= 0)
+         {
+            out.write(buf, 0, len);
+         }
+         out.close();
+         System.load(fileout.getAbsolutePath());
+      }
+      catch (Exception e)
+      {
+         e.printStackTrace();
       }
    }
    
    static
    {
+      
       System.err.println("Setting up the pic data folder");
-      verifyFolder();
+      try
+      {
+         verifyFolder();
+      }
+      catch(Exception e)
+      {
+         e.printStackTrace();
+      }
+              
       if(System.getProperty("os.name").equals("Mac OS X"))
       {
-         System.load(ClassLoader.getSystemResource(
-                 "edu/byui/PET/camera/jnilibs/libJNICamera.dylib").getFile());
+         loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs", "libJNICamera.dylib");
       }
       else if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0)
       {
-         System.load(ClassLoader.getSystemResource(
-                 "edu/byui/PET/camera/jnilibs/JNICamera.dll").getFile());
+         loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs",  "jnilibtest.lib");
       }
       else if (System.getProperty("os.name").equals("Linux"))
       {
