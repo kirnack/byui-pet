@@ -132,6 +132,11 @@ public class PETAPPView extends javax.swing.JFrame {
                 captureButtonPressed(evt);
             }
         });
+        captureButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                captureButtonActionPerformed(evt);
+            }
+        });
 
         carPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         carPanel.setName("carPanel"); // NOI18N
@@ -206,6 +211,11 @@ public class PETAPPView extends javax.swing.JFrame {
  */
 private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_captureButtonPressed
     // Capture Mode
+    String plateStr = new String();
+    H2_DB_Test h2 = new H2_DB_Test();
+    String time = "";
+    String location = "";
+    PlateInformation newSearch = new PlateInformation();
     if (this.captureButton.getText().equals("Capture")) {
         // Get the image from the Camera
         try {
@@ -240,7 +250,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         // Clear the plate image
         //((ImagePanel) platePanel).setImageIcon(null);
         //platePanel.paint(platePanel.getGraphics());
-        String plateStr = new String();
+        
 
         try {
             // Pass the image to the recognize function
@@ -258,10 +268,6 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         //platePanel.paint(platePanel.getGraphics());
 
         // Search the permit database for the string
-        String time = "";
-        String location = "";
-        H2_DB_Test h2 = new H2_DB_Test();
-        PlateInformation newSearch = new PlateInformation();
         newSearch = h2.lookUp(plateStr, location, time);
         // If no hits, display violation warning
         // If one hit, display the matched string
@@ -282,9 +288,25 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     // Lookup Mode with none-empty input
     else if (!this.plateText.getText().trim().isEmpty()) {
         // Search the permit database for the string
+        plateStr = plateText.getText();
+        
+        newSearch = h2.lookUp(plateStr, location, time);
         // If no hits, display violation warning
-        // If one hit, do nothing
-        // If multiple hits, ask for clarification (states)
+        // If one hit, display the matched string
+        // If multiple hits, ask the operator for clarification
+        // Make sure returned permit matches lot
+        // Display the plate text
+        if(newSearch.getPlateNo() == null)
+        {
+           plateText.setText(plateStr);
+        }
+        else
+        {
+           plateText.setText(newSearch.getPlateNo());
+           for(int i = 0; i < 100000; i++)
+           {}
+        }
+        
     }
 
     // Make sure the button defaults the "Capture"
@@ -299,6 +321,11 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plateTextChanged
     this.captureButton.setText("<- Lookup");
 }//GEN-LAST:event_plateTextChanged
+
+   private void captureButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_captureButtonActionPerformed
+   {//GEN-HEADEREND:event_captureButtonActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_captureButtonActionPerformed
 
     /**
      * @param args the command line arguments
