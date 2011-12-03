@@ -231,7 +231,25 @@ public class PETAPPView extends javax.swing.JFrame {
 //Edited by Ashcraft
 private void violationsBox(PlateInformation currentPlate)
 {
-   jTextField1.setText(currentPlate.getPermit());
+   String lotChosen = "";
+   String lotChosenString = (LotSelect.getSelectedItem().toString());
+   lotChosen += lotChosenString.charAt(5);
+   
+   if(currentPlate.getPermit() != null)
+   {
+      if(currentPlate.getPermit().equals(lotChosen))
+      {
+         jTextField1.setText("No Violation");
+      }
+      else
+      {
+         jTextField1.setText("Incorrect Permit");
+      }
+   }
+   else
+   {
+      jTextField1.setText("No Permit Found");
+   }
 }
 /*
  * Captures and processes a picture or looks up an entered string
@@ -310,6 +328,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         // Make sure returned permit matches lot
 
         // Display the plate text
+        violationsBox(newSearch);
         if(newSearch.getPlateNo() == null)
         {
            plateText.setText(plateStr);
@@ -317,7 +336,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         else
         {
            plateText.setText(newSearch.getPlateNo());
-           violationsBox(newSearch);
+           
         }
         
     }
@@ -332,6 +351,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         // If multiple hits, ask the operator for clarification
         // Make sure returned permit matches lot
         // Display the plate text
+        violationsBox(newSearch);
         if(newSearch.getPlateNo() == null)
         {
            plateText.setText(plateStr);
@@ -339,7 +359,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         else
         {
            plateText.setText(newSearch.getPlateNo());
-           violationsBox(newSearch);
+           
         }
         
     }
