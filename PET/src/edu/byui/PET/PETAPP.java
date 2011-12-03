@@ -4,6 +4,9 @@
 
 package edu.byui.PET;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import org.jdesktop.application.Application;
 import org.jdesktop.application.SingleFrameApplication;
 
@@ -16,6 +19,27 @@ public class PETAPP extends SingleFrameApplication {
      * At startup create and show the main frame of the application.
      */
     @Override protected void startup() {
+       File config = new File("." + "/" + "config.xml");
+       if (!config.exists() || !config.isFile())
+       {
+          try
+          {
+          InputStream in = PETAPP.class.getResourceAsStream("config.xml");
+          FileOutputStream out = new FileOutputStream(config);
+          byte[] data = new byte [100];
+          int len = 0;
+          while((len = in.read(data)) > 0)
+          {
+             out.write(data, 0, len);
+          }
+          out.close();
+          in.close();
+          }
+          catch(Exception e)
+          {
+             System.exit(10);
+          }
+       }
         show(new PETAPPView());
         
     }
