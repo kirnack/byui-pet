@@ -33,9 +33,9 @@ public class JNICamera extends PETCamera
     out.close();
    }
    
-   private static void verifyFolder()
+   private static void verifyFolder(String foldParent)
    {
-      File dir = new File(System.getProperty("user.home")+"/.petdata");
+      File dir = new File(foldParent + "/.petdata");
       File packedDir = new File(ClassLoader.getSystemResource(
               "edu/byui/PET/resources/pixelDataFiles").getFile());
       
@@ -50,32 +50,49 @@ public class JNICamera extends PETCamera
       try
       {
       InputStream in = Pix.class.getResourceAsStream("test6.data");
-      FileOutputStream out = new FileOutputStream(dir.toString() + "/test6.data");
-         byte[] buf = new byte[100];
-         int len = 0;
-         while((len = in.read(buf)) >= 0)
-         {
-            out.write(buf, 0, len);
-         }
-         out.close();
-         in = Pix.class .getResourceAsStream("test7.data");
-         out = new FileOutputStream(dir.toString() + "/test7.data");
+      File file = new File(dir.toString() + "/test6.data");
+      FileOutputStream out = new FileOutputStream(file);
+      byte[] buf;
+      int len;
+      if (!file.exists() || !file.isFile())
+      {
          buf = new byte[100];
          len = 0;
          while((len = in.read(buf)) >= 0)
          {
             out.write(buf, 0, len);
          }
-         out.close();
+
+      }
+      out.close();
+      in = Pix.class .getResourceAsStream("test7.data");
+      file = new File(dir.toString() + "/test7.data");
+      out = new FileOutputStream(file);
+      if (!file.exists() || !file.isFile())
+      {
+         buf = new byte[100];
+         len = 0;
+         while((len = in.read(buf)) >= 0)
+         {
+            out.write(buf, 0, len);
+         }
+
+      }
+      out.close();
          in = Pix.class .getResourceAsStream("test8.data");
-         out = new FileOutputStream(dir.toString() + "/test8.data");
+         file = new File(dir.toString() + "/test8.data");
+         out = new FileOutputStream(file);
+      if (!file.exists() || !file.isFile())
+      {
          buf = new byte[100];
          len = 0;
          while((len = in.read(buf)) >= 0)
          {
             out.write(buf, 0, len);
          }
-         out.close();
+
+      }
+         
       }
       catch (Exception e)
       {
@@ -115,28 +132,28 @@ public class JNICamera extends PETCamera
    
    static
    {
-      
-      System.err.println("Setting up the pic data folder");
-      try
-      {
-         verifyFolder();
-      }
-      catch(Exception e)
-      {
-         e.printStackTrace();
-      }
-              
+      String foldPath = System.getProperty("user.home");
       if(System.getProperty("os.name").equals("Mac OS X"))
       {
          loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs", "libJNICamera.dylib");
       }
       else if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0)
       {
-         loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs",  "jnilibtest.lib");
+         foldPath += "/My Documents";
+         loadLib( System.getProperty("java.io.tmpdir") + "/.petlibs",  "jnilibtest.dll");
       }
       else if (System.getProperty("os.name").equals("Linux"))
       {
          System.exit(1);
+      }
+      System.err.println("Setting up the pic data folder");
+      try
+      {
+         verifyFolder(foldPath);
+      }
+      catch(Exception e)
+      {
+         e.printStackTrace();
       }
    }
 
