@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.text.*;
 
  class ClockLabel extends JLabel implements ActionListener {
+  public String nowdate;
+  public String nowtime;
+  
   public void ClockLabel() 
   {
       
@@ -13,9 +16,15 @@ import java.text.*;
 
   public void actionPerformed(ActionEvent ae)
   {
-     Format f = new  SimpleDateFormat("h:mm:ss a         dd/MM/yy");
+     Format time = new  SimpleDateFormat("h:mm:ss a");
+     Format today = new SimpleDateFormat("MM/dd/yyyy");
+     Format timedate = new SimpleDateFormat("h:mm:ss a     MM/dd/yyyy");
      Date d = new Date();
-    setText(f.format(d));
+    setText(timedate.format(d));
+    nowdate = today.format(d);
+    nowtime = time.format(d);
     //System.err.println("timer action fired");
   }
+  public String getTime(){return(nowtime);}
+  public String getDate(){return(nowdate);}
 }
