@@ -280,3 +280,27 @@ CREATE INDEX IDX_PLATE ON logging(plate) [42111-161]
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:113)
 	at java.awt.EventDispatchThread.pumpEvents(EventDispatchThread.java:105)
 	at java.awt.EventDispatchThread.run(EventDispatchThread.java:90)
+12-05 22:03:19 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-05 22:03:22 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-05 22:03:26 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-05 22:03:32 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-05 22:03:33 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-05 22:03:37 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-05 22:03:39 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-05 22:03:44 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
+INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
