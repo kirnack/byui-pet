@@ -592,7 +592,7 @@ public class H2_DB_Test {
     
     public PlateInformation lookUp(String licenseNo, String location, String time)
     {
-        boolean valid = false;
+        int valid = 0;
         // load the H2-JDBC driver using the current class loader
         PlateInformation results = null;
         licenseNo = licenseNo.toUpperCase();
@@ -647,7 +647,7 @@ public class H2_DB_Test {
                 }
                 else
                 {
-                   valid = true;
+                   valid++;
                     newPlateNo += "[" + regExpression[n].charAt(0);
                 
                     while(m < regExpression[n].length())
@@ -670,7 +670,7 @@ public class H2_DB_Test {
                     + newPlateNo + "'"; 
             // Send an SQL Query
             ResultSet rs = statement.executeQuery(queryStatement);
-            if(valid == true)
+            if(valid >= 2)
             {
                while(rs.next())
                {
@@ -708,10 +708,10 @@ public class H2_DB_Test {
         return (results);
     }
     
-    public LoggingInformation lookUpLogging(String licenseNo)
+    public LoggingInformation[] lookUpLogging(String licenseNo)
     {
         // load the H2-JDBC driver using the current class loader
-        LoggingInformation results = null;
+        LoggingInformation[] results = null;
         licenseNo = licenseNo.toUpperCase();
         try
         {
@@ -754,12 +754,19 @@ public class H2_DB_Test {
             
             // Send an SQL Query
             ResultSet rs = statement.executeQuery(queryStatement);
-            while(rs.next())
+            ResultSet tmp = rs;
+            int j = 0;
+            while (tmp.next())
+            {
+               j++;
+            }
+            
+            for(int i = 0; i < j; i++)
             {
                 // read the result set
-                results = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
-                        rs.getString("time"));
-                break;
+               results = new LoggingInformation[j];
+               results[i] = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
+                        rs.getString("time"));             
             }
             
             
