@@ -235,22 +235,32 @@ private void violationsBox(PlateInformation currentPlate)
    String lotChosen = "";
    String lotChosenString = (LotSelect.getSelectedItem().toString());
    lotChosen += lotChosenString.charAt(5);
-   
-   if(currentPlate.getPermit() != null)
+   String special = this.jComboBox1.getSelectedItem().toString();
+   System.out.println(special.charAt(1));
+   if(special.charAt(1) == 'p')
    {
-      if(currentPlate.getPermit().equals(lotChosen))
+      if(currentPlate.getPermit() != null)
       {
-         jTextField1.setText("No Violation");
+         
+         if(currentPlate.getPermit().equals(lotChosen))
+         {
+            jTextField1.setText("No Violation");
+         }
+         else
+         {
+            jTextField1.setText("Incorrect Permit");
+         }
       }
       else
       {
-         jTextField1.setText("Incorrect Permit");
+         jTextField1.setText("No Permit Found");
       }
    }
    else
    {
-      jTextField1.setText("No Permit Found");
+      jTextField1.setText(special);
    }
+   
 }
 /*
  * Captures and processes a picture or looks up an entered string
@@ -316,6 +326,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         // Make sure returned permit matches lot
 
         // Display the plate text
+
         violationsBox(newSearch);
         if(newSearch.getPlateNo() == null)
         {
