@@ -14,7 +14,7 @@ class GPS
       try
       {
 
-         InputStream in = JNICamera.class.getResourceAsStream(name);
+         InputStream in = GPS.class.getResourceAsStream(name);
          File dir = new File(path);
          if (!dir.exists() || dir.isFile())
          {

@@ -32,18 +32,18 @@ public class JNICamera extends PETCamera
     in.close();
     out.close();
    }
-   
+
    private static void verifyFolder(String foldParent)
    {
       File dir = new File(foldParent + "/.petdata");
       File packedDir = new File(ClassLoader.getSystemResource(
               "edu/byui/PET/resources/pixelDataFiles").getFile());
-      
+
       if (!dir.exists() || dir.isFile())
       {
          dir.mkdir();
       }
-      
+
       if(dir.exists() && !dir.isFile())
       {
          System.err.println("Dir exists.\nChecking files.");
@@ -93,20 +93,20 @@ public class JNICamera extends PETCamera
          }
 
       }
-         
+
       }
       catch (Exception e)
       {
-         
+
       }
       }
    }
-   
+
    static void loadLib(String path, String name)
    {
       try
       {
-         
+
          InputStream in = JNICamera.class.getResourceAsStream(name);
          File dir = new File(path);
          if (!dir.exists() || dir.isFile())
@@ -114,7 +114,7 @@ public class JNICamera extends PETCamera
             dir.mkdirs();
          }
          File fileout = new File(dir.getPath() + "/" + name);
-         
+
          FileOutputStream out = new FileOutputStream(fileout);
          byte[] buf = new byte[100];
          int len = 0;
@@ -130,7 +130,7 @@ public class JNICamera extends PETCamera
          e.printStackTrace();
       }
    }
-   
+
    static
    {
       String foldPath = System.getProperty("user.home");
@@ -177,7 +177,7 @@ public class JNICamera extends PETCamera
    }
 
    /*
-    * 
+    *
     */
    @Override
    public boolean retrieveData() throws IOException

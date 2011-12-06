@@ -27,6 +27,37 @@ import java.util.Vector;  //Used for testing
  * @author Mattthew Allen
  */
 public class PETAPPView extends javax.swing.JFrame {
+    // Pulls the recognition into a separate thread
+    // Used to prevent GUI from freezing
+    public class RecognizeThread extends Thread {
+        BufferedImage carImage;
+        BufferedImage plateImage;
+        Intelligence reader;
+        String output;
+        PETAPPView parent;
+
+        public RecognizeThread(PETAPPView myParent, Intelligence rec) {
+            parent = myParent;
+            reader = rec;
+        }
+
+        public void loadImage(BufferedImage image) {
+            carImage = image;
+        }
+
+        @ Override
+        public void run() {
+            try
+            {
+                output = reader.recognize(new CarSnapshot(carImage));
+                plateImage = reader.getPlate();
+            } catch (Exception e) {
+                // TODO: Make GUI Error Window
+                System.err.println(e.getMessage());
+            }
+            parent.getThreadOutput(output, plateImage);
+        }
+    }
 
     // Used to store images
     BufferedImage carImage;
@@ -435,11 +466,12 @@ private void violationsBox(PlateInformation currentPlate)
  */
 private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_captureButtonPressed
     // Capture Mode
-    String plateStr = new String();
     H2_DB_Test h2 = new H2_DB_Test();
     String time = ((ClockLabel) jLabel1).getTime();
     String location = "";
     PlateInformation newSearch = new PlateInformation();
+    RecognizeThread subThread = new RecognizeThread(this, reader);  // Used for multi-threading
+
     if (this.captureButton.getText().equals("Capture")) {
         // Get the image from the Camera
         try {
@@ -457,50 +489,15 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         }
         // Display the image
         ((ImagePanel) carPanel).setImageIcon(new ImageIcon(carImage));
-        //carPanel.paint(carPanel.getGraphics());
-        // Clear the plate image
-        //((ImagePanel) platePanel).setImageIcon(null);
-        //platePanel.paint(platePanel.getGraphics());
+        plateText.setText("Reading...");
 
-
-        try {
-            // Pass the image to the recognize function
-            plateStr = reader.recognize(new CarSnapshot(carImage));
-            // Retrieve the plate image
-            plateImage = reader.getPlate();
-        } catch (Exception e) {
-            // TODO: Make GUI Error Window
-            System.err.println(e.getMessage());
-        }
-
-        // Display the plate image
-        ((ImagePanel) platePanel).setImageIcon(new ImageIcon(plateImage));
-        //platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
-        //platePanel.paint(platePanel.getGraphics());
-
-        // Search the permit database for the string
-        newSearch = h2.lookUp(plateStr, location, time);
-        // If no hits, display violation warning
-        // If one hit, display the matched string
-        // If multiple hits, ask the operator for clarification
-        // Make sure returned permit matches lot
-
-        // Display the plate text
-
-        violationsBox(newSearch);
-        if(newSearch.getPlateNo() == null)
-        {
-           plateText.setText(plateStr);
-        }
-        else
-        {
-           plateText.setText(newSearch.getPlateNo());
-           
-        }
-
+        // Pass the image to the recognize function (runs in new thread to keep the GUI from freezing)
+        subThread.loadImage(carImage);
+        subThread.start();
     }
     // Lookup Mode with none-empty input
     else if (!this.plateText.getText().trim().isEmpty()) {
+        String plateStr = new String();
         // Search the permit database for the string
         plateStr = plateText.getText();
 
@@ -518,7 +515,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         else
         {
            plateText.setText(newSearch.getPlateNo());
-           
+
         }
 
     }
@@ -527,6 +524,51 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     this.captureButton.setText("Capture");
 }//GEN-LAST:event_captureButtonPressed
 
+public void getThreadOutput(String outText, BufferedImage outImage) {
+        /*try {
+           tempThread.join();
+        }
+        catch (InterruptedException ie)
+        {
+           System.out.println("Main Thread Interrupted");
+        }*/
+        String plateStr = outText;
+        PlateInformation newSearch = new PlateInformation();
+        H2_DB_Test h2 = new H2_DB_Test();
+        plateImage = outImage;
+        plateText.setText("-");
+        String time = "";
+        String location = "";
+
+        // Display the plate image
+        ((ImagePanel) platePanel).setImageIcon(new ImageIcon(plateImage));
+        platePanel.repaint();
+        //platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
+        //platePanel.paint(platePanel.getGraphics());
+
+        // Search the permit database for the string
+        if (plateStr != null)
+        {
+            newSearch = h2.lookUp(plateStr, location, time);
+            // If no hits, display violation warning
+            // If one hit, display the matched string
+            // If multiple hits, ask the operator for clarification
+            // Make sure returned permit matches lot
+
+            // Display the plate text
+            violationsBox(newSearch);
+        }
+        // If 2 or less numbers or letters with any number of wildcards
+        if( (plateStr != null && plateStr.matches("^(\\?*[0-9a-zA-Z]){0,2}\\?*$")) ||
+                (newSearch.getPlateNo() == null))
+        {
+            plateText.setText(plateStr);
+        }
+        else
+        {
+            plateText.setText(newSearch.getPlateNo());
+        }
+}
 
 /*
  * Changes the captureButton text when the Plate Text is edited
