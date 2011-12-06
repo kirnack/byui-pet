@@ -21,7 +21,7 @@ public class BaslerA311JNI extends PETCamera
       try
       {
          
-         InputStream in = JNICamera.class.getResourceAsStream(name);
+         InputStream in = BaslerA311JNI.class.getResourceAsStream(name);
          File dir = new File(path);
          if (!dir.exists() || dir.isFile())
          {
@@ -53,7 +53,14 @@ public class BaslerA311JNI extends PETCamera
       }
       else if (System.getProperty("os.name").toLowerCase().indexOf("win") >= 0)
       {
-         loadLib(System.getProperty("java.io.tmpdir") + "/.petlibs", "baslera311.dll");
+         if(System.getProperty("os.arch").equalsIgnoreCase("x86"))
+         {
+            loadLib(System.getProperty("java.io.tmpdir") + "/.petlibs", "baslera311.dll");
+         }
+         else
+         {
+            loadLib(System.getProperty("java.io.tmpdir") + "/.petlibs", "baslera311x64.dll");
+         }
       }
       else if (System.getProperty("os.name").equals("Linux"))
       {
