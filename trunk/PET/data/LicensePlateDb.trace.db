@@ -798,3 +798,140 @@ INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', 
 12-06 17:24:19 jdbc[2]: exception
 org.h2.jdbc.JdbcSQLException: Syntax error in SQL statement "INSERT INTO PERMITS VALUES(1M80230[*]'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') "; expected "[, ::, *, /, %, +, -, ||, ~, !~, NOT, LIKE, REGEXP, IS, IN, BETWEEN, AND, OR, ,, )"; SQL statement:
 INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S', 'CHEVY', 'IMPALA', 'WHITE', '0') [42001-161]
+12-06 23:54:03 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]
+12-07 00:10:51 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Error in LIKE ESCAPE: "???"; SQL statement:
+SELECT * FROM logging WHERE plate REGEXP '???' [22025-161]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:158)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:317)
+	at org.h2.expression.CompareLike.optimize(CompareLike.java:113)
+	at org.h2.command.dml.Select.prepare(Select.java:797)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1119)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:70)
+	at edu.byui.PET.h2_db.H2_DB_Test.lookUpLogging(H2_DB_Test.java:756)
+	at edu.byui.PET.PETAPPView.getThreadOutput(PETAPPView.java:586)
+	at edu.byui.PET.PETAPPView$RecognizeThread.run(PETAPPView.java:58)
+Caused by: java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+???
+^
+	at java.util.regex.Pattern.error(Pattern.java:1924)
+	at java.util.regex.Pattern.sequence(Pattern.java:2090)
+	at java.util.regex.Pattern.expr(Pattern.java:1964)
+	at java.util.regex.Pattern.compile(Pattern.java:1665)
+	at java.util.regex.Pattern.<init>(Pattern.java:1337)
+	at java.util.regex.Pattern.compile(Pattern.java:1047)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:312)
+	... 10 more
+12-07 00:17:14 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Error in LIKE ESCAPE: "???"; SQL statement:
+SELECT * FROM logging WHERE plate REGEXP '???' [22025-161]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:158)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:317)
+	at org.h2.expression.CompareLike.optimize(CompareLike.java:113)
+	at org.h2.command.dml.Select.prepare(Select.java:797)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1119)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:70)
+	at edu.byui.PET.h2_db.H2_DB_Test.lookUpLogging(H2_DB_Test.java:756)
+	at edu.byui.PET.PETAPPView.getThreadOutput(PETAPPView.java:593)
+	at edu.byui.PET.PETAPPView$RecognizeThread.run(PETAPPView.java:58)
+Caused by: java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+???
+^
+	at java.util.regex.Pattern.error(Pattern.java:1924)
+	at java.util.regex.Pattern.sequence(Pattern.java:2090)
+	at java.util.regex.Pattern.expr(Pattern.java:1964)
+	at java.util.regex.Pattern.compile(Pattern.java:1665)
+	at java.util.regex.Pattern.<init>(Pattern.java:1337)
+	at java.util.regex.Pattern.compile(Pattern.java:1047)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:312)
+	... 10 more
+12-07 00:19:41 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Error in LIKE ESCAPE: "???"; SQL statement:
+SELECT * FROM logging WHERE plate REGEXP '???' [22025-161]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:158)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:317)
+	at org.h2.expression.CompareLike.optimize(CompareLike.java:113)
+	at org.h2.command.dml.Select.prepare(Select.java:797)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1119)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:70)
+	at edu.byui.PET.h2_db.H2_DB_Test.lookUpLogging(H2_DB_Test.java:756)
+	at edu.byui.PET.PETAPPView.getThreadOutput(PETAPPView.java:593)
+	at edu.byui.PET.PETAPPView$RecognizeThread.run(PETAPPView.java:58)
+Caused by: java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+???
+^
+	at java.util.regex.Pattern.error(Pattern.java:1924)
+	at java.util.regex.Pattern.sequence(Pattern.java:2090)
+	at java.util.regex.Pattern.expr(Pattern.java:1964)
+	at java.util.regex.Pattern.compile(Pattern.java:1665)
+	at java.util.regex.Pattern.<init>(Pattern.java:1337)
+	at java.util.regex.Pattern.compile(Pattern.java:1047)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:312)
+	... 10 more
+12-07 00:24:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Error in LIKE ESCAPE: "???"; SQL statement:
+SELECT * FROM logging WHERE plate REGEXP '???' [22025-161]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:158)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:317)
+	at org.h2.expression.CompareLike.optimize(CompareLike.java:113)
+	at org.h2.command.dml.Select.prepare(Select.java:797)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1119)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:70)
+	at edu.byui.PET.h2_db.H2_DB_Test.lookUpLogging(H2_DB_Test.java:756)
+	at edu.byui.PET.PETAPPView.getThreadOutput(PETAPPView.java:596)
+	at edu.byui.PET.PETAPPView$RecognizeThread.run(PETAPPView.java:58)
+Caused by: java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+???
+^
+	at java.util.regex.Pattern.error(Pattern.java:1924)
+	at java.util.regex.Pattern.sequence(Pattern.java:2090)
+	at java.util.regex.Pattern.expr(Pattern.java:1964)
+	at java.util.regex.Pattern.compile(Pattern.java:1665)
+	at java.util.regex.Pattern.<init>(Pattern.java:1337)
+	at java.util.regex.Pattern.compile(Pattern.java:1047)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:312)
+	... 10 more
+12-07 00:33:45 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: Error in LIKE ESCAPE: "???"; SQL statement:
+SELECT * FROM logging WHERE plate REGEXP '???' [22025-161]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:329)
+	at org.h2.message.DbException.get(DbException.java:158)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:317)
+	at org.h2.expression.CompareLike.optimize(CompareLike.java:113)
+	at org.h2.command.dml.Select.prepare(Select.java:797)
+	at org.h2.command.Parser.prepareCommand(Parser.java:218)
+	at org.h2.engine.Session.prepareLocal(Session.java:415)
+	at org.h2.engine.Session.prepareCommand(Session.java:364)
+	at org.h2.jdbc.JdbcConnection.prepareCommand(JdbcConnection.java:1119)
+	at org.h2.jdbc.JdbcStatement.executeQuery(JdbcStatement.java:70)
+	at edu.byui.PET.h2_db.H2_DB_Test.lookUpLogging(H2_DB_Test.java:756)
+	at edu.byui.PET.PETAPPView.getThreadOutput(PETAPPView.java:601)
+	at edu.byui.PET.PETAPPView$RecognizeThread.run(PETAPPView.java:59)
+Caused by: java.util.regex.PatternSyntaxException: Dangling meta character '?' near index 0
+???
+^
+	at java.util.regex.Pattern.error(Pattern.java:1924)
+	at java.util.regex.Pattern.sequence(Pattern.java:2090)
+	at java.util.regex.Pattern.expr(Pattern.java:1964)
+	at java.util.regex.Pattern.compile(Pattern.java:1665)
+	at java.util.regex.Pattern.<init>(Pattern.java:1337)
+	at java.util.regex.Pattern.compile(Pattern.java:1047)
+	at org.h2.expression.CompareLike.initPattern(CompareLike.java:312)
+	... 10 more

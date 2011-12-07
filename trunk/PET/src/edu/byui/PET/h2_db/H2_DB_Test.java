@@ -708,10 +708,10 @@ public class H2_DB_Test {
         return (results);
     }
 
-    public LoggingInformation[] lookUpLogging(String licenseNo)
+    public LoggingInformation lookUpLogging(String licenseNo)
     {
         // load the H2-JDBC driver using the current class loader
-        LoggingInformation[] results = null;
+        LoggingInformation results = null;
         licenseNo = licenseNo.toUpperCase();
         try
         {
@@ -733,7 +733,7 @@ public class H2_DB_Test {
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
 
 
-            String[] regExpression;
+            /*String[] regExpression;
             regExpression = new String[36];
             regularExpression(regExpression);
             String plateNo = "";
@@ -747,29 +747,19 @@ public class H2_DB_Test {
                 {
                     plateNo += licenseNo.charAt(i);
                 }
-            }
+            }*/
 
             String queryStatement = "SELECT * FROM logging WHERE plate REGEXP '"
-                    + plateNo + "'";
+                    + licenseNo + "'";
 
             // Send an SQL Query
             ResultSet rs = statement.executeQuery(queryStatement);
-            ResultSet tmp = rs;
-            int j = 0;
-            while (tmp.next())
-            {
-               j++;
-            }
-
-            for(int i = 0; i < j; i++)
+            if(rs.next())
             {
                 // read the result set
-               results = new LoggingInformation[j];
-               results[i] = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
+               results = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
                         rs.getString("time"));
             }
-
-
             // ASHCRAFT - You should not need to edit below this comment
         }
         catch(SQLException e) {
@@ -857,6 +847,49 @@ public class H2_DB_Test {
                     + "', '" + newPlate.getState() + "', '" + newPlate.getPermit() + "', '"
                     + newPlate.getMake() + "', '" + newPlate.getModel() + "', '"
                     + newPlate.getColor() + "', '" + newPlate.getNumViolations() + "')" );
+        }
+        catch(SQLException e) {
+            // if the error message is "out of memory",
+            // it probably means no database file is found
+            System.err.println(e.getMessage());
+        }
+        finally {
+            try {
+                if(connection != null)
+                    connection.close();
+            }
+            catch(SQLException e) {
+                // connection close failed.
+
+            }
+        }
+
+    }
+     
+     
+    public void ticket(PlateInformation violationPlate)
+    {
+        try
+        {
+           Class.forName("org.h2.Driver");
+
+        }
+        catch (ClassNotFoundException ex)
+        {
+
+           System.exit(-1);
+        }
+
+        Connection connection = null;
+         try {
+            // create a database connection
+            // Parameters: database to connect to, username, password
+            //connection = DriverManager.getConnection("jdbc:h2:~/test","sa","");
+            connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
+            Statement statement = connection.createStatement();
+            statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            statement.executeUpdate("UPDATE permits SET numViolations='" 
+                    + violationPlate.getNumViolations() + "' WHERE plate='" + violationPlate.getPlateNo() + "'");
         }
         catch(SQLException e) {
             // if the error message is "out of memory",

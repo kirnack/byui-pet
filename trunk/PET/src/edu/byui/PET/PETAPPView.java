@@ -13,6 +13,7 @@ package edu.byui.PET;
 import edu.byui.PET.util.*;
 import edu.byui.PET.h2_db.*;
 import edu.byui.PET.images.*;
+import java.awt.Color;
 import javax.swing.Timer;
 import java.awt.image.BufferedImage;
 import javaanpr.imageanalysis.Photo;
@@ -202,6 +203,7 @@ public class PETAPPView extends javax.swing.JFrame {
             .addGap(0, 271, Short.MAX_VALUE)
         );
 
+        jTextField1.setBackground(resourceMap.getColor("jTextField1.background")); // NOI18N
         jTextField1.setFont(resourceMap.getFont("jTextField1.font")); // NOI18N
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
@@ -305,9 +307,8 @@ public class PETAPPView extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel5)
                             .addComponent(jLabel8)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 163, Short.MAX_VALUE))
-                        .addContainerGap())
+                            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)
+                            .addComponent(jTextField8, javax.swing.GroupLayout.DEFAULT_SIZE, 175, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
@@ -315,13 +316,11 @@ public class PETAPPView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 211, Short.MAX_VALUE))
-                        .addContainerGap())
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addContainerGap(195, Short.MAX_VALUE))))
+                            .addComponent(jTextField7, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -379,7 +378,9 @@ public class PETAPPView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGap(33, 33, 33)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(plateText, javax.swing.GroupLayout.PREFERRED_SIZE, 317, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -442,7 +443,7 @@ public class PETAPPView extends javax.swing.JFrame {
 
 
 //Edited by Ashcraft
-private void violationsBox(PlateInformation currentPlate)
+private void violationsBox(PlateInformation currentPlate, LoggingInformation currentLookUp, H2_DB_Test h2)
 {
    String lotChosen = "";
    String lotChosenString = (LotSelect.getSelectedItem().toString());
@@ -452,19 +453,42 @@ private void violationsBox(PlateInformation currentPlate)
    {
       if(currentPlate.getPermit() != null)
       {
-
+         jTextField2.setText(currentPlate.getMake());
+         jTextField4.setText(currentPlate.getModel());
+         jTextField3.setText(currentPlate.getColor());
+         jTextField5.setText(currentPlate.getNumViolations());
+         jTextField8.setText(currentPlate.getState());
          if(currentPlate.getPermit().equals(lotChosen))
          {
             jTextField1.setText("No Violation");
+            jTextField1.setBackground(Color.green);
          }
          else
          {
             jTextField1.setText("Incorrect Permit");
+            jTextField1.setBackground(Color.red);
+            
+         }
+         
+
+         if(currentLookUp != null)
+         {
+            jTextField6.setText(currentLookUp.getLocation());
+            jTextField7.setText(currentLookUp.getTime());
          }
       }
       else
       {
          jTextField1.setText("No Permit Found");
+         jTextField2.setText("");
+         jTextField4.setText("");
+         jTextField3.setText("");
+         jTextField5.setText("");
+         jTextField6.setText("");
+         jTextField7.setText("");
+         jTextField8.setText("");
+         jTextField1.setBackground(Color.red);
+ 
       }
    }
    else
@@ -520,14 +544,16 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         String plateStr = new String();
         // Search the permit database for the string
         plateStr = plateText.getText();
-
+        LoggingInformation newLookUp = h2.lookUpLogging(plateStr);
         newSearch = h2.lookUp(plateStr, location, time);
         // If no hits, display violation warning
         // If one hit, display the matched string
         // If multiple hits, ask the operator for clarification
         // Make sure returned permit matches lot
         // Display the plate text
-        violationsBox(newSearch);
+        
+        violationsBox(newSearch, newLookUp, h2);
+        
         if(newSearch.getPlateNo() == null)
         {
            plateText.setText(plateStr);
@@ -535,13 +561,13 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         else
         {
            plateText.setText(newSearch.getPlateNo());
-
+           
         }
 
     }
 
     // Make sure the button defaults the "Capture"
-    this.captureButton.setText("Capture");
+    captureButton.setText("Capture");
 }//GEN-LAST:event_captureButtonPressed
 
 public void getThreadOutput(String outText, BufferedImage outImage) {
@@ -569,14 +595,15 @@ public void getThreadOutput(String outText, BufferedImage outImage) {
         // Search the permit database for the string
         if (plateStr != null)
         {
+            LoggingInformation newLookUp = h2.lookUpLogging(plateStr);
             newSearch = h2.lookUp(plateStr, location, time);
             // If no hits, display violation warning
             // If one hit, display the matched string
             // If multiple hits, ask the operator for clarification
             // Make sure returned permit matches lot
-
+            
             // Display the plate text
-            violationsBox(newSearch);
+            violationsBox(newSearch, newLookUp, h2);
         }
         // If 2 or less numbers or letters with any number of wildcards
         if( (plateStr != null && plateStr.matches("^(\\?*[0-9a-zA-Z]){0,2}\\?*$")) ||
