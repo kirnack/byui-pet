@@ -448,12 +448,11 @@ private void violationsBox(PlateInformation currentPlate)
    String lotChosenString = (LotSelect.getSelectedItem().toString());
    lotChosen += lotChosenString.charAt(5);
    String special = this.jComboBox1.getSelectedItem().toString();
-   System.out.println(special.charAt(1));
    if(special.charAt(1) == 'p')
    {
       if(currentPlate.getPermit() != null)
       {
-         
+
          if(currentPlate.getPermit().equals(lotChosen))
          {
             jTextField1.setText("No Violation");
@@ -472,7 +471,7 @@ private void violationsBox(PlateInformation currentPlate)
    {
       jTextField1.setText(special);
    }
-   
+
 }
 /*
  * Captures and processes a picture or looks up an entered string

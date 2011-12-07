@@ -361,6 +361,6 @@ public class Intelligence {
 
         this.lastProcessDuration = time.getTime();
         //return new String("not available yet ;-)");
-        return null;
+        return new String("No Plate");
     }
 }

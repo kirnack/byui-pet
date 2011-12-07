@@ -21,7 +21,7 @@ import java.sql.Statement;
 
 
 public class H2_DB_Test {
-    
+
 
     public H2_DB_Test()
     {
@@ -32,7 +32,7 @@ public class H2_DB_Test {
         }
         catch (ClassNotFoundException ex)
         {
-           
+
            System.exit(-1);
         }
        Connection connection = null;
@@ -42,7 +42,7 @@ public class H2_DB_Test {
           Statement statement = connection.createStatement();
           statement.setQueryTimeout(30);  // set timeout to 30 sec.
           // Send SQL Commands
-         /* statement.executeUpdate("DROP TABLE IF EXISTS permits");
+          /*statement.executeUpdate("DROP TABLE IF EXISTS permits");
           statement.executeUpdate("CREATE TABLE permits (plate VARCHAR, state VARCHAR,"
                   + " permit VARCHAR, make VARCHAR, model VARCHAR, color VARCHAR, numViolations VARCHAR)");
           statement.executeUpdate("INSERT INTO permits VALUES('1M12345', 'IDAHO',"
@@ -51,10 +51,10 @@ public class H2_DB_Test {
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
           statement.executeUpdate("INSERT INTO permits VALUES('1M8Z72B', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
-          statement.executeUpdate("CREATE INDEX IDX_PLATE ON permits(plate)");
+          //statement.executeUpdate("CREATE INDEX IDX_PLATE ON permits(plate)");
           statement.executeUpdate("DROP TABLE IF EXISTS logging");
           statement.executeUpdate("CREATE TABLE logging (plate VARCHAR, gps VARCHAR, time VARCHAR)");
-          statement.executeUpdate("CREATE INDEX IDX_PLATE ON logging(plate)");
+          //statement.executeUpdate("CREATE INDEX IDX_PLATE ON logging(plate)");
           statement.executeUpdate("INSERT INTO logging VALUES('1M12345', '157.201, 83.45', '14:35:35')");
           statement.executeUpdate("INSERT INTO permits VALUES('6617', 'MONTANA', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
@@ -310,7 +310,7 @@ public class H2_DB_Test {
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
           statement.executeUpdate("INSERT INTO permits VALUES('1M80032', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
-          statement.executeUpdate("INSERT INTO permits VALUES(1M80230'', 'IDAHO', 'S',"
+          statement.executeUpdate("INSERT INTO permits VALUES('1M80230', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
           statement.executeUpdate("INSERT INTO permits VALUES('1M80626', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
@@ -370,7 +370,7 @@ public class H2_DB_Test {
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
           statement.executeUpdate("INSERT INTO permits VALUES('1M8564', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
-          statement.executeUpdate("INSERT INTO permits VALUES(1M88662'', 'IDAHO', 'S',"
+          statement.executeUpdate("INSERT INTO permits VALUES('1M88662', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
           statement.executeUpdate("INSERT INTO permits VALUES('1O15518', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
@@ -538,8 +538,8 @@ public class H2_DB_Test {
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");
           statement.executeUpdate("INSERT INTO permits VALUES('1M81780', 'IDAHO', 'S',"
                   + " 'CHEVY', 'IMPALA', 'WHITE', '0')");*/
-         
-          
+
+
            }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -553,11 +553,11 @@ public class H2_DB_Test {
             }
             catch(SQLException e) {
                 // connection close failed.
-                
+
             }
         }
     }
-    
+
     public void regularExpression(String[] regExpression)
     {
         try
@@ -565,8 +565,8 @@ public class H2_DB_Test {
              InputStream fstream = H2_DB_Test.class.getResourceAsStream("regExpression.txt");
              DataInputStream in = new DataInputStream(fstream);
              BufferedReader br = new BufferedReader(new InputStreamReader(in));
-           
-           
+
+
              //Read File Line By Line
              int tmp = 0;
              while ((regExpression[tmp] = br.readLine()) != null)   {
@@ -577,7 +577,7 @@ public class H2_DB_Test {
              //Close the input stream
              in.close();
         }catch (Exception e){//Catch exception if any
-            
+
         }
     }
     /**
@@ -585,11 +585,11 @@ public class H2_DB_Test {
      * @param args the command line arguments
      */
     public static void main(String[] args) throws ClassNotFoundException {
-        
+
         new H2_DB_Test();
-        
+
     }
-    
+
     public PlateInformation lookUp(String licenseNo, String location, String time)
     {
         int valid = 0;
@@ -603,7 +603,7 @@ public class H2_DB_Test {
         }
         catch (ClassNotFoundException ex)
         {
-           
+
            System.exit(-1);
         }
         Connection connection = null;
@@ -615,7 +615,7 @@ public class H2_DB_Test {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
             LoggingInformation logNew = new LoggingInformation(licenseNo, location, time);
-            writeToLoggingDb(logNew);           
+            writeToLoggingDb(logNew);
             String[] regExpression;
             regExpression = new String[36];
             regularExpression(regExpression);
@@ -623,51 +623,51 @@ public class H2_DB_Test {
             String newPlateNo = "[A-Z0-9]*";
             int i = 0;
             int n = 0;
-            int m = 2;           
+            int m = 2;
             while(i < plateNo.length())
-            {       
+            {
                 while(plateNo.charAt(i) != regExpression[n].charAt(0))
                 {
                     if (n < (regExpression.length - 1))
                     {
-                       
-                        n++;  
+
+                        n++;
                     }
                     else
                     {
-                        
+
                         break;
                     }
                 }
-                
+
                 if (n >= (regExpression.length - 1))
                 {
                     newPlateNo += "[A-Z0-9]*";
-                    
+
                 }
                 else
                 {
                    valid++;
                     newPlateNo += "[" + regExpression[n].charAt(0);
-                
+
                     while(m < regExpression[n].length())
                     {
                        newPlateNo += regExpression[n].charAt(m);
                        m++;
                     }
-                
+
                     newPlateNo += "]";
                 }
                 m = 2;
-                n = 0;                
+                n = 0;
                 i++;
             }
             newPlateNo += "[A-Z0-9]*";
-                                   
+
 
             //System.out.println("New License Plate = " + newPlateNo);
-            String queryStatement = "SELECT * FROM permits WHERE plate REGEXP '" 
-                    + newPlateNo + "'"; 
+            String queryStatement = "SELECT * FROM permits WHERE plate REGEXP '"
+                    + newPlateNo + "'";
             // Send an SQL Query
             ResultSet rs = statement.executeQuery(queryStatement);
             if(valid >= 2)
@@ -679,7 +679,7 @@ public class H2_DB_Test {
                   //writeToLoggingDb(rs.getString("plate"), location, time);
                   // read the result set
                   results = new PlateInformation(rs.getString("plate"), rs.getString("state"),
-                        rs.getString("permit"), rs.getString("make"), rs.getString("model"), 
+                        rs.getString("permit"), rs.getString("make"), rs.getString("model"),
                         rs.getString("color"), rs.getString("numViolations"));
                   break;
                }
@@ -702,12 +702,12 @@ public class H2_DB_Test {
             }
             catch(SQLException e) {
                 // connection close failed.
-                
+
             }
         }
         return (results);
     }
-    
+
     public LoggingInformation[] lookUpLogging(String licenseNo)
     {
         // load the H2-JDBC driver using the current class loader
@@ -720,7 +720,7 @@ public class H2_DB_Test {
         }
         catch (ClassNotFoundException ex)
         {
-           
+
            System.exit(-1);
         }
         Connection connection = null;
@@ -731,8 +731,8 @@ public class H2_DB_Test {
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-                       
-    
+
+
             String[] regExpression;
             regExpression = new String[36];
             regularExpression(regExpression);
@@ -748,10 +748,10 @@ public class H2_DB_Test {
                     plateNo += licenseNo.charAt(i);
                 }
             }
-            
-            String queryStatement = "SELECT * FROM logging WHERE plate REGEXP '" 
-                    + plateNo + "'"; 
-            
+
+            String queryStatement = "SELECT * FROM logging WHERE plate REGEXP '"
+                    + plateNo + "'";
+
             // Send an SQL Query
             ResultSet rs = statement.executeQuery(queryStatement);
             ResultSet tmp = rs;
@@ -760,16 +760,16 @@ public class H2_DB_Test {
             {
                j++;
             }
-            
+
             for(int i = 0; i < j; i++)
             {
                 // read the result set
                results = new LoggingInformation[j];
                results[i] = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
-                        rs.getString("time"));             
+                        rs.getString("time"));
             }
-            
-            
+
+
             // ASHCRAFT - You should not need to edit below this comment
         }
         catch(SQLException e) {
@@ -784,12 +784,12 @@ public class H2_DB_Test {
             }
             catch(SQLException e) {
                 // connection close failed.
-                
+
             }
         }
         return (results);
     }
-    
+
     public void writeToLoggingDb(LoggingInformation newLog)
     {
         try
@@ -799,10 +799,10 @@ public class H2_DB_Test {
         }
         catch (ClassNotFoundException ex)
         {
-           
+
            System.exit(-1);
         }
-        
+
         Connection connection = null;
          try {
             // create a database connection
@@ -812,7 +812,7 @@ public class H2_DB_Test {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
             statement.executeUpdate("DELETE FROM logging WHERE plate='" + newLog.getPlateNo() + "'");
-            statement.executeUpdate("INSERT INTO logging VALUES('" + newLog.getPlateNo() 
+            statement.executeUpdate("INSERT INTO logging VALUES('" + newLog.getPlateNo()
                     + "', '" + newLog.getLocation() + "', '" + newLog.getTime() +"')");
         }
         catch(SQLException e) {
@@ -827,10 +827,10 @@ public class H2_DB_Test {
             }
             catch(SQLException e) {
                 // connection close failed.
-               
+
             }
         }
-            
+
     }
      public void writeToPermitDb(PlateInformation newPlate)
     {
@@ -841,10 +841,10 @@ public class H2_DB_Test {
         }
         catch (ClassNotFoundException ex)
         {
-           
+
            System.exit(-1);
         }
-        
+
         Connection connection = null;
          try {
             // create a database connection
@@ -853,9 +853,9 @@ public class H2_DB_Test {
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            statement.executeUpdate("INSERT INTO permits VALUES('" + newPlate.getPlateNo() 
-                    + "', '" + newPlate.getState() + "', '" + newPlate.getPermit() + "', '" 
-                    + newPlate.getMake() + "', '" + newPlate.getModel() + "', '" 
+            statement.executeUpdate("INSERT INTO permits VALUES('" + newPlate.getPlateNo()
+                    + "', '" + newPlate.getState() + "', '" + newPlate.getPermit() + "', '"
+                    + newPlate.getMake() + "', '" + newPlate.getModel() + "', '"
                     + newPlate.getColor() + "', '" + newPlate.getNumViolations() + "')" );
         }
         catch(SQLException e) {
@@ -870,10 +870,10 @@ public class H2_DB_Test {
             }
             catch(SQLException e) {
                 // connection close failed.
-               
+
             }
         }
-            
+
     }
 }
 
