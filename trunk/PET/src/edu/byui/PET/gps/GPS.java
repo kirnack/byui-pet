@@ -69,8 +69,8 @@ public class GPS
       String buffer = new String(getGPSData(ptr));
       //new String(getGPSData(ptr));
 
-      String deg = "?";
-      String min = "?";
+      String deg = " Deg ";
+      String min = " Min ";
       String space = " ";
       String justLocation;
       //GPS myGPS = new GPS();
@@ -83,8 +83,10 @@ public class GPS
       + buffer.charAt(32) + buffer.charAt(33) + buffer.charAt(34)
       + buffer.charAt(35) + buffer.charAt(36) + buffer.charAt(37)+ min +
       buffer.charAt(39);
+      
+      // try returning buffer
 
-      return justLocation;
+      return buffer;
 
    }
 
