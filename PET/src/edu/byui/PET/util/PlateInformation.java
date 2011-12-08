@@ -7,16 +7,19 @@ package edu.byui.PET.util;
 /**
  *
  * @author Matthew
+ * This is the class for the objects containing all of the information on a given
+ * license plate
  */
 public class PlateInformation
 {
-   String plateNo;
-   String state;
-   String permit;
-   String make;
-   String model;
-   String color; 
-   String numViolations;
+   String plateNo; //License number
+   String state;   //State of license plate
+   String permit;  //The permit attached to the license plate
+   String make;    //The make of the car
+   String model;   //The model of the car
+   String color;   //The color of the car
+   //The total number of violations this car has recieved, but it does not take 
+   String numViolations; //into account the different types of violations
    
    public PlateInformation()
    {

@@ -1043,3 +1043,17 @@ Caused by: java.util.regex.PatternSyntaxException: Dangling meta character '?' n
 	at java.util.regex.Pattern.compile(Pattern.java:1047)
 	at org.h2.expression.CompareLike.initPattern(CompareLike.java:312)
 	... 10 more
+12-07 23:02:31 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]
+12-07 23:02:51 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]
+12-07 23:02:54 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]
+12-07 23:02:59 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]
+12-07 23:03:02 jdbc[2]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]
+12-07 23:03:06 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]
+12-07 23:03:06 jdbc[4]: exception
+org.h2.jdbc.JdbcSQLException: No data is available [2000-161]

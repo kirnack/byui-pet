@@ -7,12 +7,14 @@ package edu.byui.PET.util;
 /**
  *
  * @author Matthew
+ * This is the class for the objects that are going to be passed to and from the 
+ * logging database.
  */
 public class LoggingInformation
 {
-   String plateNo;
-   String location;
-   String time;
+   String plateNo;  //License plate searching for or writing to the database.
+   String location; //GPS coordinates when the license plate was seen.
+   String time;     //Time when the license plate was last seen.
    
    public LoggingInformation()
    {
