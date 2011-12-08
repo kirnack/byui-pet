@@ -10,6 +10,7 @@
  */
 package edu.byui.PET;
 
+
 import edu.byui.PET.util.*;
 import edu.byui.PET.h2_db.*;
 import edu.byui.PET.images.*;
@@ -443,7 +444,8 @@ public class PETAPPView extends javax.swing.JFrame {
 
 
 //Edited by Ashcraft
-private void violationsBox(PlateInformation currentPlate, LoggingInformation currentLookUp, H2_DB_Test h2)
+private void violationsBox(PlateInformation currentPlate, 
+        LoggingInformation currentLookUp, H2_DB_Test h2)
 {
    String lotChosen = "";
    String lotChosenString = (LotSelect.getSelectedItem().toString());
@@ -467,6 +469,19 @@ private void violationsBox(PlateInformation currentPlate, LoggingInformation cur
          {
             jTextField1.setText("Incorrect Permit");
             jTextField1.setBackground(Color.red);
+            /*while((!jButton1.isSelected()) && (!jButton2.isSelected()))
+            {
+               captureButton.disable();
+            }
+             * 
+             */
+            if(jButton2.isSelected())
+            {
+               h2.ticket(currentPlate);
+            }
+            captureButton.enable();
+            
+                    
             
          }
          
@@ -488,6 +503,20 @@ private void violationsBox(PlateInformation currentPlate, LoggingInformation cur
          jTextField7.setText("");
          jTextField8.setText("");
          jTextField1.setBackground(Color.red);
+         /*while((!jButton1.isSelected()) && (!jButton2.isSelected()))
+         {
+            captureButton.disable();
+         }
+          * 
+          */
+         if(jButton2.isSelected())
+         {
+             PlateInformation newPlate = new PlateInformation(jTextField1.getText(),
+                     jTextField8.getText(), currentPlate.getPermit(), jTextField2.getText(), 
+                     jTextField4.getText(), jTextField3.getText(), "1");
+             h2.writeToPermitDb(newPlate);
+                     
+         }
  
       }
    }
@@ -511,7 +540,10 @@ private void violationsBox(PlateInformation currentPlate, LoggingInformation cur
 private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_captureButtonPressed
     // Capture Mode
     H2_DB_Test h2 = new H2_DB_Test();
+    //GPS gps = new GPS();
+    
     String time = ((ClockLabel) jLabel1).getTime();
+    //String location = gps.getGPSString();
     String location = "";
     PlateInformation newSearch = new PlateInformation();
     RecognizeThread subThread = new RecognizeThread(this, reader);  // Used for multi-threading
@@ -544,16 +576,18 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         String plateStr = new String();
         // Search the permit database for the string
         plateStr = plateText.getText();
-        LoggingInformation newLookUp = h2.lookUpLogging(plateStr);
-        newSearch = h2.lookUp(plateStr, location, time);
-        // If no hits, display violation warning
-        // If one hit, display the matched string
-        // If multiple hits, ask the operator for clarification
-        // Make sure returned permit matches lot
-        // Display the plate text
-        
-        violationsBox(newSearch, newLookUp, h2);
-        
+        LoggingInformation newLookUp = null;
+        if (plateStr != null)
+        {
+            newLookUp = h2.lookUpLogging(plateStr);
+            newSearch = h2.lookUp(plateStr, location, time);
+            // If no hits, display violation warning
+            // If one hit, display the matched string
+            // If multiple hits, ask the operator for clarification
+            // Make sure returned permit matches lot
+            
+            // Display the plate text
+        }
         if(newSearch.getPlateNo() == null)
         {
            plateText.setText(plateStr);
@@ -563,6 +597,8 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
            plateText.setText(newSearch.getPlateNo());
            
         }
+        violationsBox(newSearch, newLookUp, h2);
+
 
     }
 
@@ -593,9 +629,10 @@ public void getThreadOutput(String outText, BufferedImage outImage) {
         //platePanel.paint(platePanel.getGraphics());
 
         // Search the permit database for the string
+        LoggingInformation newLookUp = null;
         if (plateStr != null)
         {
-            LoggingInformation newLookUp = h2.lookUpLogging(plateStr);
+            newLookUp = h2.lookUpLogging(plateStr);
             newSearch = h2.lookUp(plateStr, location, time);
             // If no hits, display violation warning
             // If one hit, display the matched string
@@ -603,7 +640,6 @@ public void getThreadOutput(String outText, BufferedImage outImage) {
             // Make sure returned permit matches lot
             
             // Display the plate text
-            violationsBox(newSearch, newLookUp, h2);
         }
         // If 2 or less numbers or letters with any number of wildcards
         if( (plateStr != null && plateStr.matches("^(\\?*[0-9a-zA-Z]){0,2}\\?*$")) ||
@@ -615,6 +651,8 @@ public void getThreadOutput(String outText, BufferedImage outImage) {
         {
             plateText.setText(newSearch.getPlateNo());
         }
+        violationsBox(newSearch, newLookUp, h2);
+
 }
 
 /*
