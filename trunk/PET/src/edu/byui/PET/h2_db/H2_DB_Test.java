@@ -669,9 +669,10 @@ public class H2_DB_Test {
             String queryStatement = "SELECT * FROM permits WHERE plate REGEXP '"
                     + newPlateNo + "'";
             // Send an SQL Query
-            ResultSet rs = statement.executeQuery(queryStatement);
+            
             if(valid >= 2)
             {
+               ResultSet rs = statement.executeQuery(queryStatement);
                while(rs.next())
                {
                   LoggingInformation newLog = new LoggingInformation(rs.getString("plate"), location, time);
@@ -712,6 +713,7 @@ public class H2_DB_Test {
     {
         // load the H2-JDBC driver using the current class loader
         LoggingInformation results = null;
+        int valid = 0;
         licenseNo = licenseNo.toUpperCase();
         try
         {
@@ -748,17 +750,26 @@ public class H2_DB_Test {
                     plateNo += licenseNo.charAt(i);
                 }
             }*/
-
+            for(int j = 0; j < licenseNo.length(); j++)
+            {
+               if(licenseNo.charAt(j) != '?')
+               {
+                  valid++;
+               }
+            }
             String queryStatement = "SELECT * FROM logging WHERE plate REGEXP '"
                     + licenseNo + "'";
 
             // Send an SQL Query
-            ResultSet rs = statement.executeQuery(queryStatement);
-            if(rs.next())
+            if (valid >= 2)
             {
-                // read the result set
-               results = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
-                        rs.getString("time"));
+               ResultSet rs = statement.executeQuery(queryStatement);
+               if(rs.next())
+               {
+                   // read the result set
+                  results = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
+                           rs.getString("time"));
+               }
             }
             // ASHCRAFT - You should not need to edit below this comment
         }
