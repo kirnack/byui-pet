@@ -367,10 +367,20 @@ public class PETAPPView extends javax.swing.JFrame {
         jButton1.setFont(resourceMap.getFont("jButton1.font")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jButton2.setFont(resourceMap.getFont("jButton2.font")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -469,17 +479,11 @@ private void violationsBox(PlateInformation currentPlate,
          {
             jTextField1.setText("Incorrect Permit");
             jTextField1.setBackground(Color.red);
-            /*while((!jButton1.isSelected()) && (!jButton2.isSelected()))
-            {
-               captureButton.disable();
-            }
-             *
-             */
+            captureButton.setEnabled(false);
             if(jButton2.isSelected())
             {
                h2.ticket(currentPlate);
             }
-            captureButton.enable();
 
 
 
@@ -494,6 +498,8 @@ private void violationsBox(PlateInformation currentPlate,
       }
       else
       {
+         if (!plateText.getText().equals("No Plate"))
+             captureButton.setEnabled(false);
          jTextField1.setText("No Permit Found");
          jTextField2.setText("");
          jTextField4.setText("");
@@ -675,6 +681,14 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
    {//GEN-HEADEREND:event_jComboBox1ActionPerformed
       // TODO add your handling code here:
    }//GEN-LAST:event_jComboBox1ActionPerformed
+
+private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+   captureButton.setEnabled(true);
+}//GEN-LAST:event_jButton1MouseClicked
+
+private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+   captureButton.setEnabled(true);
+}//GEN-LAST:event_jButton2MouseClicked
 
     /**
      * @param args the command line arguments
