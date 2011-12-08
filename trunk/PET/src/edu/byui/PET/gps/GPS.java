@@ -5,7 +5,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
-class GPS
+public class GPS
 {
    private long ptr;
 
@@ -68,24 +68,24 @@ class GPS
    {
       String buffer = new String(getGPSData(ptr));
       //new String(getGPSData(ptr));
-      
+
       String deg = "?";
       String min = "?";
       String space = " ";
       String justLocation;
-      GPS myGPS = new GPS();
-      buffer = myGPS.getGPSString();
-      justLocation = buffer.charAt(16) + buffer.charAt(17) + deg  + space + 
-      buffer.charAt(18) +  buffer.charAt(19) + buffer.charAt(20) + 
+      //GPS myGPS = new GPS();
+      //buffer = myGPS.getGPSString();
+      justLocation = buffer.charAt(16) + buffer.charAt(17) + deg  + space +
+      buffer.charAt(18) +  buffer.charAt(19) + buffer.charAt(20) +
       buffer.charAt(21) + buffer.charAt(22) + buffer.charAt(23)
       + buffer.charAt(24) + min + buffer.charAt(26) + space + buffer.charAt(28)
       + buffer.charAt(29) +  buffer.charAt(30) + deg + space + buffer.charAt(31)
       + buffer.charAt(32) + buffer.charAt(33) + buffer.charAt(34)
-      + buffer.charAt(35) + buffer.charAt(36) + buffer.charAt(37)+ min + 
+      + buffer.charAt(35) + buffer.charAt(36) + buffer.charAt(37)+ min +
       buffer.charAt(39);
-      
+
       return justLocation;
-     
+
    }
 
    private native long createGPS();

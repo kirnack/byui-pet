@@ -444,7 +444,7 @@ public class PETAPPView extends javax.swing.JFrame {
 
 
 //Edited by Ashcraft
-private void violationsBox(PlateInformation currentPlate, 
+private void violationsBox(PlateInformation currentPlate,
         LoggingInformation currentLookUp, H2_DB_Test h2)
 {
    String lotChosen = "";
@@ -473,18 +473,18 @@ private void violationsBox(PlateInformation currentPlate,
             {
                captureButton.disable();
             }
-             * 
+             *
              */
             if(jButton2.isSelected())
             {
                h2.ticket(currentPlate);
             }
             captureButton.enable();
-            
-                    
-            
+
+
+
          }
-         
+
 
          if(currentLookUp != null)
          {
@@ -507,17 +507,17 @@ private void violationsBox(PlateInformation currentPlate,
          {
             captureButton.disable();
          }
-          * 
+          *
           */
          if(jButton2.isSelected())
          {
              PlateInformation newPlate = new PlateInformation(jTextField1.getText(),
-                     jTextField8.getText(), currentPlate.getPermit(), jTextField2.getText(), 
+                     jTextField8.getText(), currentPlate.getPermit(), jTextField2.getText(),
                      jTextField4.getText(), jTextField3.getText(), "1");
              h2.writeToPermitDb(newPlate);
-                     
+
          }
- 
+
       }
    }
    else
@@ -541,10 +541,12 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
     // Capture Mode
     H2_DB_Test h2 = new H2_DB_Test();
     //GPS gps = new GPS();
-    
+
     String time = ((ClockLabel) jLabel1).getTime();
-    //String location = gps.getGPSString();
-    String location = "";
+    edu.byui.PET.gps.GPS gps = new edu.byui.PET.gps.GPS();
+    String location = gps.getGPSString();
+    System.out.println(location);
+    //String location = "";
     PlateInformation newSearch = new PlateInformation();
     RecognizeThread subThread = new RecognizeThread(this, reader);  // Used for multi-threading
 
@@ -585,7 +587,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
             // If one hit, display the matched string
             // If multiple hits, ask the operator for clarification
             // Make sure returned permit matches lot
-            
+
             // Display the plate text
         }
         if(newSearch.getPlateNo() == null)
@@ -595,7 +597,7 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
         else
         {
            plateText.setText(newSearch.getPlateNo());
-           
+
         }
         violationsBox(newSearch, newLookUp, h2);
 
@@ -638,7 +640,7 @@ public void getThreadOutput(String outText, BufferedImage outImage) {
             // If one hit, display the matched string
             // If multiple hits, ask the operator for clarification
             // Make sure returned permit matches lot
-            
+
             // Display the plate text
         }
         // If 2 or less numbers or letters with any number of wildcards
