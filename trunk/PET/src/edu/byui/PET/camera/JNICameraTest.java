@@ -4,14 +4,17 @@
  */
 package edu.byui.PET.camera;
 
+import edu.byui.PET.ClockLabel;
 import edu.byui.PET.images.CameraImagePanel;
 import edu.byui.PET.images.DataFileImagePanel;
+import edu.byui.PET.ClockLabel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import javax.swing.Timer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JButton;
@@ -41,6 +44,7 @@ public class JNICameraTest
     * 
     */
    public static JTextField textField;
+   public static ClockLabel clock;
 
    /**
     * @param args the command line arguments
@@ -66,6 +70,8 @@ public class JNICameraTest
    {
       image2 = new CameraImagePanel(
               new BaslerA311JNI(new PETConfiguration(PETConfiguration.GRAY_SCALE)));
+
+      clock = new ClockLabel();
 
       BorderLayout cSpringLayout = new BorderLayout();
 
@@ -97,6 +103,8 @@ public class JNICameraTest
          }
       });
 
+
+
       JButton button = new JButton("Capture Image");
       button.setPreferredSize(new Dimension(200, 100));
       button.addActionListener(new ActionListener()
@@ -106,8 +114,7 @@ public class JNICameraTest
          {
             try
             {
-               image2.capture();
-               image2.repaint();
+               image2.writeFile(clock.getDate().replace("/", "-"));
             }
             catch (Exception ex)
             {
@@ -117,10 +124,12 @@ public class JNICameraTest
       });
 
       aJFrame.add(button, BorderLayout.PAGE_END);
-
-      aJFrame.getContentPane().add(image2, BorderLayout.CENTER);
+      aJFrame.add(clock, BorderLayout.NORTH);
+      aJFrame.add(image2, BorderLayout.CENTER);
       new Thread(new Refresher(image2)).start();
       aJFrame.setVisible(true);
+      Timer t = new Timer(1000, clock);
+      t.start();
    }
 
    private class Refresher extends Thread
@@ -136,7 +145,7 @@ public class JNICameraTest
       @Override
       public void run()
       {
-         while(true)
+         while (true)
          {
             try
             {
@@ -150,7 +159,7 @@ public class JNICameraTest
             }
             try
             {
-               Refresher.sleep(1000);
+               Refresher.sleep(1);
             }
             catch (InterruptedException ex)
             {
