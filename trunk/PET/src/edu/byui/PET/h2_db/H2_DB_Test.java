@@ -36,7 +36,7 @@ public class H2_DB_Test {
            System.exit(-1);
         }
        Connection connection = null;
-       try {
+       try { //Open database
           connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb;MODE=MySQL;IGNORECASE=TRUE");
 
           Statement statement = connection.createStatement();
@@ -558,6 +558,9 @@ public class H2_DB_Test {
         }
     }
 
+    /*
+     * This function reads in a file containing all of the regular expression matching.
+     */
     public void regularExpression(String[] regExpression)
     {
         try
@@ -590,12 +593,18 @@ public class H2_DB_Test {
 
     }
 
+    /*
+     * This function takes in a license plate number along with the gps coordinates and the time
+     * where and when the license plate was seen, then searches the database to look for a possible match.
+     * If there is a match then all of the information contained on the vehicle will be returned, 
+     * otherwise null will be returned.
+     */
     public PlateInformation lookUp(String licenseNo, String location, String time)
     {
-        int valid = 0;
+        int valid = 0;//This value ensures that at least part of the license plate was found
         // load the H2-JDBC driver using the current class loader
         PlateInformation results = null;
-        licenseNo = licenseNo.toUpperCase();
+        licenseNo = licenseNo.toUpperCase(); //Make sure license plate is upper case
         try
         {
            Class.forName("org.h2.Driver");
@@ -609,21 +618,23 @@ public class H2_DB_Test {
         Connection connection = null;
          try {
             // create a database connection
-            // Parameters: database to connect to, username, password
-            //connection = DriverManager.getConnection("jdbc:h2:~/test","sa","");
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb;MODE=MySQL;IGNORECASE=TRUE");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            //Create an object to capture the logging data, then log the license plate just read into the database
             LoggingInformation logNew = new LoggingInformation(licenseNo, location, time);
             writeToLoggingDb(logNew);
+            //Read in the regular expression file
             String[] regExpression;
             regExpression = new String[36];
             regularExpression(regExpression);
             String plateNo = licenseNo;
-            String newPlateNo = "[A-Z0-9]*";
+            //Put a wild card at the beginning of every search to improve accuracy
+            String newPlateNo = "[A-Z0-9]*"; 
             int i = 0;
             int n = 0;
             int m = 2;
+            //Replace every character read in from the license plate, with regular expressions
             while(i < plateNo.length())
             {
                 while(plateNo.charAt(i) != regExpression[n].charAt(0))
@@ -642,12 +653,13 @@ public class H2_DB_Test {
 
                 if (n >= (regExpression.length - 1))
                 {
-                    newPlateNo += "[A-Z0-9]*";
-
+                   //If there is no match with the regular expression file, put in a wildcard 
+                   newPlateNo += "[A-Z0-9]*";
+                    
                 }
                 else
                 {
-                   valid++;
+                    valid++; //Indicate that at least part of the license plate was found
                     newPlateNo += "[" + regExpression[n].charAt(0);
 
                     while(m < regExpression[n].length())
@@ -662,33 +674,33 @@ public class H2_DB_Test {
                 n = 0;
                 i++;
             }
-            newPlateNo += "[A-Z0-9]*";
-
-
-            //System.out.println("New License Plate = " + newPlateNo);
+            //Add a wild card on the end of the plate to increase chances of matching
+            newPlateNo += "[A-Z0-9]*"; 
+            
+            //Create SQL command
             String queryStatement = "SELECT * FROM permits WHERE plate REGEXP '"
                     + newPlateNo + "'";
             // Send an SQL Query
             
-            if(valid >= 2)
+            //Only if part of the license plate was recognized will we search the database
+            if(valid >= 2) 
             {
                ResultSet rs = statement.executeQuery(queryStatement);
-               while(rs.next())
+               if(rs.next()) //Check is the license plate was found in database
                {
+                  //Log the license plate, location, and time
                   LoggingInformation newLog = new LoggingInformation(rs.getString("plate"), location, time);
-                  writeToLoggingDb(newLog);
-                  //writeToLoggingDb(rs.getString("plate"), location, time);
-                  // read the result set
+                  writeToLoggingDb(newLog); 
+                  
+                   // read the result set
                   results = new PlateInformation(rs.getString("plate"), rs.getString("state"),
                         rs.getString("permit"), rs.getString("make"), rs.getString("model"),
                         rs.getString("color"), rs.getString("numViolations"));
-                  break;
                }
             }
-            if(results == null)
+            if(results == null) //If no license plate was found, then initialize to ""
             {
-               results = new PlateInformation();
-               //results.setPlate("Unknown");
+               results = new PlateInformation();               
             }
         }
         catch(SQLException e) {
@@ -709,12 +721,16 @@ public class H2_DB_Test {
         return (results);
     }
 
+    /*
+     * This function seached the logging table of the databse for a given license plate.
+     * A LoggingInformation object is returned, filled up with a match found, or just null.
+     */
     public LoggingInformation lookUpLogging(String licenseNo)
     {
-        // load the H2-JDBC driver using the current class loader
+        
         LoggingInformation results = null;
-        int valid = 0;
-        licenseNo = licenseNo.toUpperCase();
+        licenseNo = licenseNo.toUpperCase();//Set the license plate upper case so it can be compared
+        // load the H2-JDBC driver using the current class loader
         try
         {
            Class.forName("org.h2.Driver");
@@ -728,49 +744,23 @@ public class H2_DB_Test {
         Connection connection = null;
          try {
             // create a database connection
-            // Parameters: database to connect to, username, password
-            //connection = DriverManager.getConnection("jdbc:h2:~/test","sa","");
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-
-
-            /*String[] regExpression;
-            regExpression = new String[36];
-            regularExpression(regExpression);
-            String plateNo = "";
-            for(int i = 0; i < licenseNo.length(); i++)
-            {
-                if(licenseNo.charAt(i) == '?')
-                {
-                    plateNo += "[A-Z0-9]";
-                }
-                else
-                {
-                    plateNo += licenseNo.charAt(i);
-                }
-            }*/
-            for(int j = 0; j < licenseNo.length(); j++)
-            {
-               if(licenseNo.charAt(j) != '?')
-               {
-                  valid++;
-               }
-            }
+            
+           //Create SQL command
             String queryStatement = "SELECT * FROM logging WHERE plate REGEXP '"
                     + licenseNo + "'";
 
             // Send an SQL Query
-            if (valid >= 2)
-            {
-               ResultSet rs = statement.executeQuery(queryStatement);
+           ResultSet rs = statement.executeQuery(queryStatement);
                if(rs.next())
                {
                    // read the result set
                   results = new LoggingInformation(rs.getString("plate"), rs.getString("gps"),
                            rs.getString("time"));
                }
-            }
+
             // ASHCRAFT - You should not need to edit below this comment
         }
         catch(SQLException e) {
@@ -790,9 +780,14 @@ public class H2_DB_Test {
         }
         return (results);
     }
-
+    
+    /*
+     * This function logs a license plate to the database. If the license plate already
+     * exists in the database, then it is overwritten.
+     */
     public void writeToLoggingDb(LoggingInformation newLog)
     {
+       // load the H2-JDBC driver using the current class loader
         try
         {
            Class.forName("org.h2.Driver");
@@ -806,13 +801,14 @@ public class H2_DB_Test {
 
         Connection connection = null;
          try {
-            // create a database connection
-            // Parameters: database to connect to, username, password
-            //connection = DriverManager.getConnection("jdbc:h2:~/test","sa","");
+            // create a database connection           
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            
+            //Delete any entry with a previous match of this license plate
             statement.executeUpdate("DELETE FROM logging WHERE plate='" + newLog.getPlateNo() + "'");
+            //Write the license plate to the logging database
             statement.executeUpdate("INSERT INTO logging VALUES('" + newLog.getPlateNo()
                     + "', '" + newLog.getLocation() + "', '" + newLog.getTime() +"')");
         }
@@ -833,8 +829,17 @@ public class H2_DB_Test {
         }
 
     }
+    
+    /*
+     * This function write to the permits table in the database a new license
+     * plate, along with the state the license plate is registered, permit 
+     * associated with the license plate, make, model, and color of car with
+     * the license plate, and the number of violations the license plate has 
+     * recieved.
+     */
      public void writeToPermitDb(PlateInformation newPlate)
     {
+       // load the H2-JDBC driver using the current class loader
         try
         {
            Class.forName("org.h2.Driver");
@@ -849,11 +854,10 @@ public class H2_DB_Test {
         Connection connection = null;
          try {
             // create a database connection
-            // Parameters: database to connect to, username, password
-            //connection = DriverManager.getConnection("jdbc:h2:~/test","sa","");
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            //Write the information to the permits table in the database
             statement.executeUpdate("INSERT INTO permits VALUES('" + newPlate.getPlateNo()
                     + "', '" + newPlate.getState() + "', '" + newPlate.getPermit() + "', '"
                     + newPlate.getMake() + "', '" + newPlate.getModel() + "', '"
@@ -877,9 +881,12 @@ public class H2_DB_Test {
 
     }
      
-     
+    /*
+      * This function is for updating the number of violations related to a license plate
+      */
     public void ticket(PlateInformation violationPlate)
     {
+       // load the H2-JDBC driver using the current class loader
         try
         {
            Class.forName("org.h2.Driver");
@@ -894,11 +901,10 @@ public class H2_DB_Test {
         Connection connection = null;
          try {
             // create a database connection
-            // Parameters: database to connect to, username, password
-            //connection = DriverManager.getConnection("jdbc:h2:~/test","sa","");
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
+            //Update the number of violations
             statement.executeUpdate("UPDATE permits SET numViolations='" 
                     + violationPlate.getNumViolations() + "' WHERE plate='" + violationPlate.getPlateNo() + "'");
         }
