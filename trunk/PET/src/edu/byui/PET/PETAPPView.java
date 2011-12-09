@@ -178,11 +178,6 @@ public class PETAPPView extends javax.swing.JFrame {
         captureButton.setFont(resourceMap.getFont("captureButton.font")); // NOI18N
         captureButton.setText(resourceMap.getString("captureButton.text")); // NOI18N
         captureButton.setName("captureButton"); // NOI18N
-        captureButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                captureButtonPressed(evt);
-            }
-        });
         captureButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 captureButtonActionPerformed(evt);
@@ -367,18 +362,18 @@ public class PETAPPView extends javax.swing.JFrame {
         jButton1.setFont(resourceMap.getFont("jButton1.font")); // NOI18N
         jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
         jButton1.setName("jButton1"); // NOI18N
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
         jButton2.setFont(resourceMap.getFont("jButton2.font")); // NOI18N
         jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
         jButton2.setName("jButton2"); // NOI18N
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
             }
         });
 
@@ -543,7 +538,66 @@ private void violationsBox(PlateInformation currentPlate,
  *
  * @param evt MouseEvent object. Not used in this method.
  */
-private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_captureButtonPressed
+public void getThreadOutput(String outText, BufferedImage outImage) {
+        /*try {
+           tempThread.join();
+        }
+        catch (InterruptedException ie)
+        {
+           System.out.println("Main Thread Interrupted");
+        }*/
+        String plateStr = outText;
+        PlateInformation newSearch = new PlateInformation();
+        H2_DB_Test h2 = new H2_DB_Test();
+        plateImage = outImage;
+        plateText.setText("-");
+        String time = "";
+        String location = "";
+
+        // Display the plate image
+        ((ImagePanel) platePanel).setImageIcon(new ImageIcon(plateImage));
+        platePanel.repaint();
+        //platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
+        //platePanel.paint(platePanel.getGraphics());
+
+        // Search the permit database for the string
+        LoggingInformation newLookUp = null;
+        if (plateStr != null)
+        {
+            newLookUp = h2.lookUpLogging(plateStr);
+            newSearch = h2.lookUp(plateStr, location, time);
+            // If no hits, display violation warning
+            // If one hit, display the matched string
+            // If multiple hits, ask the operator for clarification
+            // Make sure returned permit matches lot
+
+            // Display the plate text
+        }
+        // If 2 or less numbers or letters with any number of wildcards
+        if( (plateStr != null && plateStr.matches("^(\\?*[0-9a-zA-Z]){0,2}\\?*$")) ||
+                (newSearch.getPlateNo() == null))
+        {
+            plateText.setText(plateStr);
+        }
+        else
+        {
+            plateText.setText(newSearch.getPlateNo());
+        }
+        violationsBox(newSearch, newLookUp, h2);
+
+}
+
+/*
+ * Changes the captureButton text when the Plate Text is edited
+ *
+ * @param evt KeyEvent object. Not used in this method.
+ */
+private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plateTextChanged
+    this.captureButton.setText("Look Up");
+}//GEN-LAST:event_plateTextChanged
+
+   private void captureButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_captureButtonActionPerformed
+   {//GEN-HEADEREND:event_captureButtonActionPerformed
     // Capture Mode
     H2_DB_Test h2 = new H2_DB_Test();
     //GPS gps = new GPS();
@@ -612,69 +666,6 @@ private void captureButtonPressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:ev
 
     // Make sure the button defaults the "Capture"
     captureButton.setText("Capture");
-}//GEN-LAST:event_captureButtonPressed
-
-public void getThreadOutput(String outText, BufferedImage outImage) {
-        /*try {
-           tempThread.join();
-        }
-        catch (InterruptedException ie)
-        {
-           System.out.println("Main Thread Interrupted");
-        }*/
-        String plateStr = outText;
-        PlateInformation newSearch = new PlateInformation();
-        H2_DB_Test h2 = new H2_DB_Test();
-        plateImage = outImage;
-        plateText.setText("-");
-        String time = "";
-        String location = "";
-
-        // Display the plate image
-        ((ImagePanel) platePanel).setImageIcon(new ImageIcon(plateImage));
-        platePanel.repaint();
-        //platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
-        //platePanel.paint(platePanel.getGraphics());
-
-        // Search the permit database for the string
-        LoggingInformation newLookUp = null;
-        if (plateStr != null)
-        {
-            newLookUp = h2.lookUpLogging(plateStr);
-            newSearch = h2.lookUp(plateStr, location, time);
-            // If no hits, display violation warning
-            // If one hit, display the matched string
-            // If multiple hits, ask the operator for clarification
-            // Make sure returned permit matches lot
-
-            // Display the plate text
-        }
-        // If 2 or less numbers or letters with any number of wildcards
-        if( (plateStr != null && plateStr.matches("^(\\?*[0-9a-zA-Z]){0,2}\\?*$")) ||
-                (newSearch.getPlateNo() == null))
-        {
-            plateText.setText(plateStr);
-        }
-        else
-        {
-            plateText.setText(newSearch.getPlateNo());
-        }
-        violationsBox(newSearch, newLookUp, h2);
-
-}
-
-/*
- * Changes the captureButton text when the Plate Text is edited
- *
- * @param evt KeyEvent object. Not used in this method.
- */
-private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_plateTextChanged
-    this.captureButton.setText("Look Up");
-}//GEN-LAST:event_plateTextChanged
-
-   private void captureButtonActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_captureButtonActionPerformed
-   {//GEN-HEADEREND:event_captureButtonActionPerformed
-      // TODO add your handling code here:
    }//GEN-LAST:event_captureButtonActionPerformed
 
    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_jComboBox1ActionPerformed
@@ -682,13 +673,13 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
       // TODO add your handling code here:
    }//GEN-LAST:event_jComboBox1ActionPerformed
 
-private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
-   captureButton.setEnabled(true);
-}//GEN-LAST:event_jButton1MouseClicked
+private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    captureButton.setEnabled(true);
+}//GEN-LAST:event_jButton1ActionPerformed
 
-private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-   captureButton.setEnabled(true);
-}//GEN-LAST:event_jButton2MouseClicked
+private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    captureButton.setEnabled(true);
+}//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments
