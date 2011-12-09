@@ -5,13 +5,13 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.text.*;
 
- class ClockLabel extends JLabel implements ActionListener {
+public class ClockLabel extends JLabel implements ActionListener {
   public String nowdate;
   public String nowtime;
-  
-  public void ClockLabel() 
+
+  public void ClockLabel()
   {
-      
+
   }
 
   public void actionPerformed(ActionEvent ae)
