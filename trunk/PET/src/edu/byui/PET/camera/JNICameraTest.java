@@ -113,7 +113,9 @@ public class JNICameraTest
          {
             try
             {
-               image2.writeFile(clock.getDate().replace("/", "-"));
+               String name = clock.getTime().replace(":", ",");
+               System.err.println(name);
+               image2.writeFile(name);
             }
             catch (Exception ex)
             {

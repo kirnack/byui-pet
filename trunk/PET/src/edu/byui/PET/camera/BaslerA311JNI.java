@@ -70,7 +70,7 @@ public class BaslerA311JNI extends PETCamera
    
    private long ptr;
 
-BaslerA311JNI(Configuration pCs)
+public BaslerA311JNI(Configuration pCs)
    {
       super(pCs);
       ptr = createCamera();
