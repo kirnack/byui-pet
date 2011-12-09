@@ -95,18 +95,16 @@ public class CameraImagePanel extends ImagePanel
     * @return
     * @throws Exception
     */
-   public Image getImage() throws Exception
+   @Override
+   public BufferedImage getBufferedImage()
    {
-      return getBufferedImage();
-   }
-
-   /**
-    * 
-    * @return
-    * @throws Exception
-    */
-   public BufferedImage getBufferedImage() throws Exception
-   {
-      return cam.getImage();
+      try
+      {
+         return cam.getImage();
+      }
+      catch(Exception e)
+      {
+         return null;
+      }
    }
 }

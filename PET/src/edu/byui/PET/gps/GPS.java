@@ -1,6 +1,5 @@
 package edu.byui.PET.gps;
 
-import edu.byui.PET.camera.JNICamera;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
@@ -8,7 +7,7 @@ import java.io.InputStream;
 public class GPS
 {
    private long ptr;
-
+   private static boolean loaded;
    static void loadLib(String path, String name)
    {
       try
@@ -31,10 +30,12 @@ public class GPS
          }
          out.close();
          System.load(fileout.getAbsolutePath());
+         loaded = true;
       }
       catch (Exception e)
       {
-         e.printStackTrace();
+   //      e.printStackTrace();
+         loaded = false;
       }
    }
 
@@ -48,7 +49,14 @@ public class GPS
          //}
          //catch(Exception e)
          //{
+         if(System.getProperty("os.arch").equalsIgnoreCase("x86"))
+         {
             loadLib(System.getProperty("java.io.tmpdir") + "/.petlibs", "FinalGPSVcpp.dll");
+         }
+         else
+         {
+            loaded = false;
+         }
          //}
       }
 
@@ -56,21 +64,33 @@ public class GPS
 
    public GPS()
    {
-      ptr = createGPS();
+      if(loaded)
+      {
+         ptr = createGPS();
+      }
    }
 
    public byte[] getGPSData()
    {
-      return getGPSData(ptr);
+      if (loaded)
+      {
+         return getGPSData(ptr);
+      }
+      else
+      {
+         return ("No datat.".getBytes());
+      }
    }
 
    public String getGPSString()
    {
-      String buffer = new String(getGPSData(ptr));
+      String buffer = new String(getGPSData());
       //new String(getGPSData(ptr));
 
-      String deg = " Deg ";
-      String min = " Min ";
+      if(loaded)
+      {
+      String deg = "?";
+      String min = "?";
       String space = " ";
       String justLocation;
       //GPS myGPS = new GPS();
@@ -83,11 +103,12 @@ public class GPS
       + buffer.charAt(32) + buffer.charAt(33) + buffer.charAt(34)
       + buffer.charAt(35) + buffer.charAt(36) + buffer.charAt(37)+ min +
       buffer.charAt(39);
-
+      
       // try returning buffer
 
       return justLocation;
-
+      }
+      return buffer;
    }
 
    private native long createGPS();

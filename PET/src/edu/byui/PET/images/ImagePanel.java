@@ -11,6 +11,8 @@ import java.awt.RenderingHints;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import javax.imageio.ImageIO;
 
 /**
  *
@@ -115,11 +117,26 @@ public class ImagePanel
 
    public void setImageIcon(ImageIcon pImg)
    {
-      image = pImg;
-      resizeImage(getWidth(), getHeight());
-      paint(getGraphics());
+      if(pImg != null)
+      {
+         image = pImg;
+         resizeImage(getWidth(), getHeight());
+         paint(getGraphics());
+      }
    }
 
+   public void setImageIcon(File file)
+   {
+      try
+      {
+         setImageIcon(new ImageIcon(ImageIO.read(file)));
+      }
+      catch(Exception ex)
+      {
+         ex.printStackTrace();
+      }
+   }
+   
    /**
     *
     * @param newW
@@ -139,5 +156,37 @@ public class ImagePanel
          g.dispose();
          image.setImage(img);
       }
+   }
+   
+   /**
+    * 
+    * @return
+    */
+   public Image getImage()
+   {
+      return getBufferedImage();
+   }
+
+   public BufferedImage converToBuffereImage()
+   {
+      BufferedImage buff;
+      int w = image.getIconWidth();
+         int h = image.getIconHeight();
+         Image oldImage = image.getImage();
+         buff = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
+         Graphics2D g = buff.createGraphics();
+         g.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+         g.drawImage(oldImage, 0, 0, w, h, 0, 0, w, h, null);
+         g.dispose();
+      return  buff;
+   }
+   
+   /**
+    * 
+    * @return
+    */
+   public BufferedImage getBufferedImage()
+   {
+         return converToBuffereImage();
    }
 }
