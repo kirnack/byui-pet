@@ -7,7 +7,6 @@ package edu.byui.PET.camera;
 import edu.byui.PET.ClockLabel;
 import edu.byui.PET.images.CameraImagePanel;
 import edu.byui.PET.images.DataFileImagePanel;
-import edu.byui.PET.ClockLabel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -29,19 +28,19 @@ public class JNICameraTest
 {
 
    /**
-    * 
+    *
     */
    public static JFrame aJFrame;
    /**
-    * 
+    *
     */
    public static DataFileImagePanel image;
    /**
-    * 
+    *
     */
    public static CameraImagePanel image2;
    /**
-    * 
+    *
     */
    public static JTextField textField;
    public static ClockLabel clock;
