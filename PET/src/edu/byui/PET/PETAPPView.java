@@ -31,6 +31,8 @@ import java.io.File;  //Used for testing
 public class PETAPPView extends javax.swing.JFrame {
     // Pulls the recognition into a separate thread
     // Used to prevent GUI from freezing
+   
+    Boolean licenseFound = false;
     public class RecognizeThread extends Thread {
         BufferedImage carImage;
         BufferedImage plateImage;
@@ -358,6 +360,11 @@ public class PETAPPView extends javax.swing.JFrame {
         plateText.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         plateText.setText(resourceMap.getString("plateText.text")); // NOI18N
         plateText.setName("plateText"); // NOI18N
+        plateText.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                plateTextActionPerformed(evt);
+            }
+        });
         plateText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 plateTextChanged(evt);
@@ -479,6 +486,7 @@ private void violationsBox(PlateInformation currentPlate,
          {
             jTextField1.setText("Incorrect Permit");
             jTextField1.setBackground(Color.red);
+            licenseFound = true;
             captureButton.setEnabled(false);
 
 
@@ -495,7 +503,10 @@ private void violationsBox(PlateInformation currentPlate,
       else
       {
          if (!plateText.getText().equals("No Plate"))
-             captureButton.setEnabled(false);
+         {
+            licenseFound = false;
+            captureButton.setEnabled(false);
+         }
          jTextField1.setText("No Permit Found");
          jTextField2.setText("");
          jTextField4.setText("");
@@ -505,20 +516,6 @@ private void violationsBox(PlateInformation currentPlate,
          jTextField7.setText("");
          jTextField8.setText("");
          jTextField1.setBackground(Color.red);
-         /*while((!jButton1.isSelected()) && (!jButton2.isSelected()))
-         {
-            captureButton.disable();
-         }
-          *
-          */
-         if(jButton2.isSelected())
-         {
-             PlateInformation newPlate = new PlateInformation(jTextField1.getText(),
-                     jTextField8.getText(), currentPlate.getPermit(), jTextField2.getText(),
-                     jTextField4.getText(), jTextField3.getText(), "1");
-             h2.writeToPermitDb(newPlate);
-
-         }
 
       }
    }
@@ -606,7 +603,7 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
     String time = ((ClockLabel) jLabel1).getTime();
     edu.byui.PET.gps.GPS gps = new edu.byui.PET.gps.GPS();
     String location = gps.getGPSString();
-    System.out.println(location);
+    //System.out.println(location);
     //String location = "";
     PlateInformation newSearch = new PlateInformation();
     RecognizeThread subThread = new RecognizeThread(this, reader);  // Used for multi-threading
@@ -688,6 +685,20 @@ private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
 private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
     captureButton.setEnabled(true);
+    H2_DB_Test h2 = new H2_DB_Test();
+    if(licenseFound == false)
+    {
+      PlateInformation newPlate = new PlateInformation(plateText.getText().toUpperCase(),
+                     jTextField8.getText().toUpperCase(), " ", jTextField2.getText().toUpperCase(),
+                     jTextField4.getText().toUpperCase(), jTextField3.getText().toUpperCase(), "1");
+      h2.writeToPermitDb(newPlate);
+    }
+    else
+    {
+       h2.ticket(plateText.getText().toUpperCase());
+    }
+
+    
 }//GEN-LAST:event_jButton2ActionPerformed
 
    private void carPanelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_carPanelMouseClicked
@@ -709,6 +720,11 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
          }
       }
    }//GEN-LAST:event_carPanelMouseClicked
+
+   private void plateTextActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_plateTextActionPerformed
+   {//GEN-HEADEREND:event_plateTextActionPerformed
+      // TODO add your handling code here:
+   }//GEN-LAST:event_plateTextActionPerformed
 
     /**
      * @param args the command line arguments
