@@ -858,10 +858,11 @@ public class H2_DB_Test {
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
             //Write the information to the permits table in the database
-            statement.executeUpdate("INSERT INTO permits VALUES('" + newPlate.getPlateNo()
+            String queryStatement = "INSERT INTO permits VALUES('" + newPlate.getPlateNo()
                     + "', '" + newPlate.getState() + "', '" + newPlate.getPermit() + "', '"
                     + newPlate.getMake() + "', '" + newPlate.getModel() + "', '"
-                    + newPlate.getColor() + "', '" + newPlate.getNumViolations() + "')" );
+                    + newPlate.getColor() + "', '" + newPlate.getNumViolations() + "')";
+            statement.executeUpdate(queryStatement);
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -884,7 +885,7 @@ public class H2_DB_Test {
     /*
       * This function is for updating the number of violations related to a license plate
       */
-    public void ticket(PlateInformation violationPlate)
+    public void ticket(String violationPlate)
     {
        // load the H2-JDBC driver using the current class loader
         try
@@ -904,9 +905,17 @@ public class H2_DB_Test {
             connection = DriverManager.getConnection("jdbc:h2:file:data/LicensePlateDb");
             Statement statement = connection.createStatement();
             statement.setQueryTimeout(30);  // set timeout to 30 sec.
-            //Update the number of violations
-            statement.executeUpdate("UPDATE permits SET numViolations='" 
-                    + violationPlate.getNumViolations() + "' WHERE plate='" + violationPlate.getPlateNo() + "'");
+            
+            //Create SQL command
+            String queryStatement = "SELECT numViolations FROM permits WHERE plate='" + violationPlate + "'";
+            // Send an SQL Query
+           ResultSet rs = statement.executeQuery(queryStatement);          
+           //Update the number of violations
+           rs.next();
+           int tmp = Integer.parseInt(rs.getString("numViolations"));
+           tmp++;
+           statement.executeUpdate("UPDATE permits SET numViolations='" 
+                    + Integer.toString(tmp) + "' WHERE plate='" + violationPlate + "'");
         }
         catch(SQLException e) {
             // if the error message is "out of memory",
@@ -923,7 +932,6 @@ public class H2_DB_Test {
 
             }
         }
-
     }
 }
 
