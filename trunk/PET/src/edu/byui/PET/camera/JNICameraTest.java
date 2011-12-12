@@ -7,6 +7,7 @@ package edu.byui.PET.camera;
 import edu.byui.PET.ClockLabel;
 import edu.byui.PET.images.CameraImagePanel;
 import edu.byui.PET.images.DataFileImagePanel;
+import edu.byui.PET.images.Refresher;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -14,8 +15,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import javax.swing.Timer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
@@ -44,6 +43,7 @@ public class JNICameraTest
     */
    public static JTextField textField;
    public static ClockLabel clock;
+   public static Refresher refresh;
 
    /**
     * @param args the command line arguments
@@ -123,17 +123,19 @@ public class JNICameraTest
             }
          }
       });
+      
+      refresh = new Refresher(image2);
 
       aJFrame.add(button, BorderLayout.PAGE_END);
       aJFrame.add(clock, BorderLayout.NORTH);
       aJFrame.add(image2, BorderLayout.CENTER);
-      new Thread(new Refresher(image2)).start();
+      new Thread(refresh).start();
       aJFrame.setVisible(true);
       Timer t = new Timer(1000, clock);
       t.start();
    }
 
-   private class Refresher extends Thread
+  /* private class Refresher extends Thread
    {
 
       CameraImagePanel image;
@@ -168,5 +170,5 @@ public class JNICameraTest
             }
          }
       }
-   }
+   }*/
 }

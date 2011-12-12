@@ -82,6 +82,12 @@ public class ImagePanel
       }
    }
 
+   @Override
+   public void paint(Graphics g)
+   {
+      super.paint(g);
+   }
+
    /**
     * Overrides the paintComponent to display the background Image
     *
