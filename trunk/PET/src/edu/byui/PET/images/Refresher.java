@@ -57,6 +57,15 @@ public class Refresher extends Thread
    {
       while(!die)
       {
+         try
+         {
+            Refresher.sleep(delay);
+         }
+         catch (InterruptedException ex)
+         {
+            Logger.getLogger(JNICameraTest.class.getName()).log(Level.SEVERE, null, ex);
+            ex.printStackTrace();
+         }
          if(!paused)
          {
             try
@@ -67,14 +76,7 @@ public class Refresher extends Thread
             catch (Exception ex)
             {
                Logger.getLogger(JNICameraTest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try
-            {
-               Refresher.sleep(delay);
-            }
-            catch (InterruptedException ex)
-            {
-               Logger.getLogger(JNICameraTest.class.getName()).log(Level.SEVERE, null, ex);
+               ex.printStackTrace();
             }
          }
       }
