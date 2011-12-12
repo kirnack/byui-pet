@@ -154,24 +154,45 @@ public class Photo {
     }
     
     static public float getBrightness(BufferedImage image, int x, int y) {
+        // Altered by Kyle Atkinson 2011.12.12
+        // Use any colorspace, not just RGB
+        int rgb = image.getRGB(x, y);
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = rgb & 0xFF;
+        /*
         int r = image.getRaster().getSample(x,y,0);
         int g = image.getRaster().getSample(x,y,1);
-        int b = image.getRaster().getSample(x,y,2);
+        int b = image.getRaster().getSample(x,y,2);*/
         float[] hsb = Color.RGBtoHSB(r,g,b,null);
         return hsb[2];
     }
     static public float getSaturation(BufferedImage image, int x, int y) {
+        // Altered by Kyle Atkinson 2011.12.12
+        // Use any colorspace, not just RGB
+        int rgb = image.getRGB(x, y);
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = rgb & 0xFF;
+        /*
         int r = image.getRaster().getSample(x,y,0);
         int g = image.getRaster().getSample(x,y,1);
-        int b = image.getRaster().getSample(x,y,2);
+        int b = image.getRaster().getSample(x,y,2);*/
 
         float[] hsb = Color.RGBtoHSB(r,g,b,null);
         return hsb[1];
     }
     static public float getHue(BufferedImage image, int x, int y) {
+        // Altered by Kyle Atkinson 2011.12.12
+        // Use any colorspace, not just RGB
+        int rgb = image.getRGB(x, y);
+        int r = (rgb >> 16) & 0xFF;
+        int g = (rgb >> 8) & 0xFF;
+        int b = rgb & 0xFF;
+        /*
         int r = image.getRaster().getSample(x,y,0);
         int g = image.getRaster().getSample(x,y,1);
-        int b = image.getRaster().getSample(x,y,2);
+        int b = image.getRaster().getSample(x,y,2);*/
 
         float[] hsb = Color.RGBtoHSB(r,g,b,null);
         return hsb[0];
@@ -288,7 +309,10 @@ public class Photo {
     }
     static public BufferedImage duplicateBufferedImage(BufferedImage image) {
         BufferedImage imageCopy = new BufferedImage(image.getWidth(),image.getHeight(),BufferedImage.TYPE_INT_RGB);
-        imageCopy.setData(image.getData());
+        // Altered by Kyle Atkinson 2011.12.12
+        // Draw the image to ensure that it is in RGB
+        imageCopy.getGraphics().drawImage(image, 0, 0, null);
+        //imageCopy.setData(image.getData());
         return imageCopy;
     }
     

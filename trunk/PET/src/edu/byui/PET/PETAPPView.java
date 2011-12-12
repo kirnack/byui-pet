@@ -58,7 +58,7 @@ public class PETAPPView extends javax.swing.JFrame {
                 plateImage = reader.getPlate();
             } catch (Exception e) {
                 // TODO: Make GUI Error Window
-                System.err.println(e.getMessage());
+                e.printStackTrace();
             }
             parent.getThreadOutput(output, plateImage);
         }
@@ -73,6 +73,7 @@ public class PETAPPView extends javax.swing.JFrame {
     private int currentTestPhoto = 0;  //Used for testing
     private File[] photoList = null;  // Used for testing
 
+    private BaslerA311JNI camera;
     private Refresher refresh;
     
     /** Creates new form PETAPPView */
@@ -93,6 +94,7 @@ public class PETAPPView extends javax.swing.JFrame {
         photoList = folder.listFiles();  //Used for testing
         refresh = new Refresher((CameraImagePanel)carPanel);
         refresh.pause();
+        camera = new BaslerA311JNI(new PETConfiguration(PETConfiguration.GRAY_SCALE));
         new Thread(refresh).start();
     }
     /** This method is called from within the constructor to
@@ -559,6 +561,11 @@ public void getThreadOutput(String outText, BufferedImage outImage) {
         String location = "";
 
         // Display the plate image
+        if (plateImage == null){
+        ((ImagePanel) platePanel).setImageIcon(new ImageIcon(carImage));
+        System.out.println(carImage.getClass());
+        }
+        else
         ((ImagePanel) platePanel).setImageIcon(new ImageIcon(plateImage));
         platePanel.repaint();
         //platePanelImage = Photo.linearResizeBi(plateImage,platePanel.getWidth(),platePanel.getHeight());
@@ -620,7 +627,7 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
             // This code used for testing
            if(BaslerA311JNI.class.isInstance(((CameraImagePanel)carPanel).getCamera()))
            {
-              System.err.println("Garbing Image");
+              System.err.println("Grabbing Image");
               ((CameraImagePanel) carPanel).capture();
               //new Thread(new Refresher((CameraImagePanel)carPanel)).start();
            }
@@ -640,8 +647,13 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
             System.err.println(e.getMessage());
         }
         
-        carImage = ((ImagePanel) carPanel).getBufferedImage();
+        carImage = javaanpr.imageanalysis.Photo.duplicateBufferedImage(((CameraImagePanel) carPanel).getBufferedImage());
         plateText.setText("Reading...");
+
+        // This code forces a deep copy
+        java.awt.image.ColorModel cm = carImage.getColorModel();
+        java.awt.image.WritableRaster raster = carImage.copyData(null);
+        carImage = new BufferedImage(cm, raster, cm.isAlphaPremultiplied(), null);
 
         // Pass the image to the recognize function (runs in new thread to keep the GUI from freezing)
         subThread.loadImage(carImage);
@@ -723,8 +735,7 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
       {
          try
          {
-            ((CameraImagePanel) carPanel).setCamera(new BaslerA311JNI(
-                    new PETConfiguration(PETConfiguration.GRAY_SCALE)));
+            ((CameraImagePanel) carPanel).setCamera(camera);
             refresh.play();
          }
          catch(Exception e)

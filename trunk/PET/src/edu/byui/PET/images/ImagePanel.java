@@ -123,11 +123,16 @@ public class ImagePanel
 
    public void setImageIcon(ImageIcon pImg)
    {
-      if(pImg != null)
+      if(pImg.getImage() != null)
       {
          image = pImg;
          resizeImage(getWidth(), getHeight());
          paint(getGraphics());
+      }
+      else
+      {
+         image = new ImageIcon();
+         getGraphics().clearRect(0, 0, getWidth(), getHeight());
       }
    }
 
