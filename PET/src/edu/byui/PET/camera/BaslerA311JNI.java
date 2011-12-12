@@ -99,6 +99,7 @@ public BaslerA311JNI(Configuration pCs)
       return ptr;
    }
 
+
    
    private native long createCamera();
    private native byte[] getCameraData(long ptr, long size);
