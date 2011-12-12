@@ -2,11 +2,11 @@ package edu.byui.PET.images;
 
 import edu.byui.PET.camera.Camera;
 import edu.byui.PET.camera.PETProcCamera;
+import java.awt.Graphics;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import java.awt.image.*;
-import java.awt.Image;
 
 /**
  * 
@@ -30,13 +30,20 @@ public class CameraImagePanel extends ImagePanel
       
    }
    
-   public CameraImagePanel(Camera pCam)  throws Exception
+   public CameraImagePanel(Camera pCam)
    {
       cam = pCam;
-      cam.captureImage();
-      image = new ImageIcon(cam.getImage());
+      try
+      {
+         cam.captureImage();
+         image = new ImageIcon(cam.getImage());
+      }
+      catch (Exception e)
+      {
+         
+      }
    }
-
+  
    /**
     * 
     * @return
@@ -87,9 +94,19 @@ public class CameraImagePanel extends ImagePanel
       int w = image.getIconWidth();
       int h = image.getIconHeight();
       resizeImage(w, h);
-      repaint();
+      super.paint(getGraphics());
    }
 
+   public void setCamera(Camera pCam)
+   {
+      cam = pCam;
+   }
+   
+   public Camera getCamera()
+   {
+      return cam;
+   }
+   
    /**
     * 
     * @return

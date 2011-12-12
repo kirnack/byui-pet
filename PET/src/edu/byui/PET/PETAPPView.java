@@ -12,6 +12,7 @@ package edu.byui.PET;
 
 
 import edu.byui.PET.camera.BaslerA311JNI;
+import edu.byui.PET.camera.BufferedImageCamera;
 import edu.byui.PET.camera.PETConfiguration;
 import edu.byui.PET.util.*;
 import edu.byui.PET.h2_db.*;
@@ -72,6 +73,8 @@ public class PETAPPView extends javax.swing.JFrame {
     private int currentTestPhoto = 0;  //Used for testing
     private File[] photoList = null;  // Used for testing
 
+    private Refresher refresh;
+    
     /** Creates new form PETAPPView */
     public PETAPPView() {
 
@@ -88,6 +91,9 @@ public class PETAPPView extends javax.swing.JFrame {
 
         File folder = new File("./resources/realTestImages");  //Used for testing
         photoList = folder.listFiles();  //Used for testing
+        refresh = new Refresher((CameraImagePanel)carPanel);
+        refresh.pause();
+        new Thread(refresh).start();
     }
     /** This method is called from within the constructor to
      * initialize the form.
@@ -102,7 +108,7 @@ public class PETAPPView extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new ClockLabel();
         captureButton = new javax.swing.JButton();
-        carPanel = new ImagePanel();
+        carPanel = new CameraImagePanel(new BufferedImageCamera());
         jTextField1 = new javax.swing.JTextField();
         LotSelect = new javax.swing.JComboBox();
         jComboBox1 = new javax.swing.JComboBox();
@@ -612,10 +618,11 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
         // Get the image from the Camera
         try {
             // This code used for testing
-           if(CameraImagePanel.class.isInstance(carPanel))
+           if(BaslerA311JNI.class.isInstance(((CameraImagePanel)carPanel).getCamera()))
            {
               System.err.println("Garbing Image");
               ((CameraImagePanel) carPanel).capture();
+              //new Thread(new Refresher((CameraImagePanel)carPanel)).start();
            }
            else
            {
@@ -624,7 +631,8 @@ private void plateTextChanged(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_pl
                 currentTestPhoto = (currentTestPhoto + 1) % photoList.length;
             } while (!photoList[currentTestPhoto].getAbsolutePath().toLowerCase().endsWith(".jpg") &&
                     !photoList[currentTestPhoto].getAbsolutePath().toLowerCase().endsWith(".bmp"));
-            ((ImagePanel) carPanel).setImageIcon(photoList[currentTestPhoto]);
+            System.err.println(((BufferedImageCamera) ((CameraImagePanel) carPanel).getCamera()).setImage(photoList[currentTestPhoto]));
+            ((CameraImagePanel) carPanel).capture();
            }
             
         } catch (Exception e) {
@@ -689,8 +697,10 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
     if(licenseFound == false)
     {
       PlateInformation newPlate = new PlateInformation(plateText.getText().toUpperCase(),
-                     jTextField8.getText().toUpperCase(), " ", jTextField2.getText().toUpperCase(),
-                     jTextField4.getText().toUpperCase(), jTextField3.getText().toUpperCase(), "1");
+                     jTextField8.getText().toUpperCase(), " ",
+                     jTextField2.getText().toUpperCase(),
+                     jTextField4.getText().toUpperCase(), 
+                     jTextField3.getText().toUpperCase(), "1");
       h2.writeToPermitDb(newPlate);
     }
     else
@@ -703,22 +713,27 @@ private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRS
 
    private void carPanelMouseClicked(java.awt.event.MouseEvent evt)//GEN-FIRST:event_carPanelMouseClicked
    {//GEN-HEADEREND:event_carPanelMouseClicked
-      if (CameraImagePanel.class.isInstance(carPanel))
+      if (BaslerA311JNI.class.isInstance(((CameraImagePanel) carPanel).getCamera()))
       {
-         carPanel = new ImagePanel();
+         ((CameraImagePanel) carPanel).setCamera(new BufferedImageCamera(
+                 photoList[currentTestPhoto]));
+         refresh.pause();
       }
       else
       {
          try
          {
-            carPanel = new CameraImagePanel(new BaslerA311JNI(new PETConfiguration(PETConfiguration.GRAY_SCALE)));
-            carPanel.repaint();
+            ((CameraImagePanel) carPanel).setCamera(new BaslerA311JNI(
+                    new PETConfiguration(PETConfiguration.GRAY_SCALE)));
+            refresh.play();
          }
          catch(Exception e)
          {
-            carPanel = new ImagePanel();
+            ((CameraImagePanel) carPanel).setCamera(new BufferedImageCamera(
+                 photoList[currentTestPhoto]));
          }
       }
+      carPanel.repaint();
    }//GEN-LAST:event_carPanelMouseClicked
 
    private void plateTextActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_plateTextActionPerformed
