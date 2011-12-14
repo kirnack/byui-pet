@@ -18,8 +18,12 @@
 char* getDIR();
 #define HOME_DIR getDIR()
 
-#ifdef _WIN32_
+#ifdef _WIN32_ || __WIN32 || WIN32
 #include <windows.h>
+#include <winbase.h>
+
+using namespace std;
+
 char* getDIR()
 {
    WCHAR path[MAX_PATH];
@@ -27,18 +31,44 @@ char* getDIR()
                                 SHGFP_TYPE_CURRENT, path);
    return path;
 }
+
+JNIFileCamera::JNIFileCamera() {
+  
+  ifstream fin;
+  string filepath;
+  string dir = HOME_DIR;
+  dir += "/.petdata";
+  size = 0;
+  pos = 0;
+  max = 10;
+  files = new imageTable[max];
+  WIN32_FIND_DATA fd;
+  HANDLE hFind = ::FindFirstFile(dir.c_str(), &fd);
+  if(hFind != INVALID_HANDLE_VALUE)
+  {
+      do
+      {
+          if(!(fd.dwFIleAttributes & FILE_ATTRIBUTE_DIRECTORY))
+          {
+              wstring filepath = dir;
+              filepath.append(fd.cFileName);
+              parserImageTable(filepath);
+          }
+      }while(::FindNextFile(hFind, &fd));
+      ::FindClose(hFind);
+  }
+  if (size < 1)
+        exit(1);
+}
+
 #else
 #include <pwd.h>
 #include <sys/types.h>
-
+using namespace std;
 char* getDIR()
 {
    return getpwuid(getuid())->pw_dir;
 }
-#endif
-
-
-using namespace std;
 
 JNIFileCamera::JNIFileCamera() {
   
@@ -61,15 +91,7 @@ JNIFileCamera::JNIFileCamera() {
 
   while ((dirp = readdir( dp )))
   {
-      if (size == max)
-      {
-          max += 10;
-          imageTable* temp = new imageTable[max];
-          for(int i = 0; i < size; i ++)
-              temp[i] = files[i];
-          delete [] files;
-          files = temp;
-      }
+      
     filepath = dir + "/" + dirp->d_name;
 
     // If the file is a directory (or is in some way invalid) we'll skip it 
@@ -77,7 +99,31 @@ JNIFileCamera::JNIFileCamera() {
     if (S_ISDIR( filestat.st_mode ))         continue;
 
     // Endeavor to read a single number from the file and display it
-    fin.open( filepath.c_str() );
+    parseImageTable(filepath);
+  }
+
+  closedir( dp );
+  if (size < 1)
+        exit(1);
+}
+#endif
+
+
+void JNIFileCamera::parseImageTable(PATH_STRING path)
+{
+    if (size == max)
+              {
+                max += 10;
+                imageTable* temp = new imageTable[max];
+                for(int i = 0; i < size; i ++)
+                        temp[i] = files[i];
+                delete [] files;
+                files = temp;
+              }
+    ifstream fin;
+    fin.open( path.c_str() );
+    if(fin.fail())
+        return;
     char num[4];
     fin.read(num, 3);
     files[size].x = atoi(num);
@@ -85,11 +131,9 @@ JNIFileCamera::JNIFileCamera() {
     files[size].y = atoi(num);
     files[size].data = new char[files[size].x * files[size].y];
     fin.read(files[size].data, files[size].x * files[size].y);
-    size++;
+    if(files[size].x * files[size].y > 0)
+        size++;
     fin.close();
-  }
-
-  closedir( dp );
 }
 
 JNIFileCamera::JNIFileCamera(const JNIFileCamera& orig)
