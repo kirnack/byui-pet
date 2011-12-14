@@ -7,6 +7,14 @@
 
 #ifndef JNIFILECAMERA_H
 #define	JNIFILECAMERA_H
+#include <string>
+using namespace std;
+
+#ifdef _WIN32_ || __WIN32 || WIN32
+#define PATH_STRING wstring
+#else
+#define PATH_STRING string
+#endif
 
 struct imageTable
 {
@@ -28,6 +36,7 @@ private:
     int max;
     int pos;
     imageTable* files;
+    void parseImageTable(PATH_STRING path);
 };
 
 #endif	/* JNIFILECAMERA_H */
