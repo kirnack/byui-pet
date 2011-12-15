@@ -6,7 +6,7 @@ import java.awt.color.*;
  * An implementation of Configuration to set the needed configurations
  * for converting pixel data to a BufferedImage.
  * 
- * @author kirnack
+ * @author Bryon Rogers
  */
 public class PETConfiguration extends Configuration
 {
@@ -22,7 +22,7 @@ public class PETConfiguration extends Configuration
    public static final int BAYER_RG8 = 2;
    
    /**
-    * Creates a PETConfiguration of the given type.
+    * Creates a  PETConfiguration of the given type.
     * 
     * @param ImageType Configuration type integer.
     */

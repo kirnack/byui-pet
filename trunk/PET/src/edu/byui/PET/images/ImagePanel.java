@@ -15,8 +15,8 @@ import java.io.File;
 import javax.imageio.ImageIO;
 
 /**
- *
- *
+ * A JPanel to display a picture on.
+ * @author Bryon Rogers
  **/
 @SuppressWarnings("serial")
 public class ImagePanel
@@ -24,7 +24,7 @@ public class ImagePanel
 {
 
    /**
-    * Holds the Wanted background Image
+    * Holds the wanted background Image
     **/
    protected ImageIcon image;
    /**
@@ -37,7 +37,7 @@ public class ImagePanel
    private String backLoc;
 
    /**
-    *
+    * Creates a default  ImagePanel and sets up the resize listener.
     */
    public ImagePanel()
    {
@@ -67,7 +67,7 @@ public class ImagePanel
    /**
     * Creates a new BackgroundPanel
     *
-    * @param pURL
+    * @param pURL  URL of the file to load.
     */
    public ImagePanel(URL pURL)
    {
@@ -82,6 +82,10 @@ public class ImagePanel
       }
    }
 
+   /**
+    * Overrides paints
+    * @param g  Graphics to paint on.
+    */
    @Override
    public void paint(Graphics g)
    {
@@ -91,7 +95,7 @@ public class ImagePanel
    /**
     * Overrides the paintComponent to display the background Image
     *
-    * @param g
+    * @param g  Graphics to paint on.
     */
    @Override
    protected void paintComponent(Graphics g)
@@ -105,7 +109,7 @@ public class ImagePanel
    }
 
    /**
-    * changes the image icon to the specificed address in the config file
+    * Changes the image icon to the specified address in the config file
     **/
    public void getImageLoc()
    {
@@ -121,6 +125,11 @@ public class ImagePanel
       }
    }
 
+   /**
+    * Loads a pImg into the  ImagePanel.
+    * 
+    * @param pImg  ImageIcon to load.
+    */
    public void setImageIcon(ImageIcon pImg)
    {
       if(pImg.getImage() != null)
@@ -136,6 +145,11 @@ public class ImagePanel
       }
    }
 
+   /**
+    * Loads a image located at file into the  ImagePanel.
+    * 
+    * @param file Path to image to load.
+    */
    public void setImageIcon(File file)
    {
       try
@@ -149,9 +163,10 @@ public class ImagePanel
    }
    
    /**
-    *
-    * @param newW
-    * @param newH
+    * Resizes the image being displayed, not the camera's configuration.
+    * 
+    * @param newW New width.
+    * @param newH New height.
     */
    public void resizeImage(int newW, int newH)
    {
@@ -170,14 +185,20 @@ public class ImagePanel
    }
    
    /**
+    * Returns the current image as a  BufferedImage.
     * 
-    * @return
+    * @return A  BufferedImage of the current image.
     */
    public Image getImage()
    {
       return getBufferedImage();
    }
 
+   /**
+    * Converts an  ImageIcon to a  BufferedImage.
+    * 
+    * @return A  BufferedImage of the current image.
+    */
    public BufferedImage converToBuffereImage()
    {
       BufferedImage buff;
@@ -193,8 +214,9 @@ public class ImagePanel
    }
    
    /**
+    * Returns the current  BufferedImage.
     * 
-    * @return
+    * @return The current  BufferedImage.
     */
    public BufferedImage getBufferedImage()
    {

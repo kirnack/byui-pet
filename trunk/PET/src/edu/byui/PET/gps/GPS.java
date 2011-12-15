@@ -4,10 +4,27 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 
+/**
+ * JNI Class to talk to the GPS
+ * @author Bryon Rogers
+ */
 public class GPS
 {
+   /**
+    * Long containing the address of the underlying c++ GPS object.
+    */
    private long ptr;
+   /**
+    * True if the JNI code was loaded.
+    */
    private static boolean loaded;
+   
+   /**
+    * Moves to a temp folder and loads a JNI library
+    * 
+    * @param path Path of temp folder.
+    * @param name Name of JNI lib to load.
+    */
    static void loadLib(String path, String name)
    {
       try
@@ -39,6 +56,9 @@ public class GPS
       }
    }
 
+   /**
+    * Loads the appropriate JNI lib based on OS. Currently only WIN32 supported.
+    */
    static
    {
       if(System.getProperty("os.name").toLowerCase().indexOf("win") >= 0)
@@ -62,6 +82,9 @@ public class GPS
 
    }
 
+   /**
+    * Creates a GPS object and to load from JNI code.
+    */
    public GPS()
    {
       if(loaded)
@@ -70,6 +93,11 @@ public class GPS
       }
    }
 
+   /**
+    * Gets the current GPS data. If GPS is not loaded the will return "No data."
+    * 
+    * @return The bytes of the GPS string.
+    */
    public byte[] getGPSData()
    {
       if (loaded)
@@ -78,10 +106,14 @@ public class GPS
       }
       else
       {
-         return ("No datat.".getBytes());
+         return ("No data.".getBytes());
       }
    }
 
+   /**
+    * Takes the bytes from getGPSData() and creates a String from it.
+    * @return Returns a string of the GPS data.
+    */
    public String getGPSString()
    {
       String buffer = new String(getGPSData());
@@ -111,7 +143,18 @@ public class GPS
       return buffer;
    }
 
+   /**
+    * JNI GPS creation function.
+    * @return Address of the C++ JNI GPS object.
+    */
    private native long createGPS();
+   
+   /**
+    * Retrieves a byte[] of C++ GPS data.
+    * 
+    * @param ptr Address of the C++ GPS object.
+    * @return A byte[] of C++ GPS data.
+    */
    private native byte[] getGPSData(long ptr);
 
 }

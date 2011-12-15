@@ -6,7 +6,7 @@ import java.io.*;
  * PETCamera to read saved of pixel data. Used for initial testing of camera
  * communication.
  * 
- * @author kirnack
+ * @author Bryon Rogers
  */
 public class PETFileCamera extends PETCamera
 {
@@ -26,7 +26,7 @@ public class PETFileCamera extends PETCamera
    }
 
    /**
-    * Creates a PETFileCamera and loads the file at the path pFile into the
+    * Creates a  PETFileCamera and loads the file at the path pFile into the
     * camera, with a GRAY_SCALE configuration.
     * 
     * @param pFile Path to the file to load.
@@ -58,7 +58,7 @@ public class PETFileCamera extends PETCamera
    /**
     * Changes the file loaded in the image.
     * 
-    * @param pIn InputStream to use.
+    * @param pIn  InputStream to use.
     * @return True if loading was successful.
     * @throws IOException
     */

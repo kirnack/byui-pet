@@ -13,8 +13,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 /**
- *
- * @author kirnack
+ * A JNICamera to be an example of what to do to implement a JNICamera.
+ * 
+ * @author Bryon Rogers
  */
 public class JNICamera extends PETCamera
 {
@@ -181,7 +182,7 @@ public class JNICamera extends PETCamera
    }
 
    /*
-    *
+    * Retr
     */
    @Override
    public boolean retrieveData() throws IOException
@@ -199,8 +200,9 @@ public class JNICamera extends PETCamera
    }
 
    /**
+    * Returns the address of the C++ JNI Camera.
     * 
-    * @return
+    * @return The address of the JNICamera.
     */
    protected long getPtr()
    {

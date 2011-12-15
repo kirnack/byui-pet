@@ -12,7 +12,7 @@ import java.io.InputStream;
 /**
  * A Camera Class that accesses the BaslerA311 camera
  * via JNI.
- * @author kirnack
+ * @author Bryon Rogers
  */
 public class BaslerA311JNI extends PETCamera
 {
@@ -95,7 +95,8 @@ public class BaslerA311JNI extends PETCamera
 
    /**
     * Retrieves the width and height of the image, sets the configuration
-    * x and y appropriately. Then it gets the pixel data from the BaslerA311JNI.
+    * x and y appropriately. Then it gets the pixel data from the
+    * BaslerA311JNI.
     */
    @Override
    public boolean retrieveData() throws IOException
