@@ -170,6 +170,10 @@ public class JNICamera extends PETCamera
 
    private long ptr;
 
+   /**
+    * 
+    * @param pCs
+    */
    public JNICamera(Configuration pCs)
    {
       super(pCs);
@@ -194,6 +198,10 @@ public class JNICamera extends PETCamera
       return result;
    }
 
+   /**
+    * 
+    * @return
+    */
    protected long getPtr()
    {
       return ptr;

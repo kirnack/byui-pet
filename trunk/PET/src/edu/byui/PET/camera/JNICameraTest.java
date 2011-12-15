@@ -20,7 +20,8 @@ import javax.swing.JFrame;
 import javax.swing.JTextField;
 
 /**
- *
+ * Tests the JNICamera or BaslerA311JNI
+ * 
  * @author kirnack
  */
 public class JNICameraTest
@@ -42,10 +43,17 @@ public class JNICameraTest
     *
     */
    public static JTextField textField;
+   /**
+    * 
+    */
    public static ClockLabel clock;
+   /**
+    * 
+    */
    public static Refresher refresh;
 
    /**
+    * Creates the test
     * @param args the command line arguments
     */
    public static void main(String[] args)
@@ -53,6 +61,9 @@ public class JNICameraTest
       new JNICameraTest();
    }
 
+   /**
+    * Creates a JNICameraTestObject to test the camera.
+    */
    public JNICameraTest()
    {
       try
@@ -134,41 +145,4 @@ public class JNICameraTest
       Timer t = new Timer(1000, clock);
       t.start();
    }
-
-  /* private class Refresher extends Thread
-   {
-
-      CameraImagePanel image;
-
-      Refresher(CameraImagePanel pImg)
-      {
-         image = pImg;
-      }
-
-      @Override
-      public void run()
-      {
-         while (true)
-         {
-            try
-            {
-               System.err.println("refreshing");
-               image.capture();
-               System.err.println("refreshed");
-            }
-            catch (Exception ex)
-            {
-               Logger.getLogger(JNICameraTest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            try
-            {
-               Refresher.sleep(1);
-            }
-            catch (InterruptedException ex)
-            {
-               Logger.getLogger(JNICameraTest.class.getName()).log(Level.SEVERE, null, ex);
-            }
-         }
-      }
-   }*/
 }
