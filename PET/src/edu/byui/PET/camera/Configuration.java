@@ -3,6 +3,8 @@ package edu.byui.PET.camera;
 import java.awt.color.*;
 
 /**
+ * Represents the width, height, bits per pixel and ColorSpcae of the images
+ * from a camera.
  * 
  * @author kirnack
  */
@@ -10,29 +12,34 @@ public class Configuration
 {
 
    /**
-    * 
+    * Width of the images in pixels.
     */
    protected int xRes = 0;
+   
    /**
-    * 
+    * Height of the images in pixels.
     */
    protected int yRes = 0;
+   
    /**
-    * 
+    * Number of bits per pixel
     */
    protected int bitsPerPixel = 0;
+   
    /**
-    * 
+    * The number of bits for each color.
     */
    protected int[] nBits = null;
+   
    /**
-    * 
+    * ColorSpace of the images.
     */
    protected ColorSpace cs = null;
 
    /**
+    * Returns the width of the images from the camera.
     * 
-    * @return
+    * @return The width of the images.
     */
    public int getXRes()
    {
@@ -40,8 +47,9 @@ public class Configuration
    }
 
    /**
+    * Sets the width of the images.
     * 
-    * @param n
+    * @param n New width of the images.
     */
    public void setXRes(int n)
    {
@@ -49,8 +57,9 @@ public class Configuration
    }
 
    /**
+    * Returns the height of the images from the camera.
     * 
-    * @return
+    * @return The height of the images.
     */
    public int getYRes()
    {
@@ -58,8 +67,9 @@ public class Configuration
    }
 
    /**
+    * Sets the height of the images.
     * 
-    * @param n
+    * @param n New height of the images.
     */
    public void setYRes(int n)
    {
@@ -67,8 +77,9 @@ public class Configuration
    }
 
    /**
+    * Returns the number of bits per pixel.
     * 
-    * @return
+    * @return The number of bits per pixel in an integer.
     */
    public int getBPP()
    {
@@ -76,8 +87,9 @@ public class Configuration
    }
 
    /**
+    * Returns an array containing the number of bits per color.
     * 
-    * @return
+    * @return An integer array with the number of bits for each color.
     */
    public int[] getNBits()
    {
@@ -85,8 +97,9 @@ public class Configuration
    }
 
    /**
+    * Returns the ColorSpace associated with the images.
     * 
-    * @return
+    * @return The ColorSpace associated with the images.
     */
    public ColorSpace getColorSpace()
    {
@@ -95,8 +108,8 @@ public class Configuration
 
    /**
     * 
-    * @param pCam
-    * @return
+    * @param pCam The camera to configure with the settings.
+    * @return True if the configuration was successful.
     */
    public boolean configure(Camera pCam)
    {

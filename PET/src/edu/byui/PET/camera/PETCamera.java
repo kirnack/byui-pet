@@ -5,6 +5,9 @@ import java.awt.image.*;
 import java.awt.*;
 
 /**
+ * An abstract camera for the PET project, that will take the pixel data
+ * and create a BufferedImage from it. It calls has a private retrieveData()
+ * method to actually get the camera data from the hardware camera.
  * 
  * @author kirnack
  */
@@ -12,8 +15,9 @@ public abstract class PETCamera extends Camera
 {
 
    /**
+    * Creates a PETCamera with pCS as it's configuration.
     * 
-    * @param pCS
+    * @param pCS The configuration for the Camera.
     */
    public PETCamera(Configuration pCS)
    {
@@ -21,10 +25,11 @@ public abstract class PETCamera extends Camera
    }
 
    /**
+    * Creates a PETCamera
     * 
-    * @param pCS
-    * @param pX
-    * @param pY
+    * @param pCS The Configuration for the camera.
+    * @param pX  The width (a.k.a. X)
+    * @param pY  The height (a.k.a. Y)
     */
    public PETCamera(Configuration pCS, int pX, int pY)
    {
@@ -34,10 +39,11 @@ public abstract class PETCamera extends Camera
    }
 
    /**
+    * Changes the resolution of the Camera to pX x xY.
     * 
-    * @param pX
-    * @param pY
-    * @return
+    * @param pX  The width (a.k.a. X)
+    * @param pY  The height (a.k.a. Y)
+    * @return True if the resolution was changed.
     */
    public boolean setRes(int pX, int pY)
    {
@@ -54,15 +60,17 @@ public abstract class PETCamera extends Camera
    }
 
    /**
+    * Retrieves data from the underling hardware camera.
     * 
-    * @return
+    * @return True if the data was retrieved.
     * @throws IOException
     */
    public abstract boolean retrieveData() throws IOException;
 
    /**
+    * Creates a BufferedImage from a new image from the hardware camera.
     * 
-    * @return
+    * @return True if it was successful in capturing the new image.
     * @throws IOException
     */
    public boolean captureImage() throws IOException

@@ -7,6 +7,12 @@ import java.awt.*;
 import java.awt.color.*;
 
 /**
+ * A Camera class used to represent a camera in the PET software. This is an
+ * abstract class. The captureImage() function in not implemented, due to the
+ * nature that each camera will have a different way of processing the pixel
+ * data.
+ * 
+ * The configuration of the camera is stored in a Configuration object.
  * 
  * @author kirnack
  */
@@ -14,15 +20,15 @@ public abstract class Camera
 {
 
    /**
-    * 
+    * Configuration of the camera.
     */
    protected Configuration config = null;
    /**
-    * 
+    * A buffered image containing the current image.
     */
    protected BufferedImage image = null;
    /**
-    * 
+    * Contains the byte values of the current image.
     */
    protected byte[] data = null;
 
@@ -42,8 +48,9 @@ public abstract class Camera
    }
 
    /**
+    * Returns the current image in a BufferedImage.
     * 
-    * @return
+    * @return The current image as a BufferedImage.
     * @throws Exception
     */
    public BufferedImage getImage() throws Exception
@@ -66,16 +73,18 @@ public abstract class Camera
    }
 
    /**
+    * Abstract method that changes the current image to a new image.
     * 
-    * @return
+    * @return True if the capture was successful.
     * @throws IOException
     */
    public abstract boolean captureImage() throws IOException;
 
    /**
+    * Save the image to a JPEG.
     * 
-    * @param pFilename
-    * @return
+    * @param pFilename Filename of the created JPEG.
+    * @return True if the write was successful.
     */
    public boolean saveJPEG(String pFilename)
    {
@@ -95,8 +104,9 @@ public abstract class Camera
    }
 
    /**
+    * Save the image to a JPEG called "converted.jpg".
     * 
-    * @return
+    * @return True if the write was successful.
     */
    public boolean saveJPEG()
    {
@@ -104,9 +114,10 @@ public abstract class Camera
    }
 
    /**
+    * Changes the Camera's configuration.
     * 
-    * @param pConfig
-    * @return
+    * @param pConfig The new Configuration for the camera.
+    * @return True if the configuration was set correctly.
     */
    public boolean setConfiguration(Configuration pConfig)
    {

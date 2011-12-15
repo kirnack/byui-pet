@@ -3,6 +3,8 @@ package edu.byui.PET.camera;
 import java.io.*;
 
 /**
+ * PETCamera to read saved of pixel data. Used for initial testing of camera
+ * communication.
  * 
  * @author kirnack
  */
@@ -12,9 +14,10 @@ public class PETFileCamera extends PETCamera
    private InputStream in;
 
    /**
+    * Creates a PETFileCamera and loads pFile into the camera.
     * 
-    * @param pFile
-    * @param ImageType
+    * @param pFile File to open.
+    * @param ImageType Type of configuration to use.
     * @throws IOException
     */
    public PETFileCamera(String pFile, int ImageType) throws IOException
@@ -23,8 +26,10 @@ public class PETFileCamera extends PETCamera
    }
 
    /**
+    * Creates a PETFileCamera and loads the file at the path pFile into the
+    * camera, with a GRAY_SCALE configuration.
     * 
-    * @param pFile
+    * @param pFile Path to the file to load.
     * @throws IOException
     */
    public PETFileCamera(String pFile) throws IOException
@@ -39,9 +44,10 @@ public class PETFileCamera extends PETCamera
    }
 
    /**
+    * Changes the file loaded in the image.
     * 
-    * @param pFileName
-    * @return
+    * @param pFileName Path of file to load.
+    * @return True if load was successful.
     * @throws IOException
     */
    public boolean changeFile(String pFileName) throws IOException
@@ -50,9 +56,10 @@ public class PETFileCamera extends PETCamera
    }
 
    /**
+    * Changes the file loaded in the image.
     * 
-    * @param pIn
-    * @return
+    * @param pIn InputStream to use.
+    * @return True if loading was successful.
     * @throws IOException
     */
    public boolean changeFile(InputStream pIn) throws IOException
@@ -64,8 +71,10 @@ public class PETFileCamera extends PETCamera
    }
 
    /**
+    * Retrieves the data from the loaded file and places it into a
+    * BufferedImage.
     * 
-    * @return
+    * @return True if conversion was successful.
     * @throws IOException
     */
    public boolean retrieveData() throws IOException
