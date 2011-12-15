@@ -35,7 +35,7 @@ public class PETAPPView extends javax.swing.JFrame {
    
     Boolean licenseFound = false;
     /**
-     * 
+     * A thread to call JavaANPR to Recognize the plate form an image.
      */
     public class RecognizeThread extends Thread {
         BufferedImage carImage;
@@ -45,9 +45,9 @@ public class PETAPPView extends javax.swing.JFrame {
         PETAPPView parent;
 
         /**
-         * 
-         * @param myParent
-         * @param rec
+         * Creates a RecognizeThread
+         * @param myParent The Caller.
+         * @param rec Intelligence for Java ANPR
          */
         public RecognizeThread(PETAPPView myParent, Intelligence rec) {
             parent = myParent;
@@ -55,15 +55,15 @@ public class PETAPPView extends javax.swing.JFrame {
         }
 
         /**
-         * 
-         * @param image
+         * Loads an Image to recognize.
+         * @param image Image to be recognized.
          */
         public void loadImage(BufferedImage image) {
             carImage = image;
         }
 
         /**
-         * 
+         * Runs recognition
          */
         @ Override
         public void run() {
@@ -550,9 +550,10 @@ private void violationsBox(PlateInformation currentPlate,
 }
 
 /**
+ * Callback function for the thread for JavaANPR to do it's job.
  * 
- * @param outText
- * @param outImage
+ * @param outText Outputted Text.
+ * @param outImage BufferedIamge of the Plate.
  */
 public void getThreadOutput(String outText, BufferedImage outImage) {
         /*try {

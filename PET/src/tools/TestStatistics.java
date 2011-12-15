@@ -75,15 +75,8 @@ import java.io.FileReader;
 //import java.io.IOException;
 import java.util.Vector;
 
-/**
- * 
- * @author Kyle
- */
 public class TestStatistics {
-    
-   /**
-    * 
-    */
+
    public static String helpText = "" +
             "-----------------------------------------------------------\n"+
             "ANPR Statistics Generator\n"+
@@ -101,17 +94,10 @@ public class TestStatistics {
             "real plate and recognized plate string\n" +
             "Example : \n"+
             "001.jpg, 1B01234, 1B012??";
-    
-    /**
-     * 
-     */
+
     public TestStatistics() {
     }
-    
-    /**
-     * 
-     * @param args
-     */
+
     public static void main(String[] args) {
         if (args.length==2 &&
                 args[0].equals("-i")
