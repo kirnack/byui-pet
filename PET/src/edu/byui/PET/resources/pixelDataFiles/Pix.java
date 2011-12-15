@@ -5,8 +5,8 @@
 package edu.byui.PET.resources.pixelDataFiles;
 
 /**
- *
- * @author kirnack
+ * A class to allow access to files in this package.
+ * @author Bryon Rogers
  */
 public class Pix
 {

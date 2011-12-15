@@ -5,15 +5,34 @@ import java.awt.event.*;
 import javax.swing.*;
 import java.text.*;
 
+/**
+ * A JLabel that will display the current date and time and refresh itself.
+ * 
+ * @author Matt Jones
+ */
 public class ClockLabel extends JLabel implements ActionListener {
-  public String nowdate;
-  public String nowtime;
+   /**
+    * 
+    */
+   private String nowdate;
+   /**
+    * 
+    */
+   private String nowtime;
 
+  /**
+   * Creates a new ClockLabel
+   */
   public void ClockLabel()
   {
 
   }
 
+  /**
+   * Refreshes the data shown in the label.
+   * 
+   * @param ae ActionEvent that happened.
+   */
   public void actionPerformed(ActionEvent ae)
   {
      Format time = new  SimpleDateFormat("h:mm:ss a");
@@ -25,6 +44,14 @@ public class ClockLabel extends JLabel implements ActionListener {
     nowtime = time.format(d);
     //System.err.println("timer action fired");
   }
+  /**
+   * Get the current time as a String.
+   * @return String of the current time.
+   */
   public String getTime(){return(nowtime);}
+  /**
+   * Get the current date as a String.
+   * @return String of the current date.
+   */
   public String getDate(){return(nowdate);}
 }

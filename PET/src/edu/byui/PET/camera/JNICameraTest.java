@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 /**
  * Tests the JNICamera or BaslerA311JNI
  * 
- * @author kirnack
+ * @author Bryon Rogers
  */
 public class JNICameraTest
 {
@@ -30,27 +30,27 @@ public class JNICameraTest
    /**
     *
     */
-   public static JFrame aJFrame;
+   private static JFrame aJFrame;
    /**
     *
     */
-   public static DataFileImagePanel image;
+   private static DataFileImagePanel image;
    /**
     *
     */
-   public static CameraImagePanel image2;
+   private static CameraImagePanel image2;
    /**
     *
     */
-   public static JTextField textField;
+   private static JTextField textField;
    /**
     * 
     */
-   public static ClockLabel clock;
+   private static ClockLabel clock;
    /**
     * 
     */
-   public static Refresher refresh;
+   private static Refresher refresh;
 
    /**
     * Creates the test
@@ -62,7 +62,7 @@ public class JNICameraTest
    }
 
    /**
-    * Creates a JNICameraTestObject to test the camera.
+    * Creates a @see JNICameraTest object to test the camera.
     */
    public JNICameraTest()
    {

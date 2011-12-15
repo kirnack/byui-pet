@@ -13,17 +13,17 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 /**
- *
+ * A Java class for communicating with the tracking database.
+ * 
  * @author Ashcraft
  */
-
-
-
-
 public class H2_DB_Test {
 
 
-    public H2_DB_Test()
+   /**
+    * Loads and/or creates the tracking DB.
+    */
+   public H2_DB_Test()
     {
         try
         {
@@ -558,8 +558,11 @@ public class H2_DB_Test {
         }
     }
 
-    /*
-     * This function reads in a file containing all of the regular expression matching.
+    /**
+     * This function reads in a file containing all of the regular
+     * expression matching.
+     *
+     * @param regExpression String[] to hold the regExpression matching.
      */
     public void regularExpression(String[] regExpression)
     {
@@ -583,9 +586,12 @@ public class H2_DB_Test {
 
         }
     }
+    
     /**
+     * Creates a new H2_DB_Test object.
      * @author Kyle
      * @param args the command line arguments
+     * @throws ClassNotFoundException  
      */
     public static void main(String[] args) throws ClassNotFoundException {
 
@@ -593,11 +599,16 @@ public class H2_DB_Test {
 
     }
 
-    /*
+    /**
      * This function takes in a license plate number along with the gps coordinates and the time
      * where and when the license plate was seen, then searches the database to look for a possible match.
      * If there is a match then all of the information contained on the vehicle will be returned, 
      * otherwise null will be returned.
+     * 
+     * @param licenseNo Plate number to search for.
+     * @param location Location information of the current location.
+     * @param time Time the plate was looked up.
+     * @return
      */
     public PlateInformation lookUp(String licenseNo, String location, String time)
     {
@@ -721,9 +732,12 @@ public class H2_DB_Test {
         return (results);
     }
 
-    /*
-     * This function seached the logging table of the databse for a given license plate.
+    /**
+     * This function searched the logging table of the database for a given license plate.
      * A LoggingInformation object is returned, filled up with a match found, or just null.
+     *
+     * @param licenseNo Number to lookup in database.
+     * @return Logging information of the found license plate number.
      */
     public LoggingInformation lookUpLogging(String licenseNo)
     {
@@ -781,9 +795,11 @@ public class H2_DB_Test {
         return (results);
     }
     
-    /*
+    /**
      * This function logs a license plate to the database. If the license plate already
      * exists in the database, then it is overwritten.
+     *
+     * @param newLog Logging information to write to database.
      */
     public void writeToLoggingDb(LoggingInformation newLog)
     {
@@ -830,14 +846,16 @@ public class H2_DB_Test {
 
     }
     
-    /*
+    /**
      * This function write to the permits table in the database a new license
      * plate, along with the state the license plate is registered, permit 
      * associated with the license plate, make, model, and color of car with
      * the license plate, and the number of violations the license plate has 
      * recieved.
+     *
+     * @param newPlate Adds a new plate to the database.
      */
-     public void writeToPermitDb(PlateInformation newPlate)
+    public void writeToPermitDb(PlateInformation newPlate)
     {
        // load the H2-JDBC driver using the current class loader
         try
@@ -882,9 +900,11 @@ public class H2_DB_Test {
 
     }
      
-    /*
-      * This function is for updating the number of violations related to a license plate
-      */
+    /**
+     * This function is for updating the number of violations related to a license plate
+     * 
+     * @param violationPlate Plate number of the violating car.
+     */
     public void ticket(String violationPlate)
     {
        // load the H2-JDBC driver using the current class loader

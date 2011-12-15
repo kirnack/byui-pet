@@ -12,9 +12,9 @@ import java.awt.color.*;
  * nature that each camera will have a different way of processing the pixel
  * data.
  * 
- * The configuration of the camera is stored in a Configuration object.
+ * The configuration of the camera is stored in a  Configuration object.
  * 
- * @author kirnack
+ * @author Bryon Rogers
  */
 public abstract class Camera
 {
@@ -48,9 +48,9 @@ public abstract class Camera
    }
 
    /**
-    * Returns the current image in a BufferedImage.
+    * Returns the current image in a  BufferedImage.
     * 
-    * @return The current image as a BufferedImage.
+    * @return The current image as a  BufferedImage.
     * @throws Exception
     */
    public BufferedImage getImage() throws Exception
@@ -116,7 +116,7 @@ public abstract class Camera
    /**
     * Changes the Camera's configuration.
     * 
-    * @param pConfig The new Configuration for the camera.
+    * @param pConfig The new  Configuration for the  Camera.
     * @return True if the configuration was set correctly.
     */
    public boolean setConfiguration(Configuration pConfig)

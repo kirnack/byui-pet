@@ -75,9 +75,16 @@ import java.io.FileReader;
 //import java.io.IOException;
 import java.util.Vector;
 
+/**
+ * 
+ * @author Kyle
+ */
 public class TestStatistics {
     
-    public static String helpText = "" +
+   /**
+    * 
+    */
+   public static String helpText = "" +
             "-----------------------------------------------------------\n"+
             "ANPR Statistics Generator\n"+
             "Copyright (c) Ondrej Martinsky, 2006-2007\n"+
@@ -95,9 +102,16 @@ public class TestStatistics {
             "Example : \n"+
             "001.jpg, 1B01234, 1B012??";
     
+    /**
+     * 
+     */
     public TestStatistics() {
     }
     
+    /**
+     * 
+     * @param args
+     */
     public static void main(String[] args) {
         if (args.length==2 &&
                 args[0].equals("-i")

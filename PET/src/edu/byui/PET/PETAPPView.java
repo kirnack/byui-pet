@@ -34,6 +34,9 @@ public class PETAPPView extends javax.swing.JFrame {
     // Used to prevent GUI from freezing
    
     Boolean licenseFound = false;
+    /**
+     * 
+     */
     public class RecognizeThread extends Thread {
         BufferedImage carImage;
         BufferedImage plateImage;
@@ -41,15 +44,27 @@ public class PETAPPView extends javax.swing.JFrame {
         String output;
         PETAPPView parent;
 
+        /**
+         * 
+         * @param myParent
+         * @param rec
+         */
         public RecognizeThread(PETAPPView myParent, Intelligence rec) {
             parent = myParent;
             reader = rec;
         }
 
+        /**
+         * 
+         * @param image
+         */
         public void loadImage(BufferedImage image) {
             carImage = image;
         }
 
+        /**
+         * 
+         */
         @ Override
         public void run() {
             try
@@ -533,16 +548,11 @@ private void violationsBox(PlateInformation currentPlate,
    }
 
 }
-/*
- * Captures and processes a picture or looks up an entered string
- *
- * When the captureButton text is "Capture", this method captures a picture
- * from the camera and processes the picture.
- * When the captureButton text is "Lookup", this method searches the database
- * for the string that was entered. This is used when the operator corrects
- * the plate text read by the system.
- *
- * @param evt MouseEvent object. Not used in this method.
+
+/**
+ * 
+ * @param outText
+ * @param outImage
  */
 public void getThreadOutput(String outText, BufferedImage outImage) {
         /*try {

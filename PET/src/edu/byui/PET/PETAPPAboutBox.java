@@ -8,7 +8,7 @@ import org.jdesktop.application.Action;
 
 /**
  * 
- * @author kirnack
+ * @author Bryon Rogers
  */
 public class PETAPPAboutBox extends javax.swing.JDialog {
 

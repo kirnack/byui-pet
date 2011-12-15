@@ -4,9 +4,9 @@ import java.awt.color.*;
 
 /**
  * Represents the width, height, bits per pixel and ColorSpcae of the images
- * from a camera.
+ * from a Camera.
  * 
- * @author kirnack
+ * @author Bryon Rogers
  */
 public class Configuration
 {
@@ -97,9 +97,9 @@ public class Configuration
    }
 
    /**
-    * Returns the ColorSpace associated with the images.
+    * Returns the @see ColorSpace associated with the images.
     * 
-    * @return The ColorSpace associated with the images.
+    * @return The @see ColorSpace associated with the images.
     */
    public ColorSpace getColorSpace()
    {

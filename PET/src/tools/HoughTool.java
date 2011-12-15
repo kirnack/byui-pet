@@ -71,9 +71,18 @@ import java.io.IOException;
 import javaanpr.imageanalysis.HoughTransformation;
 import javaanpr.imageanalysis.Photo;
 
+/**
+ * 
+ * @author 
+ */
 public class HoughTool {
     
-    public static void main(String[] args) throws IOException {
+   /**
+    * 
+    * @param args
+    * @throws IOException
+    */
+   public static void main(String[] args) throws IOException {
         Photo p = new Photo(args[0]);
         HoughTransformation hough = p.getHoughTransformation();
         new Photo(hough.render(HoughTransformation.RENDER_TRANSFORMONLY, 
@@ -81,7 +90,10 @@ public class HoughTool {
                  ).saveImage(args[1]);
     }
     
-    public HoughTool() {
+   /**
+    * 
+    */
+   public HoughTool() {
     }
     
 }
