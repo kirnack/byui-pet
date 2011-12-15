@@ -5,9 +5,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Designed to communicate with a command line program to get data from the
+ * hardware camera.
  * 
- * @author kirnack
+ * @deprecated Due to issues with interprocess communication not working.
+ * @author Bryon Rogers
  */
+@Deprecated
 public class PETProcCamera extends PETCamera
 {
 
@@ -17,9 +21,11 @@ public class PETProcCamera extends PETCamera
    private BufferedReader cerr;
 
    /**
+    * Creates a  PETProcCamera that runs and communicates with pProc
+    * to get data from the camera.
     * 
-    * @param pProc
-    * @param ImageType
+    * @param pProc Name of program to run
+    * @param ImageType Type of image configuration to use.
     * @throws IOException
     */
    public PETProcCamera(String pProc, int ImageType) throws IOException
@@ -32,8 +38,10 @@ public class PETProcCamera extends PETCamera
    }
 
    /**
+    * Creates a  PETProcCamera that runs and communicates with pProc
+    * to get data from the camera, using a GRAY_SCALE configuration.
     * 
-    * @param pProc
+    * @param pProc Name of program to run.
     * @throws IOException
     */
    public PETProcCamera(String pProc) throws IOException
@@ -42,10 +50,13 @@ public class PETProcCamera extends PETCamera
    }
 
    /**
+    * Prompts the process to get the next image.
     * 
-    * @return
+    * @deprecated Due to hanging during interprocess communication.
+    * @return true if successful
     * @throws IOException
     */
+   @Deprecated
    public boolean retrieveData() throws IOException
    {
       output.write("1");
@@ -80,8 +91,9 @@ public class PETProcCamera extends PETCamera
    }
 
    /**
+    * Kill the process that is being run.
     * 
-    * @return
+    * @return True if successful.
     */
    public boolean killProc()
    {
