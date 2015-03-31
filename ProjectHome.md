@@ -1,0 +1,1 @@
+A Senior Project to do Automatic Licence Plate Recognition for validation of parking permits.
